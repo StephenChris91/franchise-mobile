@@ -33,7 +33,6 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-toast": "^1.2.15",
-    "@supabase/supabase-js": "^2.50.4",
     "@tanstack/react-table": "^8.21.3",
     "@tiptap/extension-character-count": "^3.23.6",
     "@tiptap/extension-link": "^3.23.6",

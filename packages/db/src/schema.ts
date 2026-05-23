@@ -634,6 +634,26 @@ export const pushTokens = pgTable(
   ]
 );
 
+// ─── Sermons ──────────────────────────────────────────────────────────────────
+
+export const sermons = pgTable(
+  "sermons",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    title: text("title").notNull(),
+    speaker: text("speaker").notNull().default(""),
+    date: text("date").notNull(), // "YYYY-MM-DD"
+    duration: integer("duration").notNull().default(0), // seconds
+    audioUrl: text("audio_url").notNull(),     // Cloudinary secure_url
+    thumbnail: text("thumbnail").notNull().default("/assets/sermon-fallback.jpg"),
+    categories: jsonb("categories").$type<string[]>().notNull().default([]),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [index("sermons_date_idx").on(t.date)]
+);
+
 // ─── Social types ─────────────────────────────────────────────────────────────
 
 export type Group = typeof groups.$inferSelect;
@@ -648,3 +668,4 @@ export type EventRsvp = typeof eventRsvps.$inferSelect;
 export type AdminAction = typeof adminActions.$inferSelect;
 export type RefreshToken = typeof refreshTokens.$inferSelect;
 export type PushToken = typeof pushTokens.$inferSelect;
+export type Sermon = typeof sermons.$inferSelect;
