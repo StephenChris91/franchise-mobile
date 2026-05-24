@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import { useAuthStore } from "@/lib/auth/store";
 import { Screen } from "@/components/ui/Screen";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { COLORS } from "@/lib/theme/colors";
 
 export default function SignupScreen() {
   const signup = useAuthStore((s) => s.signup);
@@ -32,24 +33,25 @@ export default function SignupScreen() {
       await signup(values);
       router.replace("/(auth)/pending");
     } catch (e: unknown) {
-      const msg =
-        e instanceof Error ? e.message : "Something went wrong. Please try again.";
+      const msg = e instanceof Error ? e.message : "Something went wrong. Please try again.";
       Toast.show({ type: "error", text1: "Sign up failed", text2: msg });
     }
   }
 
   return (
     <Screen scroll padded>
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <View className="mt-10 mb-8">
-        <Text className="text-ink text-2xl font-bold">Create account</Text>
-        <Text className="text-ink-secondary text-sm mt-1">
+      {/* ── Header ───────────────────────────────────────────────────────── */}
+      <View style={styles.header}>
+        <Text style={[styles.heading, { color: COLORS.ink.primary }]}>
+          Create account
+        </Text>
+        <Text style={[styles.subheading, { color: COLORS.ink.secondary }]}>
           Join the Franchise Church community
         </Text>
       </View>
 
-      {/* ── Form ───────────────────────────────────────────────────────────── */}
-      <View className="gap-y-4">
+      {/* ── Form ─────────────────────────────────────────────────────────── */}
+      <View style={styles.form}>
         <Controller
           control={control}
           name="fullName"
@@ -138,33 +140,65 @@ export default function SignupScreen() {
           )}
         />
 
-        <Text className="text-ink-muted text-xs leading-5">
+        <Text style={[styles.terms, { color: COLORS.ink.muted }]}>
           By creating an account you agree to our{" "}
-          <Text className="text-gold">Terms of Service</Text>. Your account will
-          be reviewed by our pastoral team before you gain full access.
+          <Text style={{ color: COLORS.brand.primary }}>Terms of Service</Text>
+          {". "}Your account will be reviewed by our pastoral team before you
+          gain full access.
         </Text>
 
         <Button
           size="lg"
           loading={isSubmitting}
           onPress={handleSubmit(onSubmit)}
-          className="mt-2"
+          style={{ marginTop: 8 }}
         >
           Create Account
         </Button>
       </View>
 
-      {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <View className="flex-row justify-center mt-8 gap-x-1">
-        <Text className="text-ink-secondary text-sm">Already have an account?</Text>
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      <View style={styles.footer}>
+        <Text style={{ color: COLORS.ink.secondary, fontSize: 14 }}>
+          Already have an account?
+        </Text>
         <Link href="/(auth)/login" asChild>
           <TouchableOpacity accessibilityRole="link">
-            <Text className="text-gold text-sm font-semibold">Sign in</Text>
+            <Text style={{ color: COLORS.brand.primary, fontSize: 14, fontWeight: "600" }}>
+              {" "}Sign in
+            </Text>
           </TouchableOpacity>
         </Link>
       </View>
 
-      <View className="h-10" />
+      <View style={{ height: 40 }} />
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    marginTop: 40,
+    marginBottom: 32,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  subheading: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  form: {
+    gap: 16,
+  },
+  terms: {
+    fontSize: 12,
+    lineHeight: 20,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 32,
+  },
+});

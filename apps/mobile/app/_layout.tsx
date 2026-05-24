@@ -1,3 +1,5 @@
+// Must import global.css so NativeWind registers custom-config color classes
+import "../global.css";
 import { useEffect } from "react";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";

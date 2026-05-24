@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,17 +15,14 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { COLORS } from "@/lib/theme/colors";
 
-// ── Form schema ────────────────────────────────────────────────────────────────
 const editProfileSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters").max(60),
   bio: z.string().max(300, "Bio must be 300 characters or fewer").optional(),
   ministry: z.string().max(80).optional(),
   phone: z.string().max(20).optional(),
 });
-
 type EditProfileInput = z.infer<typeof editProfileSchema>;
 
-// ── Screen ─────────────────────────────────────────────────────────────────────
 export default function EditProfileScreen() {
   const qc = useQueryClient();
   const { refreshUser } = useAuthStore();
@@ -35,17 +32,13 @@ export default function EditProfileScreen() {
     queryFn: ({ signal }) => api.profile.me(signal),
   });
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isDirty },
-  } = useForm<EditProfileInput>({
+  const { control, handleSubmit, formState: { errors, isDirty } } = useForm<EditProfileInput>({
     resolver: zodResolver(editProfileSchema),
     values: {
-      fullName:  profile?.fullName  ?? "",
-      bio:       profile?.bio       ?? "",
-      ministry:  profile?.ministry  ?? "",
-      phone:     profile?.phone     ?? "",
+      fullName: profile?.fullName  ?? "",
+      bio:      profile?.bio       ?? "",
+      ministry: profile?.ministry  ?? "",
+      phone:    profile?.phone     ?? "",
     },
   });
 
@@ -62,37 +55,25 @@ export default function EditProfileScreen() {
     },
   });
 
-  // ── Photo upload ─────────────────────────────────────────────────────────────
   async function handleChangePhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!perm.granted) {
-      Alert.alert(
-        "Permission needed",
-        "Allow access to your photos in Settings to change your profile picture."
-      );
+      Alert.alert("Permission needed", "Allow access to your photos in Settings.");
       return;
     }
-
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.8,
     });
-
     if (result.canceled) return;
-
-    // Phase M2: photo upload wired for M3 (needs Cloudinary signed upload)
-    Toast.show({
-      type: "info",
-      text1: "Photo upload",
-      text2: "Photo uploads will be enabled in the next update.",
-    });
+    Toast.show({ type: "info", text1: "Photo upload", text2: "Photo uploads enabled in next update." });
   }
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-page px-5 pt-6 gap-y-4">
+      <View style={[styles.loadingRoot, { backgroundColor: COLORS.bg.page }]}>
         <Skeleton width="100%" height={56} />
         <Skeleton width="100%" height={100} />
         <Skeleton width="100%" height={56} />
@@ -103,119 +84,100 @@ export default function EditProfileScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-page"
+      style={{ flex: 1, backgroundColor: COLORS.bg.page }}
       contentContainerStyle={{ padding: 20, paddingBottom: 48 }}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      {/* ── Avatar picker ─────────────────────────────────────────────────── */}
-      <View className="items-center mb-8">
-        <View className="relative">
+      {/* Avatar picker */}
+      <View style={styles.avatarWrap}>
+        <View>
           <Avatar uri={profile?.photoUrl} name={profile?.fullName} size={96} />
           <TouchableOpacity
             onPress={handleChangePhoto}
             accessibilityLabel="Change profile photo"
-            style={{
-              position: "absolute",
-              bottom: 0,
-              right: 0,
-              width: 32,
-              height: 32,
-              borderRadius: 16,
-              backgroundColor: COLORS.brand.primary,
-              borderWidth: 2,
-              borderColor: COLORS.bg.page,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={[styles.cameraBtn, { backgroundColor: COLORS.brand.primary, borderColor: COLORS.bg.page }]}
           >
             <Camera size={14} color={COLORS.bg.page} />
           </TouchableOpacity>
         </View>
-        <Text className="text-gold text-sm font-medium mt-2">Change photo</Text>
+        <Text style={{ color: COLORS.brand.primary, fontSize: 14, fontWeight: "500", marginTop: 8 }}>
+          Change photo
+        </Text>
       </View>
 
-      {/* ── Form fields ───────────────────────────────────────────────────── */}
-      <View className="gap-y-4">
+      {/* Form fields */}
+      <View style={styles.form}>
         <Controller
           control={control}
           name="fullName"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Full name"
-              placeholder="Your full name"
-              autoCapitalize="words"
-              textContentType="name"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              error={errors.fullName?.message}
-            />
+            <Input label="Full name" placeholder="Your full name" autoCapitalize="words"
+              textContentType="name" onChangeText={onChange} onBlur={onBlur} value={value}
+              error={errors.fullName?.message} />
           )}
         />
-
         <Controller
           control={control}
           name="bio"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Bio"
-              placeholder="Tell the community about yourself…"
-              multiline
-              numberOfLines={4}
-              autoCapitalize="sentences"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value ?? ""}
-              error={errors.bio?.message}
-              hint={`${(value ?? "").length}/300`}
-            />
+            <Input label="Bio" placeholder="Tell the community about yourself…" multiline
+              numberOfLines={4} autoCapitalize="sentences" onChangeText={onChange}
+              onBlur={onBlur} value={value ?? ""} error={errors.bio?.message}
+              hint={`${(value ?? "").length}/300`} />
           )}
         />
-
         <Controller
           control={control}
           name="ministry"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Ministry / department"
-              placeholder="e.g. Worship team, Ushers…"
-              autoCapitalize="words"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value ?? ""}
-              error={errors.ministry?.message}
-            />
+            <Input label="Ministry / department" placeholder="e.g. Worship team, Ushers…"
+              autoCapitalize="words" onChangeText={onChange} onBlur={onBlur}
+              value={value ?? ""} error={errors.ministry?.message} />
           )}
         />
-
         <Controller
           control={control}
           name="phone"
           render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Phone number"
-              placeholder="+234 800 000 0000"
-              keyboardType="phone-pad"
-              textContentType="telephoneNumber"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value ?? ""}
-              error={errors.phone?.message}
-            />
+            <Input label="Phone number" placeholder="+234 800 000 0000" keyboardType="phone-pad"
+              textContentType="telephoneNumber" onChangeText={onChange} onBlur={onBlur}
+              value={value ?? ""} error={errors.phone?.message} />
           )}
         />
       </View>
 
-      <Button
-        size="lg"
-        loading={saving}
-        disabled={!isDirty}
-        onPress={handleSubmit((d) => save(d))}
-        className="mt-6"
-      >
+      <Button size="lg" loading={saving} disabled={!isDirty}
+        onPress={handleSubmit((d) => save(d))} style={{ marginTop: 24 }}>
         Save changes
       </Button>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingRoot: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    gap: 16,
+  },
+  avatarWrap: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  cameraBtn: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  form: {
+    gap: 16,
+  },
+});

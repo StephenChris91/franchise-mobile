@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity, type TextInputProps } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  type TextInputProps,
+} from "react-native";
 import { Eye, EyeOff } from "lucide-react-native";
 import { COLORS } from "@/lib/theme/colors";
 
@@ -17,35 +24,48 @@ export function Input({
   leftIcon,
   secureTextEntry,
   multiline,
-  className,
+  style,
   ...props
 }: InputProps) {
   const [visible, setVisible] = useState(false);
   const isPassword = secureTextEntry;
 
+  const borderColor = error
+    ? "rgba(201, 58, 58, 0.65)"
+    : COLORS.border.default;
+
   return (
-    <View className="gap-y-1.5">
+    <View style={styles.wrapper}>
       {label && (
-        <Text className="text-sm font-medium text-ink-secondary">{label}</Text>
+        <Text style={[styles.label, { color: COLORS.ink.secondary }]}>
+          {label}
+        </Text>
       )}
 
       <View
-        className={`
-          flex-row ${multiline ? "items-start" : "items-center"}
-          border rounded-xl px-4
-          bg-card
-          ${error ? "border-danger/60" : "border-gold/20"}
-          ${className ?? ""}
-        `}
+        style={[
+          styles.inputRow,
+          multiline ? styles.inputRowMultiline : styles.inputRowSingle,
+          { backgroundColor: COLORS.bg.card, borderColor },
+        ]}
       >
-        {leftIcon && <View className="mr-3 mt-3.5">{leftIcon}</View>}
+        {leftIcon && (
+          <View style={multiline ? styles.leftIconMultiline : styles.leftIconSingle}>
+            {leftIcon}
+          </View>
+        )}
 
         <TextInput
           {...props}
           multiline={multiline}
           secureTextEntry={isPassword && !visible}
           placeholderTextColor={COLORS.ink.muted}
-          className={`flex-1 text-base text-ink ${multiline ? "py-3 min-h-[88px]" : "py-3.5"}`}
+          style={[
+            styles.textInput,
+            { color: COLORS.ink.primary },
+            multiline ? styles.textInputMultiline : styles.textInputSingle,
+            style,
+          ]}
           textAlignVertical={multiline ? "top" : "center"}
           accessibilityLabel={label}
         />
@@ -54,7 +74,7 @@ export function Input({
           <TouchableOpacity
             onPress={() => setVisible((v) => !v)}
             accessibilityLabel={visible ? "Hide password" : "Show password"}
-            className="ml-2 p-1"
+            style={styles.eyeButton}
           >
             {visible ? (
               <EyeOff size={20} color={COLORS.ink.muted} />
@@ -66,13 +86,66 @@ export function Input({
       </View>
 
       {error && (
-        <Text className="text-xs text-danger" accessibilityLiveRegion="polite">
+        <Text
+          style={[styles.helperText, { color: COLORS.status.error }]}
+          accessibilityLiveRegion="polite"
+        >
           {error}
         </Text>
       )}
       {hint && !error && (
-        <Text className="text-xs text-ink-muted">{hint}</Text>
+        <Text style={[styles.helperText, { color: COLORS.ink.muted }]}>
+          {hint}
+        </Text>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    gap: 6,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  inputRow: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+  },
+  inputRowSingle: {
+    alignItems: "center",
+  },
+  inputRowMultiline: {
+    alignItems: "flex-start",
+  },
+  leftIconSingle: {
+    marginRight: 12,
+    marginTop: 14,
+  },
+  leftIconMultiline: {
+    marginRight: 12,
+    marginTop: 14,
+  },
+  textInput: {
+    flex: 1,
+    fontSize: 16,
+  },
+  textInputSingle: {
+    paddingVertical: 14,
+  },
+  textInputMultiline: {
+    paddingVertical: 12,
+    minHeight: 88,
+  },
+  eyeButton: {
+    marginLeft: 8,
+    padding: 4,
+  },
+  helperText: {
+    fontSize: 12,
+  },
+});

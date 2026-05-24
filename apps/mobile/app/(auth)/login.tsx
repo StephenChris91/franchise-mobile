@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import { useAuthStore } from "@/lib/auth/store";
 import { Screen } from "@/components/ui/Screen";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { COLORS } from "@/lib/theme/colors";
 
 export default function LoginScreen() {
   const login = useAuthStore((s) => s.login);
@@ -24,7 +25,6 @@ export default function LoginScreen() {
   async function onSubmit(values: LoginInput) {
     try {
       await login(values.email, values.password);
-
       const { user } = useAuthStore.getState();
       if (user?.approvalStatus === "pending") {
         router.replace("/(auth)/pending");
@@ -38,29 +38,21 @@ export default function LoginScreen() {
         router.replace("/(app)/(tabs)/feed");
       }
     } catch (e: unknown) {
-      const msg =
-        e instanceof Error ? e.message : "Something went wrong. Please try again.";
+      const msg = e instanceof Error ? e.message : "Something went wrong. Please try again.";
       Toast.show({ type: "error", text1: "Login failed", text2: msg });
     }
   }
 
   return (
     <Screen scroll padded>
-      {/* ── Logo ───────────────────────────────────────────────────────────── */}
-      <View className="items-center mt-14 mb-10">
-        <Text
-          style={{ fontFamily: "DancingScript_700Bold", fontSize: 52 }}
-          className="text-gold"
-        >
-          Franchise
-        </Text>
-        <Text className="text-ink-muted text-xs tracking-widest uppercase mt-1">
-          Church
-        </Text>
+      {/* ── Logo ─────────────────────────────────────────────────────────── */}
+      <View style={styles.logoWrap}>
+        <Text style={styles.logoScript}>Franchise</Text>
+        <Text style={styles.logoSub}>Church</Text>
       </View>
 
-      {/* ── Form ───────────────────────────────────────────────────────────── */}
-      <View className="gap-y-4">
+      {/* ── Form ─────────────────────────────────────────────────────────── */}
+      <View style={styles.form}>
         <Controller
           control={control}
           name="email"
@@ -99,27 +91,75 @@ export default function LoginScreen() {
         />
 
         <Link href="/(auth)/forgot-password" asChild>
-          <TouchableOpacity className="self-end" accessibilityRole="link">
-            <Text className="text-gold text-sm">Forgot password?</Text>
+          <TouchableOpacity style={styles.forgotWrap} accessibilityRole="link">
+            <Text style={[styles.linkText, { color: COLORS.brand.primary }]}>
+              Forgot password?
+            </Text>
           </TouchableOpacity>
         </Link>
 
-        <Button size="lg" loading={isSubmitting} onPress={handleSubmit(onSubmit)} className="mt-2">
+        <Button
+          size="lg"
+          loading={isSubmitting}
+          onPress={handleSubmit(onSubmit)}
+          style={styles.submitBtn}
+        >
           Sign In
         </Button>
       </View>
 
-      {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <View className="flex-row justify-center mt-8 gap-x-1">
-        <Text className="text-ink-secondary text-sm">Don't have an account?</Text>
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      <View style={styles.footer}>
+        <Text style={{ color: COLORS.ink.secondary, fontSize: 14 }}>
+          Don't have an account?
+        </Text>
         <Link href="/(auth)/signup" asChild>
           <TouchableOpacity accessibilityRole="link">
-            <Text className="text-gold text-sm font-semibold">Sign up</Text>
+            <Text style={[styles.linkText, { color: COLORS.brand.primary, fontWeight: "600" }]}>
+              {" "}Sign up
+            </Text>
           </TouchableOpacity>
         </Link>
       </View>
 
-      <View className="h-10" />
+      <View style={{ height: 40 }} />
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  logoWrap: {
+    alignItems: "center",
+    marginTop: 56,
+    marginBottom: 40,
+  },
+  logoScript: {
+    fontFamily: "DancingScript_700Bold",
+    fontSize: 52,
+    color: COLORS.brand.primary,
+  },
+  logoSub: {
+    fontSize: 11,
+    letterSpacing: 4,
+    textTransform: "uppercase",
+    color: COLORS.ink.muted,
+    marginTop: 2,
+  },
+  form: {
+    gap: 16,
+  },
+  forgotWrap: {
+    alignSelf: "flex-end",
+  },
+  linkText: {
+    fontSize: 14,
+  },
+  submitBtn: {
+    marginTop: 8,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 32,
+  },
+});

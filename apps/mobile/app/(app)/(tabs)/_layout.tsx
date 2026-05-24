@@ -1,12 +1,6 @@
 import { Tabs } from "expo-router";
-import { View, Text } from "react-native";
-import {
-  Home,
-  HandHeart,
-  Calendar,
-  Bell,
-  User,
-} from "lucide-react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Home, HandHeart, Calendar, Bell, User } from "lucide-react-native";
 import { COLORS } from "@/lib/theme/colors";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
@@ -21,32 +15,21 @@ function TabIcon({
   badge?: number;
 }) {
   return (
-    <View className="items-center gap-y-1">
-      <View className="relative">
+    <View style={styles.iconWrap}>
+      <View>
         <Icon
           size={22}
           color={focused ? COLORS.brand.primary : COLORS.ink.muted}
           strokeWidth={focused ? 2.5 : 1.8}
         />
         {badge != null && badge > 0 && (
-          <View className="absolute -top-1 -right-2 bg-danger rounded-full min-w-[16px] h-4 items-center justify-center px-1">
-            <Text className="text-white text-[10px] font-bold">
-              {badge > 99 ? "99+" : badge}
-            </Text>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{badge > 99 ? "99+" : badge}</Text>
           </View>
         )}
       </View>
-      {/* Active dot indicator */}
-      {focused && (
-        <View
-          style={{
-            width: 4,
-            height: 4,
-            borderRadius: 2,
-            backgroundColor: COLORS.brand.primary,
-          }}
-        />
-      )}
+      {/* Active dot */}
+      {focused && <View style={styles.dot} />}
     </View>
   );
 }
@@ -68,9 +51,9 @@ export default function TabsLayout() {
         tabBarActiveTintColor: COLORS.brand.primary,
         tabBarInactiveTintColor: COLORS.ink.muted,
         tabBarStyle: {
+          backgroundColor: COLORS.bg.elevated,
           borderTopWidth: 1,
           borderTopColor: COLORS.border.subtle,
-          backgroundColor: COLORS.bg.elevated,
           elevation: 0,
           shadowOpacity: 0,
           height: 64,
@@ -80,10 +63,7 @@ export default function TabsLayout() {
         tabBarLabelStyle: {
           fontSize: 10,
           fontWeight: "500",
-          marginTop: 0,
         },
-        // Hide the default label when we show a dot; keep labels for accessibility
-        tabBarShowLabel: true,
       }}
     >
       <Tabs.Screen
@@ -124,3 +104,33 @@ export default function TabsLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  iconWrap: {
+    alignItems: "center",
+    gap: 3,
+  },
+  badge: {
+    position: "absolute",
+    top: -4,
+    right: -8,
+    backgroundColor: COLORS.status.error,
+    borderRadius: 8,
+    minWidth: 16,
+    height: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "700",
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: COLORS.brand.primary,
+  },
+});

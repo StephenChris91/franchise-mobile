@@ -1,5 +1,6 @@
 import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { COLORS } from "@/lib/theme/colors";
 
 interface ScreenProps {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ export function Screen({
   children,
   scroll = false,
   padded = true,
-  dark: _dark,   // accepted but unused — always dark
+  dark: _dark,
   className,
 }: ScreenProps) {
   const padding = padded ? "px-5" : "";
@@ -32,7 +33,10 @@ export function Screen({
   );
 
   return (
-    <SafeAreaView className={`flex-1 bg-page ${className ?? ""}`}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: COLORS.bg.page }}
+      className={className ?? ""}
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"

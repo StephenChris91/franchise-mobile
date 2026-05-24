@@ -1,14 +1,7 @@
-import { View, Text, TouchableOpacity, Alert, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ScrollView, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Pencil,
-  Settings,
-  LogOut,
-  ChevronRight,
-  MapPin,
-  AtSign,
-} from "lucide-react-native";
+import { Pencil, Settings, LogOut, ChevronRight, MapPin, AtSign } from "lucide-react-native";
 import { useAuthStore } from "@/lib/auth/store";
 import { api } from "@/lib/api/client";
 import { Screen } from "@/components/ui/Screen";
@@ -16,23 +9,15 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { COLORS } from "@/lib/theme/colors";
 
-// ── Info row ───────────────────────────────────────────────────────────────────
-function InfoRow({
-  icon: Icon,
-  label,
-}: {
-  icon: typeof MapPin;
-  label: string;
-}) {
+function InfoRow({ icon: Icon, label }: { icon: typeof MapPin; label: string }) {
   return (
-    <View className="flex-row items-center gap-x-2">
+    <View style={styles.infoRow}>
       <Icon size={15} color={COLORS.ink.muted} />
-      <Text className="text-ink-secondary text-sm">{label}</Text>
+      <Text style={{ color: COLORS.ink.secondary, fontSize: 14 }}>{label}</Text>
     </View>
   );
 }
 
-// ── Action row ─────────────────────────────────────────────────────────────────
 function ActionRow({
   icon: Icon,
   label,
@@ -49,15 +34,12 @@ function ActionRow({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="flex-row items-center justify-between py-4"
-      style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.subtle }}
+      style={[styles.actionRow, { borderBottomColor: COLORS.border.subtle }]}
       activeOpacity={0.7}
     >
-      <View className="flex-row items-center gap-x-3">
+      <View style={styles.actionRowLeft}>
         <Icon size={18} color={danger ? COLORS.status.error : COLORS.ink.secondary} />
-        <Text
-          className={`text-base font-medium ${danger ? "text-danger" : "text-ink"}`}
-        >
+        <Text style={{ color: danger ? COLORS.status.error : COLORS.ink.primary, fontSize: 16, fontWeight: "500" }}>
           {label}
         </Text>
       </View>
@@ -66,7 +48,6 @@ function ActionRow({
   );
 }
 
-// ── Profile screen ─────────────────────────────────────────────────────────────
 export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
 
@@ -90,14 +71,6 @@ export default function ProfileScreen() {
       : undefined,
   });
 
-  function handleEditProfile() {
-    router.push("/(app)/profile/edit");
-  }
-
-  function handleSettings() {
-    Alert.alert("Settings", "Settings screen coming in a future release.");
-  }
-
   function handleSignOut() {
     Alert.alert(
       "Sign out",
@@ -119,15 +92,10 @@ export default function ProfileScreen() {
 
   return (
     <Screen padded={false}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* ── Header band ─────────────────────────────────────────────────── */}
-        <View
-          className="bg-elevated pt-14 pb-10 px-5 items-center gap-y-3"
-          style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.default }}
-        >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+
+        {/* ── Header band ──────────────────────────────────────────────── */}
+        <View style={[styles.header, { backgroundColor: COLORS.bg.elevated, borderBottomColor: COLORS.border.default }]}>
           {isLoading && !profile ? (
             <Skeleton width={88} height={88} rounded />
           ) : (
@@ -135,54 +103,90 @@ export default function ProfileScreen() {
           )}
 
           {isLoading && !profile ? (
-            <View className="items-center gap-y-2">
+            <View style={{ alignItems: "center", gap: 8 }}>
               <Skeleton width={160} height={22} />
               <Skeleton width={100} height={16} />
             </View>
           ) : (
-            <View className="items-center gap-y-1">
-              <Text className="text-ink text-xl font-bold">
+            <View style={{ alignItems: "center", gap: 4 }}>
+              <Text style={{ color: COLORS.ink.primary, fontSize: 20, fontWeight: "700" }}>
                 {profile?.fullName ?? "—"}
               </Text>
               <InfoRow icon={AtSign} label={profile?.username ?? "—"} />
-              {profile?.ministry ? (
-                <InfoRow icon={MapPin} label={profile.ministry} />
-              ) : null}
+              {profile?.ministry ? <InfoRow icon={MapPin} label={profile.ministry} /> : null}
             </View>
           )}
 
-          {/* Role badge */}
           {profile?.role && profile.role !== "member" ? (
-            <View
-              style={{ backgroundColor: COLORS.brand.soft, borderWidth: 1, borderColor: COLORS.border.default }}
-              className="rounded-full px-3 py-1"
-            >
-              <Text className="text-gold text-xs font-semibold capitalize">
+            <View style={[styles.roleBadge, { backgroundColor: COLORS.brand.soft, borderColor: COLORS.border.default }]}>
+              <Text style={{ color: COLORS.brand.primary, fontSize: 12, fontWeight: "600" }}>
                 {profile.role.replace("_", " ")}
               </Text>
             </View>
           ) : null}
         </View>
 
-        {/* ── Bio ─────────────────────────────────────────────────────────── */}
+        {/* ── Bio ──────────────────────────────────────────────────────── */}
         {profile?.bio ? (
-          <View
-            className="px-5 py-4"
-            style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.subtle }}
-          >
-            <Text className="text-ink-secondary text-sm leading-6">{profile.bio}</Text>
+          <View style={[styles.bioWrap, { borderBottomColor: COLORS.border.subtle }]}>
+            <Text style={{ color: COLORS.ink.secondary, fontSize: 14, lineHeight: 22 }}>
+              {profile.bio}
+            </Text>
           </View>
         ) : null}
 
-        {/* ── Actions ─────────────────────────────────────────────────────── */}
-        <View className="px-5 mt-2">
-          <ActionRow icon={Pencil} label="Edit profile" onPress={handleEditProfile} />
-          <ActionRow icon={Settings} label="Settings" onPress={handleSettings} />
+        {/* ── Actions ──────────────────────────────────────────────────── */}
+        <View style={styles.actions}>
+          <ActionRow icon={Pencil} label="Edit profile" onPress={() => router.push("/(app)/profile/edit")} />
+          <ActionRow icon={Settings} label="Settings" onPress={() => Alert.alert("Settings", "Coming soon.")} />
           <ActionRow icon={LogOut} label="Sign out" onPress={handleSignOut} danger />
         </View>
 
-        <View className="h-8" />
+        <View style={{ height: 32 }} />
       </ScrollView>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    paddingTop: 56,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    gap: 12,
+    borderBottomWidth: 1,
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  roleBadge: {
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderWidth: 1,
+  },
+  bioWrap: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+  },
+  actions: {
+    paddingHorizontal: 20,
+    marginTop: 8,
+  },
+  actionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+  },
+  actionRowLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+});

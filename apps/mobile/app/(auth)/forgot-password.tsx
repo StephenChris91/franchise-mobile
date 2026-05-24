@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,41 +40,47 @@ export default function ForgotPasswordScreen() {
       {/* Back button */}
       <TouchableOpacity
         onPress={() => router.back()}
-        className="flex-row items-center gap-x-1 mt-4 mb-8"
+        style={styles.backBtn}
         accessibilityLabel="Go back"
       >
         <ArrowLeft size={20} color={COLORS.ink.muted} />
-        <Text className="text-ink-muted text-sm">Back to login</Text>
+        <Text style={{ color: COLORS.ink.muted, fontSize: 14, marginLeft: 4 }}>
+          Back to login
+        </Text>
       </TouchableOpacity>
 
       {sent ? (
-        // ── Success state ─────────────────────────────────────────────────────
-        <View className="items-center pt-16 gap-y-4">
+        /* ── Success ─────────────────────────────────────────────────── */
+        <View style={styles.successWrap}>
           <CheckCircle size={64} color={COLORS.status.success} />
-          <Text className="text-ink text-xl font-bold text-center">
+          <Text style={[styles.successHeading, { color: COLORS.ink.primary }]}>
             Check your email
           </Text>
-          <Text className="text-ink-secondary text-sm text-center leading-6">
+          <Text style={[styles.successBody, { color: COLORS.ink.secondary }]}>
             We've sent a password reset link to{"\n"}
-            <Text className="text-gold font-medium">{getValues("email")}</Text>
+            <Text style={{ color: COLORS.brand.primary, fontWeight: "500" }}>
+              {getValues("email")}
+            </Text>
           </Text>
-          <Text className="text-ink-muted text-xs text-center mt-2">
+          <Text style={[styles.successNote, { color: COLORS.ink.muted }]}>
             The link expires in 1 hour. Check your spam folder if you don't see it.
           </Text>
           <Button
             variant="ghost"
-            className="mt-4"
+            style={{ marginTop: 16 }}
             onPress={() => router.replace("/(auth)/login")}
           >
             Return to login
           </Button>
         </View>
       ) : (
-        // ── Form state ────────────────────────────────────────────────────────
-        <View className="gap-y-4">
-          <View className="mb-2">
-            <Text className="text-ink text-2xl font-bold">Reset password</Text>
-            <Text className="text-ink-secondary text-sm mt-1">
+        /* ── Form ────────────────────────────────────────────────────── */
+        <View style={styles.form}>
+          <View style={styles.formHeader}>
+            <Text style={[styles.formHeading, { color: COLORS.ink.primary }]}>
+              Reset password
+            </Text>
+            <Text style={[styles.formSubheading, { color: COLORS.ink.secondary }]}>
               Enter your email and we'll send you a reset link.
             </Text>
           </View>
@@ -103,7 +109,7 @@ export default function ForgotPasswordScreen() {
             size="lg"
             loading={isSubmitting}
             onPress={handleSubmit(onSubmit)}
-            className="mt-2"
+            style={{ marginTop: 8 }}
           >
             Send Reset Link
           </Button>
@@ -112,3 +118,45 @@ export default function ForgotPasswordScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  backBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 16,
+    marginBottom: 32,
+  },
+  successWrap: {
+    alignItems: "center",
+    paddingTop: 64,
+    gap: 16,
+  },
+  successHeading: {
+    fontSize: 20,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  successBody: {
+    fontSize: 14,
+    textAlign: "center",
+    lineHeight: 22,
+  },
+  successNote: {
+    fontSize: 12,
+    textAlign: "center",
+  },
+  form: {
+    gap: 16,
+  },
+  formHeader: {
+    marginBottom: 8,
+  },
+  formHeading: {
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  formSubheading: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});

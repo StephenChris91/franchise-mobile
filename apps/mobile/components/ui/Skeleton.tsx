@@ -1,19 +1,14 @@
 import { useEffect, useRef } from "react";
-import { Animated, View } from "react-native";
+import { Animated, View, StyleSheet } from "react-native";
+import { COLORS } from "@/lib/theme/colors";
 
 interface SkeletonProps {
   width?: number | string;
   height?: number;
   rounded?: boolean;
-  className?: string;
 }
 
-export function Skeleton({
-  width = "100%",
-  height = 16,
-  rounded = false,
-  className,
-}: SkeletonProps) {
+export function Skeleton({ width = "100%", height = 16, rounded = false }: SkeletonProps) {
   const opacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
@@ -29,15 +24,20 @@ export function Skeleton({
 
   return (
     <Animated.View
-      style={{ opacity, width: width as number, height }}
-      className={`bg-card-hover ${rounded ? "rounded-full" : "rounded-lg"} ${className ?? ""}`}
+      style={{
+        opacity,
+        width: width as number,
+        height,
+        borderRadius: rounded ? 999 : 8,
+        backgroundColor: COLORS.bg.cardHover,
+      }}
     />
   );
 }
 
 export function ProfileSkeleton() {
   return (
-    <View className="items-center pt-10 px-5 gap-y-4">
+    <View style={styles.profileSkeletonRoot}>
       <Skeleton width={88} height={88} rounded />
       <Skeleton width={160} height={22} />
       <Skeleton width={100} height={16} />
@@ -46,3 +46,12 @@ export function ProfileSkeleton() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  profileSkeletonRoot: {
+    alignItems: "center",
+    paddingTop: 40,
+    paddingHorizontal: 20,
+    gap: 16,
+  },
+});

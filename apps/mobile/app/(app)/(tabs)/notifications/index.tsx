@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Bell } from "lucide-react-native";
 import { Screen } from "@/components/ui/Screen";
 import { COLORS } from "@/lib/theme/colors";
@@ -6,18 +6,26 @@ import { COLORS } from "@/lib/theme/colors";
 export default function NotificationsScreen() {
   return (
     <Screen padded>
-      <View className="flex-1 items-center justify-center gap-y-4">
-        <View
-          style={{ backgroundColor: COLORS.brand.soft }}
-          className="w-20 h-20 rounded-full items-center justify-center"
-        >
+      <View style={styles.center}>
+        <View style={styles.iconCircle}>
           <Bell size={36} color={COLORS.brand.primary} />
         </View>
-        <Text className="text-ink text-xl font-bold">Notifications</Text>
-        <Text className="text-ink-secondary text-sm text-center leading-6">
+        <Text style={[styles.title, { color: COLORS.ink.primary }]}>Notifications</Text>
+        <Text style={[styles.body, { color: COLORS.ink.secondary }]}>
           Activity and mentions{"\n"}are coming in Phase M4.
         </Text>
       </View>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  center: { flex: 1, alignItems: "center", justifyContent: "center", gap: 16 },
+  iconCircle: {
+    width: 80, height: 80, borderRadius: 40,
+    backgroundColor: "rgba(212,166,74,0.12)",
+    alignItems: "center", justifyContent: "center",
+  },
+  title: { fontSize: 20, fontWeight: "700" },
+  body:  { fontSize: 14, textAlign: "center", lineHeight: 24 },
+});

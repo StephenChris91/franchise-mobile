@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { Clock, RefreshCw, MessageCircle, LogOut } from "lucide-react-native";
+import { Clock } from "lucide-react-native";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import { useAuthStore } from "@/lib/auth/store";
@@ -21,11 +21,7 @@ export default function PendingScreen() {
       if (updated?.approvalStatus === "approved") {
         router.replace("/(app)/(tabs)/feed");
       } else {
-        Toast.show({
-          type: "info",
-          text1: "Still pending",
-          text2: "Your account is still under review.",
-        });
+        Toast.show({ type: "info", text1: "Still pending", text2: "Your account is still under review." });
       }
     } catch {
       Toast.show({ type: "error", text1: "Couldn't check status" });
@@ -39,79 +35,117 @@ export default function PendingScreen() {
     router.replace("/(auth)/login");
   }
 
+  const steps = [
+    { step: "1", text: "Account created ✓" },
+    { step: "2", text: "Pastoral review (in progress)" },
+    { step: "3", text: "Welcome email sent" },
+    { step: "4", text: "Full access granted" },
+  ];
+
   return (
     <Screen padded>
-      <View className="flex-1 items-center justify-center gap-y-6 py-12">
+      <View style={styles.root}>
 
-        {/* ── Clock icon ───────────────────────────────────────────────────── */}
-        <View
-          style={{ backgroundColor: COLORS.brand.soft }}
-          className="w-24 h-24 rounded-full items-center justify-center"
-        >
+        {/* Clock icon */}
+        <View style={styles.iconCircle}>
           <Clock size={48} color={COLORS.brand.primary} />
         </View>
 
-        {/* ── Copy ─────────────────────────────────────────────────────────── */}
-        <View className="items-center gap-y-2">
-          <Text className="text-ink text-2xl font-bold text-center">
+        {/* Copy */}
+        <View style={styles.copyWrap}>
+          <Text style={[styles.heading, { color: COLORS.ink.primary }]}>
             Almost there,{" "}
             {user?.fullName?.split(" ")[0] ?? "friend"}!
           </Text>
-          <Text className="text-ink-secondary text-base text-center leading-6">
-            Your account is being reviewed by our pastoral team.
-            You'll receive an email once you're approved.
+          <Text style={[styles.body, { color: COLORS.ink.secondary }]}>
+            Your account is being reviewed by our pastoral team. You'll receive
+            an email once you're approved.
           </Text>
         </View>
 
-        {/* ── Steps card ───────────────────────────────────────────────────── */}
-        <View
-          className="bg-card rounded-2xl p-5 w-full gap-y-3"
-          style={{ borderWidth: 1, borderColor: COLORS.border.default }}
-        >
-          {[
-            { step: "1", text: "Account created ✓" },
-            { step: "2", text: "Pastoral review (in progress)" },
-            { step: "3", text: "Welcome email sent" },
-            { step: "4", text: "Full access granted" },
-          ].map(({ step, text }) => (
-            <View key={step} className="flex-row items-center gap-x-3">
-              <View
-                style={{ backgroundColor: COLORS.brand.soft }}
-                className="w-6 h-6 rounded-full items-center justify-center"
-              >
-                <Text className="text-gold text-xs font-bold">{step}</Text>
+        {/* Steps card */}
+        <View style={[styles.card, { backgroundColor: COLORS.bg.card, borderColor: COLORS.border.default }]}>
+          {steps.map(({ step, text }) => (
+            <View key={step} style={styles.stepRow}>
+              <View style={[styles.stepDot, { backgroundColor: COLORS.brand.soft }]}>
+                <Text style={{ color: COLORS.brand.primary, fontSize: 11, fontWeight: "700" }}>
+                  {step}
+                </Text>
               </View>
-              <Text className="text-ink-secondary text-sm">{text}</Text>
+              <Text style={{ color: COLORS.ink.secondary, fontSize: 14 }}>{text}</Text>
             </View>
           ))}
         </View>
 
-        {/* ── Actions ──────────────────────────────────────────────────────── */}
-        <View className="w-full gap-y-3">
-          <Button variant="primary" loading={checking} onPress={handleCheckStatus} size="lg">
-            <View className="flex-row items-center gap-x-2">
-              <RefreshCw size={16} color="#0a0807" />
-              <Text style={{ color: "#0a0807" }} className="font-semibold text-base">
-                Check Status
-              </Text>
-            </View>
+        {/* Actions */}
+        <View style={styles.actions}>
+          <Button variant="primary" size="lg" loading={checking} onPress={handleCheckStatus}>
+            Check Status
           </Button>
-
           <Button variant="secondary" size="lg" onPress={() => {}}>
-            <View className="flex-row items-center gap-x-2">
-              <MessageCircle size={16} color={COLORS.brand.primary} />
-              <Text className="text-gold font-semibold text-base">Contact Us</Text>
-            </View>
+            Contact Us
           </Button>
-
           <Button variant="ghost" size="md" onPress={handleSignOut}>
-            <View className="flex-row items-center gap-x-2">
-              <LogOut size={15} color={COLORS.ink.muted} />
-              <Text className="text-ink-muted text-sm">Sign out</Text>
-            </View>
+            Sign out
           </Button>
         </View>
       </View>
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 24,
+    paddingVertical: 48,
+  },
+  iconCircle: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    backgroundColor: "rgba(212,166,74,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  copyWrap: {
+    alignItems: "center",
+    gap: 8,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+  body: {
+    fontSize: 15,
+    textAlign: "center",
+    lineHeight: 24,
+    paddingHorizontal: 8,
+  },
+  card: {
+    width: "100%",
+    borderRadius: 16,
+    padding: 20,
+    gap: 12,
+    borderWidth: 1,
+  },
+  stepRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  stepDot: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  actions: {
+    width: "100%",
+    gap: 12,
+  },
+});

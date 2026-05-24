@@ -1,47 +1,60 @@
-import { TouchableOpacity, Text, ActivityIndicator, type TouchableOpacityProps } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  type TouchableOpacityProps,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 import * as Haptics from "expo-haptics";
+import { COLORS } from "@/lib/theme/colors";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
   variant?: Variant;
   size?: Size;
   loading?: boolean;
   children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-// All buttons are pill-shaped (rounded-full) per the Franchise design system
-const variantClasses: Record<
+const variantConfig: Record<
   Variant,
-  { container: string; text: string; indicatorColor: string }
+  { bg: string; border?: string; textColor: string; indicatorColor: string }
 > = {
   primary: {
-    container:      "bg-gold active:bg-gold-deep",
-    text:           "text-page font-semibold",
-    indicatorColor: "#0a0807",
+    bg: COLORS.brand.primary,
+    textColor: COLORS.bg.page,
+    indicatorColor: COLORS.bg.page,
   },
   secondary: {
-    container:      "bg-transparent border border-gold/30 active:bg-gold/10",
-    text:           "text-gold font-semibold",
-    indicatorColor: "#d4a64a",
+    bg: "transparent",
+    border: "rgba(212,166,74,0.35)",
+    textColor: COLORS.brand.primary,
+    indicatorColor: COLORS.brand.primary,
   },
   ghost: {
-    container:      "bg-transparent active:bg-card",
-    text:           "text-ink-secondary font-medium",
-    indicatorColor: "#a5a09a",
+    bg: "transparent",
+    textColor: COLORS.ink.secondary,
+    indicatorColor: COLORS.ink.secondary,
   },
   danger: {
-    container:      "bg-danger/80 active:bg-danger",
-    text:           "text-white font-semibold",
+    bg: "rgba(201,58,58,0.85)",
+    textColor: "#ffffff",
     indicatorColor: "#ffffff",
   },
 };
 
-const sizeClasses: Record<Size, { container: string; text: string }> = {
-  sm: { container: "px-4 py-2 rounded-full", text: "text-sm" },
-  md: { container: "px-5 py-3 rounded-full", text: "text-base" },
-  lg: { container: "px-6 py-4 rounded-full", text: "text-lg" },
+const sizeConfig: Record<
+  Size,
+  { px: number; py: number; fontSize: number; borderRadius: number }
+> = {
+  sm: { px: 16, py: 8,  fontSize: 14, borderRadius: 999 },
+  md: { px: 20, py: 12, fontSize: 16, borderRadius: 999 },
+  lg: { px: 24, py: 16, fontSize: 18, borderRadius: 999 },
 };
 
 export function Button({
@@ -51,11 +64,12 @@ export function Button({
   children,
   disabled,
   onPress,
-  className,
+  style,
   ...props
 }: ButtonProps) {
   const isDisabled = disabled || loading;
-  const v = variantClasses[variant];
+  const v = variantConfig[variant];
+  const s = sizeConfig[size];
 
   async function handlePress(
     e: Parameters<NonNullable<TouchableOpacityProps["onPress"]>>[0]
@@ -71,21 +85,47 @@ export function Button({
       disabled={isDisabled}
       activeOpacity={0.75}
       accessibilityRole="button"
-      className={`
-        flex-row items-center justify-center
-        ${v.container}
-        ${sizeClasses[size].container}
-        ${isDisabled ? "opacity-50" : ""}
-        ${className ?? ""}
-      `}
+      style={[
+        baseStyle.btn,
+        {
+          backgroundColor: v.bg,
+          borderRadius: s.borderRadius,
+          paddingHorizontal: s.px,
+          paddingVertical: s.py,
+          opacity: isDisabled ? 0.5 : 1,
+          ...(v.border
+            ? { borderWidth: 1, borderColor: v.border }
+            : {}),
+        },
+        style,
+      ]}
     >
       {loading ? (
         <ActivityIndicator size="small" color={v.indicatorColor} />
-      ) : (
-        <Text className={`${v.text} ${sizeClasses[size].text}`}>
+      ) : typeof children === "string" || typeof children === "number" ? (
+        // Plain text label — wrap in styled Text
+        <Text
+          style={{
+            color: v.textColor,
+            fontSize: s.fontSize,
+            fontWeight: "600",
+            textAlign: "center",
+          }}
+        >
           {children}
         </Text>
+      ) : (
+        // Complex children (icon+text rows, etc.) — render as-is
+        children
       )}
     </TouchableOpacity>
   );
 }
+
+const baseStyle = StyleSheet.create({
+  btn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

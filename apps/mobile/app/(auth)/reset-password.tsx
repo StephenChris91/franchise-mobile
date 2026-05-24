@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,37 +38,37 @@ export default function ResetPasswordScreen() {
   return (
     <Screen padded>
       {done ? (
-        // ── Success state ─────────────────────────────────────────────────────
-        <View className="items-center pt-24 gap-y-4">
+        /* ── Success ─────────────────────────────────────────────────── */
+        <View style={styles.successWrap}>
           <CheckCircle size={64} color={COLORS.status.success} />
-          <Text className="text-ink text-xl font-bold">Password updated!</Text>
-          <Text className="text-ink-secondary text-sm text-center">
+          <Text style={[styles.successHeading, { color: COLORS.ink.primary }]}>
+            Password updated!
+          </Text>
+          <Text style={[styles.successBody, { color: COLORS.ink.secondary }]}>
             Your password has been changed successfully.
           </Text>
-          <Button onPress={() => router.replace("/(auth)/login")} className="mt-4 w-full">
+          <Button
+            onPress={() => router.replace("/(auth)/login")}
+            style={{ marginTop: 16, width: "100%" }}
+          >
             Back to Login
           </Button>
         </View>
       ) : (
-        // ── Form state ────────────────────────────────────────────────────────
-        <View className="gap-y-4 mt-8">
-          <View className="mb-2">
-            <Text className="text-ink text-2xl font-bold">New password</Text>
-            <Text className="text-ink-secondary text-sm mt-1">
+        /* ── Form ────────────────────────────────────────────────────── */
+        <View style={styles.form}>
+          <View style={styles.formHeader}>
+            <Text style={[styles.formHeading, { color: COLORS.ink.primary }]}>
+              New password
+            </Text>
+            <Text style={[styles.formSubheading, { color: COLORS.ink.secondary }]}>
               Choose a strong password (min. 8 characters).
             </Text>
           </View>
 
           {!token && (
-            <View
-              className="rounded-xl p-4"
-              style={{
-                backgroundColor: "rgba(201, 58, 58, 0.12)",
-                borderWidth: 1,
-                borderColor: "rgba(201, 58, 58, 0.35)",
-              }}
-            >
-              <Text className="text-danger text-sm">
+            <View style={styles.tokenWarning}>
+              <Text style={{ color: COLORS.status.error, fontSize: 14 }}>
                 No reset token found. Please tap the link from your email again.
               </Text>
             </View>
@@ -113,7 +113,7 @@ export default function ResetPasswordScreen() {
             loading={isSubmitting}
             disabled={!token}
             onPress={handleSubmit(onSubmit)}
-            className="mt-2"
+            style={{ marginTop: 8 }}
           >
             Update Password
           </Button>
@@ -122,3 +122,41 @@ export default function ResetPasswordScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  successWrap: {
+    alignItems: "center",
+    paddingTop: 96,
+    gap: 16,
+  },
+  successHeading: {
+    fontSize: 20,
+    fontWeight: "700",
+  },
+  successBody: {
+    fontSize: 14,
+    textAlign: "center",
+  },
+  form: {
+    gap: 16,
+    marginTop: 32,
+  },
+  formHeader: {
+    marginBottom: 8,
+  },
+  formHeading: {
+    fontSize: 24,
+    fontWeight: "700",
+  },
+  formSubheading: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+  tokenWarning: {
+    backgroundColor: "rgba(201,58,58,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(201,58,58,0.35)",
+    borderRadius: 12,
+    padding: 16,
+  },
+});
