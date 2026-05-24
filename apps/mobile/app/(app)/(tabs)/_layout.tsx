@@ -4,6 +4,7 @@ import { Home, HandHeart, Calendar, Bell, User } from "lucide-react-native";
 import { COLORS } from "@/lib/theme/colors";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
+import { queryKeys } from "@/lib/query/keys";
 
 function TabIcon({
   icon: Icon,
@@ -36,7 +37,7 @@ function TabIcon({
 
 function NotificationTabIcon({ focused }: { focused: boolean }) {
   const { data } = useQuery({
-    queryKey: ["notifications", "unread-count"],
+    queryKey: queryKeys.notifications.unreadCount(),
     queryFn: () => api.notifications.unreadCount(),
     refetchInterval: 30_000,
   });

@@ -1,13 +1,17 @@
-import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import { Camera } from "lucide-react-native";
 import Toast from "react-native-toast-message";
 import { api } from "@/lib/api/client";
+import { queryKeys } from "@/lib/query/keys";
+import { uploadToCloudinary } from "@/lib/upload/cloudinary";
 import { useAuthStore } from "@/lib/auth/store";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -26,9 +30,11 @@ type EditProfileInput = z.infer<typeof editProfileSchema>;
 export default function EditProfileScreen() {
   const qc = useQueryClient();
   const { refreshUser } = useAuthStore();
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [photoUploading, setPhotoUploading] = useState(false);
 
   const { data: profile, isLoading } = useQuery({
-    queryKey: ["profile", "me"],
+    queryKey: queryKeys.profile.me(),
     queryFn: ({ signal }) => api.profile.me(signal),
   });
 
@@ -43,9 +49,24 @@ export default function EditProfileScreen() {
   });
 
   const { mutate: save, isPending: saving } = useMutation({
-    mutationFn: (data: EditProfileInput) => api.profile.updateMe(data),
+    mutationFn: async (data: EditProfileInput) => {
+      let photoUrl: string | undefined;
+
+      // Upload new photo if one was picked
+      if (photoUri) {
+        setPhotoUploading(true);
+        try {
+          const result = await uploadToCloudinary(photoUri, "franchise/profiles");
+          photoUrl = result.url;
+        } finally {
+          setPhotoUploading(false);
+        }
+      }
+
+      return api.profile.updateMe({ ...data, ...(photoUrl ? { photoUrl } : {}) });
+    },
     onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: ["profile", "me"] });
+      await qc.invalidateQueries({ queryKey: queryKeys.profile.me() });
       await refreshUser();
       Toast.show({ type: "success", text1: "Profile updated!" });
       router.back();
@@ -62,13 +83,20 @@ export default function EditProfileScreen() {
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.8,
+      quality: 0.9,
     });
-    if (result.canceled) return;
-    Toast.show({ type: "info", text1: "Photo upload", text2: "Photo uploads enabled in next update." });
+    if (result.canceled || !result.assets[0]) return;
+
+    // Compress to max 800px square
+    const compressed = await ImageManipulator.manipulateAsync(
+      result.assets[0].uri,
+      [{ resize: { width: 800, height: 800 } }],
+      { compress: 0.85, format: ImageManipulator.SaveFormat.JPEG }
+    );
+    setPhotoUri(compressed.uri);
   }
 
   if (isLoading) {
@@ -92,17 +120,25 @@ export default function EditProfileScreen() {
       {/* Avatar picker */}
       <View style={styles.avatarWrap}>
         <View>
-          <Avatar uri={profile?.photoUrl} name={profile?.fullName} size={96} />
+          <Avatar
+            uri={photoUri ?? profile?.photoUrl}
+            name={profile?.fullName}
+            size={96}
+          />
           <TouchableOpacity
             onPress={handleChangePhoto}
             accessibilityLabel="Change profile photo"
             style={[styles.cameraBtn, { backgroundColor: COLORS.brand.primary, borderColor: COLORS.bg.page }]}
           >
-            <Camera size={14} color={COLORS.bg.page} />
+            {photoUploading ? (
+              <ActivityIndicator size="small" color={COLORS.bg.page} />
+            ) : (
+              <Camera size={14} color={COLORS.bg.page} />
+            )}
           </TouchableOpacity>
         </View>
         <Text style={{ color: COLORS.brand.primary, fontSize: 14, fontWeight: "500", marginTop: 8 }}>
-          Change photo
+          {photoUri ? "Photo ready" : "Change photo"}
         </Text>
       </View>
 
@@ -147,8 +183,13 @@ export default function EditProfileScreen() {
         />
       </View>
 
-      <Button size="lg" loading={saving} disabled={!isDirty}
-        onPress={handleSubmit((d) => save(d))} style={{ marginTop: 24 }}>
+      <Button
+        size="lg"
+        loading={saving || photoUploading}
+        disabled={!isDirty && !photoUri}
+        onPress={handleSubmit((d) => save(d))}
+        style={{ marginTop: 24 }}
+      >
         Save changes
       </Button>
     </ScrollView>

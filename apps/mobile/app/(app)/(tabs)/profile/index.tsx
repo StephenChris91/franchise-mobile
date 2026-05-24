@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity, Alert, ScrollView, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { Pencil, Settings, LogOut, ChevronRight, MapPin, AtSign } from "lucide-react-native";
+import { Pencil, Settings, LogOut, ChevronRight, MapPin, AtSign, Users2, Users } from "lucide-react-native";
 import { useAuthStore } from "@/lib/auth/store";
 import { api } from "@/lib/api/client";
+import { queryKeys } from "@/lib/query/keys";
 import { Screen } from "@/components/ui/Screen";
 import { Avatar } from "@/components/ui/Avatar";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -52,7 +53,7 @@ export default function ProfileScreen() {
   const { user, logout } = useAuthStore();
 
   const { data: profile, isLoading } = useQuery({
-    queryKey: ["profile", "me"],
+    queryKey: queryKeys.profile.me(),
     queryFn: ({ signal }) => api.profile.me(signal),
     placeholderData: user
       ? {
@@ -137,9 +138,11 @@ export default function ProfileScreen() {
 
         {/* ── Actions ──────────────────────────────────────────────────── */}
         <View style={styles.actions}>
-          <ActionRow icon={Pencil} label="Edit profile" onPress={() => router.push("/(app)/profile/edit")} />
-          <ActionRow icon={Settings} label="Settings" onPress={() => Alert.alert("Settings", "Coming soon.")} />
-          <ActionRow icon={LogOut} label="Sign out" onPress={handleSignOut} danger />
+          <ActionRow icon={Pencil}  label="Edit profile" onPress={() => router.push("/(app)/profile/edit")} />
+          <ActionRow icon={Users}   label="Groups"       onPress={() => router.push("/(app)/groups")} />
+          <ActionRow icon={Users2}  label="Members"      onPress={() => router.push("/(app)/members")} />
+          <ActionRow icon={Settings} label="Settings"   onPress={() => Alert.alert("Settings", "Coming soon.")} />
+          <ActionRow icon={LogOut}  label="Sign out"     onPress={handleSignOut} danger />
         </View>
 
         <View style={{ height: 32 }} />

@@ -1,14 +1,19 @@
 import { useEffect, useRef } from "react";
-import { Animated, View, StyleSheet } from "react-native";
+import { Animated, View, StyleSheet, type StyleProp, type ViewStyle } from "react-native";
 import { COLORS } from "@/lib/theme/colors";
 
 interface SkeletonProps {
+  /** Width — only used when no style prop is provided */
   width?: number | string;
+  /** Height — only used when no style prop is provided */
   height?: number;
+  /** Makes border-radius a full pill (only used when no style prop is provided) */
   rounded?: boolean;
+  /** Full style override — takes precedence over width/height/rounded */
+  style?: StyleProp<ViewStyle>;
 }
 
-export function Skeleton({ width = "100%", height = 16, rounded = false }: SkeletonProps) {
+export function Skeleton({ width = "100%", height = 16, rounded = false, style }: SkeletonProps) {
   const opacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
@@ -24,13 +29,19 @@ export function Skeleton({ width = "100%", height = 16, rounded = false }: Skele
 
   return (
     <Animated.View
-      style={{
-        opacity,
-        width: width as number,
-        height,
-        borderRadius: rounded ? 999 : 8,
-        backgroundColor: COLORS.bg.cardHover,
-      }}
+      style={[
+        {
+          opacity,
+          backgroundColor: COLORS.bg.cardHover,
+        },
+        // Apply width/height/rounded only when no style override is provided
+        !style && {
+          width: width as number,
+          height,
+          borderRadius: rounded ? 999 : 8,
+        },
+        style,
+      ]}
     />
   );
 }

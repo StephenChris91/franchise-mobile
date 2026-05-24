@@ -12,7 +12,7 @@ export default function Index() {
   if (isLoading) return null;
 
   if (!isAuthenticated) {
-    return <Redirect href="/(auth)/login" />;
+    return <Redirect href="/(auth)/welcome" />;
   }
 
   if (user?.approvalStatus === "pending") {
