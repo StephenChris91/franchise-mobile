@@ -8,7 +8,20 @@ import type { LoginInput, SignupInput } from "@franchise/validators";
 
 export interface FranchiseAPIConfig {
   baseUrl: string;
+  /** Return the current access token (called on every authenticated request) */
   getToken: () => Promise<string | null>;
+  /**
+   * Return the current refresh token.
+   * On web, falls back to localStorage if omitted.
+   * Required for React Native.
+   */
+  getRefreshToken?: () => Promise<string | null>;
+  /**
+   * Called after a successful token rotation with the new token pair.
+   * Use this to persist the new tokens (SecureStore, localStorage, etc.).
+   */
+  onTokensRefreshed?: (accessToken: string, refreshToken: string) => void | Promise<void>;
+  /** Called when authentication fails and cannot be recovered (logout the user). */
   onUnauthorized: () => void;
 }
 
@@ -44,14 +57,14 @@ export class FranchiseAPI {
     });
 
     if (res.status === 401 && !skipAuth) {
-      // Try to refresh once
       const newToken = await this.refreshOnce();
       if (!newToken) { this.config.onUnauthorized(); throw new Error("Unauthorized"); }
 
-      // Retry original request with new token
       const retryRes = await fetch(`${this.config.baseUrl}${path}`, {
-        method, headers: { ...headers, Authorization: `Bearer ${newToken}` },
-        body: body !== undefined ? JSON.stringify(body) : undefined, signal,
+        method,
+        headers: { ...headers, Authorization: `Bearer ${newToken}` },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+        signal,
       });
       if (retryRes.status === 401) { this.config.onUnauthorized(); throw new Error("Unauthorized"); }
       return this.parseResponse<T>(retryRes);
@@ -71,7 +84,17 @@ export class FranchiseAPI {
 
     this.refreshPromise = (async () => {
       try {
-        const storedRefresh = typeof window !== "undefined" ? localStorage.getItem("franchise_refresh_token") : null;
+        // Prefer the callback (React Native), fall back to localStorage (web)
+        let storedRefresh: string | null = null;
+        if (this.config.getRefreshToken) {
+          storedRefresh = await this.config.getRefreshToken();
+        } else if (
+          typeof window !== "undefined" &&
+          typeof (window as Window & typeof globalThis & { localStorage?: Storage }).localStorage !== "undefined"
+        ) {
+          storedRefresh = localStorage.getItem("franchise_refresh_token");
+        }
+
         if (!storedRefresh) return null;
 
         const res = await fetch(`${this.config.baseUrl}/api/v1/auth/refresh`, {
@@ -80,8 +103,21 @@ export class FranchiseAPI {
           body: JSON.stringify({ refreshToken: storedRefresh }),
         });
         if (!res.ok) return null;
+
         const data = (await res.json()) as { data: RefreshResponse };
-        return data.data.accessToken;
+        const { accessToken, refreshToken } = data.data;
+
+        // Persist the new token pair
+        if (this.config.onTokensRefreshed) {
+          await this.config.onTokensRefreshed(accessToken, refreshToken);
+        } else if (
+          typeof window !== "undefined" &&
+          typeof (window as Window & typeof globalThis & { localStorage?: Storage }).localStorage !== "undefined"
+        ) {
+          localStorage.setItem("franchise_refresh_token", refreshToken);
+        }
+
+        return accessToken;
       } catch {
         return null;
       } finally {

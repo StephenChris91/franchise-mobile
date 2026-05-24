@@ -1,0 +1,74 @@
+{
+  "expo": {
+    "name": "Franchise Church",
+    "slug": "franchise",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "franchise",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1b1b1b"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.thefranchiselagos.app",
+      "associatedDomains": ["applinks:thefranchiselagos.com.ng"]
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1b1b1b"
+      },
+      "package": "com.thefranchiselagos.app",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "thefranchiselagos.com.ng",
+              "pathPrefix": "/auth/reset-password"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Franchise Church to access your photos for profile pictures."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#1b1b1b",
+          "image": "./assets/images/splash.png",
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "YOUR_EAS_PROJECT_ID"
+      }
+    }
+  }
+}

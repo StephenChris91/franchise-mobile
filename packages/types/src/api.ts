@@ -50,6 +50,7 @@ export interface SignupResponse {
 
 export interface RefreshResponse {
   accessToken: string;
+  refreshToken: string; // rotated — must be persisted after each refresh
 }
 
 export interface JwtPayload {
