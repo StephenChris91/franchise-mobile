@@ -36,12 +36,13 @@ export default function ResetPasswordScreen() {
   }
 
   return (
-    <Screen dark padded>
+    <Screen padded>
       {done ? (
+        // ── Success state ─────────────────────────────────────────────────────
         <View className="items-center pt-24 gap-y-4">
           <CheckCircle size={64} color={COLORS.status.success} />
-          <Text className="text-white text-xl font-bold">Password updated!</Text>
-          <Text className="text-gray-400 text-sm text-center">
+          <Text className="text-ink text-xl font-bold">Password updated!</Text>
+          <Text className="text-ink-secondary text-sm text-center">
             Your password has been changed successfully.
           </Text>
           <Button onPress={() => router.replace("/(auth)/login")} className="mt-4 w-full">
@@ -49,17 +50,25 @@ export default function ResetPasswordScreen() {
           </Button>
         </View>
       ) : (
+        // ── Form state ────────────────────────────────────────────────────────
         <View className="gap-y-4 mt-8">
           <View className="mb-2">
-            <Text className="text-white text-2xl font-bold">New password</Text>
-            <Text className="text-gray-400 text-sm mt-1">
+            <Text className="text-ink text-2xl font-bold">New password</Text>
+            <Text className="text-ink-secondary text-sm mt-1">
               Choose a strong password (min. 8 characters).
             </Text>
           </View>
 
           {!token && (
-            <View className="bg-yellow-900/50 border border-yellow-600 rounded-xl p-4">
-              <Text className="text-yellow-400 text-sm">
+            <View
+              className="rounded-xl p-4"
+              style={{
+                backgroundColor: "rgba(201, 58, 58, 0.12)",
+                borderWidth: 1,
+                borderColor: "rgba(201, 58, 58, 0.35)",
+              }}
+            >
+              <Text className="text-danger text-sm">
                 No reset token found. Please tap the link from your email again.
               </Text>
             </View>
@@ -78,7 +87,6 @@ export default function ResetPasswordScreen() {
                 onBlur={onBlur}
                 value={value}
                 error={errors.password?.message}
-                className="bg-dark-card border-dark-border"
               />
             )}
           />
@@ -96,7 +104,6 @@ export default function ResetPasswordScreen() {
                 onBlur={onBlur}
                 value={value}
                 error={errors.confirmPassword?.message}
-                className="bg-dark-card border-dark-border"
               />
             )}
           />

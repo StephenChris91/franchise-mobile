@@ -36,29 +36,29 @@ export default function ForgotPasswordScreen() {
   }
 
   return (
-    <Screen dark padded>
+    <Screen padded>
       {/* Back button */}
       <TouchableOpacity
         onPress={() => router.back()}
         className="flex-row items-center gap-x-1 mt-4 mb-8"
         accessibilityLabel="Go back"
       >
-        <ArrowLeft size={20} color={COLORS.text.muted} />
-        <Text className="text-gray-400 text-sm">Back to login</Text>
+        <ArrowLeft size={20} color={COLORS.ink.muted} />
+        <Text className="text-ink-muted text-sm">Back to login</Text>
       </TouchableOpacity>
 
       {sent ? (
-        // ── Success state ────────────────────────────────────────────────────
+        // ── Success state ─────────────────────────────────────────────────────
         <View className="items-center pt-16 gap-y-4">
           <CheckCircle size={64} color={COLORS.status.success} />
-          <Text className="text-white text-xl font-bold text-center">
+          <Text className="text-ink text-xl font-bold text-center">
             Check your email
           </Text>
-          <Text className="text-gray-400 text-sm text-center leading-6">
+          <Text className="text-ink-secondary text-sm text-center leading-6">
             We've sent a password reset link to{"\n"}
-            <Text className="text-brand font-medium">{getValues("email")}</Text>
+            <Text className="text-gold font-medium">{getValues("email")}</Text>
           </Text>
-          <Text className="text-gray-500 text-xs text-center mt-2">
+          <Text className="text-ink-muted text-xs text-center mt-2">
             The link expires in 1 hour. Check your spam folder if you don't see it.
           </Text>
           <Button
@@ -70,11 +70,11 @@ export default function ForgotPasswordScreen() {
           </Button>
         </View>
       ) : (
-        // ── Form state ──────────────────────────────────────────────────────
+        // ── Form state ────────────────────────────────────────────────────────
         <View className="gap-y-4">
           <View className="mb-2">
-            <Text className="text-white text-2xl font-bold">Reset password</Text>
-            <Text className="text-gray-400 text-sm mt-1">
+            <Text className="text-ink text-2xl font-bold">Reset password</Text>
+            <Text className="text-ink-secondary text-sm mt-1">
               Enter your email and we'll send you a reset link.
             </Text>
           </View>
@@ -94,8 +94,7 @@ export default function ForgotPasswordScreen() {
                 onBlur={onBlur}
                 value={value}
                 error={errors.email?.message}
-                leftIcon={<Mail size={18} color={COLORS.text.muted} />}
-                className="bg-dark-card border-dark-border"
+                leftIcon={<Mail size={18} color={COLORS.ink.muted} />}
               />
             )}
           />

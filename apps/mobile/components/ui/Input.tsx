@@ -26,15 +26,15 @@ export function Input({
   return (
     <View className="gap-y-1.5">
       {label && (
-        <Text className="text-sm font-medium text-gray-700">{label}</Text>
+        <Text className="text-sm font-medium text-ink-secondary">{label}</Text>
       )}
 
       <View
         className={`
           flex-row ${multiline ? "items-start" : "items-center"}
           border rounded-xl px-4
-          bg-white
-          ${error ? "border-red-500" : "border-gray-300 focus:border-brand"}
+          bg-card
+          ${error ? "border-danger/60" : "border-gold/20"}
           ${className ?? ""}
         `}
       >
@@ -44,8 +44,8 @@ export function Input({
           {...props}
           multiline={multiline}
           secureTextEntry={isPassword && !visible}
-          placeholderTextColor={COLORS.text.muted}
-          className={`flex-1 text-base text-gray-900 ${multiline ? "py-3 min-h-[88px]" : "py-3.5"}`}
+          placeholderTextColor={COLORS.ink.muted}
+          className={`flex-1 text-base text-ink ${multiline ? "py-3 min-h-[88px]" : "py-3.5"}`}
           textAlignVertical={multiline ? "top" : "center"}
           accessibilityLabel={label}
         />
@@ -57,21 +57,21 @@ export function Input({
             className="ml-2 p-1"
           >
             {visible ? (
-              <EyeOff size={20} color={COLORS.text.secondary} />
+              <EyeOff size={20} color={COLORS.ink.muted} />
             ) : (
-              <Eye size={20} color={COLORS.text.secondary} />
+              <Eye size={20} color={COLORS.ink.muted} />
             )}
           </TouchableOpacity>
         )}
       </View>
 
       {error && (
-        <Text className="text-xs text-red-500" accessibilityLiveRegion="polite">
+        <Text className="text-xs text-danger" accessibilityLiveRegion="polite">
           {error}
         </Text>
       )}
       {hint && !error && (
-        <Text className="text-xs text-gray-400">{hint}</Text>
+        <Text className="text-xs text-ink-muted">{hint}</Text>
       )}
     </View>
   );

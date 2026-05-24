@@ -16,7 +16,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { COLORS } from "@/lib/theme/colors";
 
-// ── Row component ──────────────────────────────────────────────────────────────
+// ── Info row ───────────────────────────────────────────────────────────────────
 function InfoRow({
   icon: Icon,
   label,
@@ -26,12 +26,13 @@ function InfoRow({
 }) {
   return (
     <View className="flex-row items-center gap-x-2">
-      <Icon size={15} color={COLORS.text.secondary} />
-      <Text className="text-gray-500 text-sm">{label}</Text>
+      <Icon size={15} color={COLORS.ink.muted} />
+      <Text className="text-ink-secondary text-sm">{label}</Text>
     </View>
   );
 }
 
+// ── Action row ─────────────────────────────────────────────────────────────────
 function ActionRow({
   icon: Icon,
   label,
@@ -48,18 +49,19 @@ function ActionRow({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="flex-row items-center justify-between py-4 border-b border-gray-100"
+      className="flex-row items-center justify-between py-4"
+      style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.subtle }}
       activeOpacity={0.7}
     >
       <View className="flex-row items-center gap-x-3">
-        <Icon size={18} color={danger ? COLORS.status.error : COLORS.text.secondary} />
+        <Icon size={18} color={danger ? COLORS.status.error : COLORS.ink.secondary} />
         <Text
-          className={`text-base font-medium ${danger ? "text-red-500" : "text-gray-800"}`}
+          className={`text-base font-medium ${danger ? "text-danger" : "text-ink"}`}
         >
           {label}
         </Text>
       </View>
-      <ChevronRight size={16} color={COLORS.text.muted} />
+      <ChevronRight size={16} color={COLORS.ink.muted} />
     </TouchableOpacity>
   );
 }
@@ -71,7 +73,6 @@ export default function ProfileScreen() {
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", "me"],
     queryFn: ({ signal }) => api.profile.me(signal),
-    // Use auth user as placeholder while loading
     placeholderData: user
       ? {
           userId: user.id,
@@ -123,15 +124,14 @@ export default function ProfileScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* ── Header band ─────────────────────────────────────────────────── */}
-        <View className="bg-brand pt-14 pb-10 px-5 items-center gap-y-3">
+        <View
+          className="bg-elevated pt-14 pb-10 px-5 items-center gap-y-3"
+          style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.default }}
+        >
           {isLoading && !profile ? (
             <Skeleton width={88} height={88} rounded />
           ) : (
-            <Avatar
-              uri={profile?.photoUrl}
-              name={profile?.fullName}
-              size={88}
-            />
+            <Avatar uri={profile?.photoUrl} name={profile?.fullName} size={88} />
           )}
 
           {isLoading && !profile ? (
@@ -141,7 +141,7 @@ export default function ProfileScreen() {
             </View>
           ) : (
             <View className="items-center gap-y-1">
-              <Text className="text-white text-xl font-bold">
+              <Text className="text-ink text-xl font-bold">
                 {profile?.fullName ?? "—"}
               </Text>
               <InfoRow icon={AtSign} label={profile?.username ?? "—"} />
@@ -153,8 +153,11 @@ export default function ProfileScreen() {
 
           {/* Role badge */}
           {profile?.role && profile.role !== "member" ? (
-            <View className="bg-white/20 rounded-full px-3 py-1">
-              <Text className="text-white text-xs font-semibold capitalize">
+            <View
+              style={{ backgroundColor: COLORS.brand.soft, borderWidth: 1, borderColor: COLORS.border.default }}
+              className="rounded-full px-3 py-1"
+            >
+              <Text className="text-gold text-xs font-semibold capitalize">
                 {profile.role.replace("_", " ")}
               </Text>
             </View>
@@ -163,29 +166,19 @@ export default function ProfileScreen() {
 
         {/* ── Bio ─────────────────────────────────────────────────────────── */}
         {profile?.bio ? (
-          <View className="px-5 py-4 border-b border-gray-100">
-            <Text className="text-gray-600 text-sm leading-6">{profile.bio}</Text>
+          <View
+            className="px-5 py-4"
+            style={{ borderBottomWidth: 1, borderBottomColor: COLORS.border.subtle }}
+          >
+            <Text className="text-ink-secondary text-sm leading-6">{profile.bio}</Text>
           </View>
         ) : null}
 
         {/* ── Actions ─────────────────────────────────────────────────────── */}
         <View className="px-5 mt-2">
-          <ActionRow
-            icon={Pencil}
-            label="Edit profile"
-            onPress={handleEditProfile}
-          />
-          <ActionRow
-            icon={Settings}
-            label="Settings"
-            onPress={handleSettings}
-          />
-          <ActionRow
-            icon={LogOut}
-            label="Sign out"
-            onPress={handleSignOut}
-            danger
-          />
+          <ActionRow icon={Pencil} label="Edit profile" onPress={handleEditProfile} />
+          <ActionRow icon={Settings} label="Settings" onPress={handleSettings} />
+          <ActionRow icon={LogOut} label="Sign out" onPress={handleSignOut} danger />
         </View>
 
         <View className="h-8" />

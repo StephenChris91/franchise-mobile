@@ -11,29 +11,37 @@ interface ButtonProps extends TouchableOpacityProps {
   children: React.ReactNode;
 }
 
-const variantClasses: Record<Variant, { container: string; text: string }> = {
+// All buttons are pill-shaped (rounded-full) per the Franchise design system
+const variantClasses: Record<
+  Variant,
+  { container: string; text: string; indicatorColor: string }
+> = {
   primary: {
-    container: "bg-brand active:bg-brand-dark",
-    text: "text-white font-semibold",
+    container:      "bg-gold active:bg-gold-deep",
+    text:           "text-page font-semibold",
+    indicatorColor: "#0a0807",
   },
   secondary: {
-    container: "bg-white border border-brand active:bg-brand-faint",
-    text: "text-brand font-semibold",
+    container:      "bg-transparent border border-gold/30 active:bg-gold/10",
+    text:           "text-gold font-semibold",
+    indicatorColor: "#d4a64a",
   },
   ghost: {
-    container: "bg-transparent active:bg-gray-100",
-    text: "text-brand font-semibold",
+    container:      "bg-transparent active:bg-card",
+    text:           "text-ink-secondary font-medium",
+    indicatorColor: "#a5a09a",
   },
   danger: {
-    container: "bg-red-600 active:bg-red-700",
-    text: "text-white font-semibold",
+    container:      "bg-danger/80 active:bg-danger",
+    text:           "text-white font-semibold",
+    indicatorColor: "#ffffff",
   },
 };
 
 const sizeClasses: Record<Size, { container: string; text: string }> = {
-  sm: { container: "px-4 py-2 rounded-lg", text: "text-sm" },
-  md: { container: "px-5 py-3 rounded-xl", text: "text-base" },
-  lg: { container: "px-6 py-4 rounded-2xl", text: "text-lg" },
+  sm: { container: "px-4 py-2 rounded-full", text: "text-sm" },
+  md: { container: "px-5 py-3 rounded-full", text: "text-base" },
+  lg: { container: "px-6 py-4 rounded-full", text: "text-lg" },
 };
 
 export function Button({
@@ -47,8 +55,11 @@ export function Button({
   ...props
 }: ButtonProps) {
   const isDisabled = disabled || loading;
+  const v = variantClasses[variant];
 
-  async function handlePress(e: Parameters<NonNullable<TouchableOpacityProps["onPress"]>>[0]) {
+  async function handlePress(
+    e: Parameters<NonNullable<TouchableOpacityProps["onPress"]>>[0]
+  ) {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPress?.(e);
   }
@@ -58,23 +69,20 @@ export function Button({
       {...props}
       onPress={handlePress}
       disabled={isDisabled}
-      activeOpacity={0.8}
+      activeOpacity={0.75}
       accessibilityRole="button"
       className={`
         flex-row items-center justify-center
-        ${variantClasses[variant].container}
+        ${v.container}
         ${sizeClasses[size].container}
         ${isDisabled ? "opacity-50" : ""}
         ${className ?? ""}
       `}
     >
       {loading ? (
-        <ActivityIndicator
-          size="small"
-          color={variant === "primary" || variant === "danger" ? "#ffffff" : "#af601a"}
-        />
+        <ActivityIndicator size="small" color={v.indicatorColor} />
       ) : (
-        <Text className={`${variantClasses[variant].text} ${sizeClasses[size].text}`}>
+        <Text className={`${v.text} ${sizeClasses[size].text}`}>
           {children}
         </Text>
       )}

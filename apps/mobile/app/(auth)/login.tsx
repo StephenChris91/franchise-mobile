@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,23 +45,21 @@ export default function LoginScreen() {
   }
 
   return (
-    <Screen dark scroll padded>
-      {/* Logo */}
-      <View className="items-center mt-12 mb-10">
-        <Image
-          source={require("../../assets/images/icon.png")}
-          style={{ width: 72, height: 72, borderRadius: 16 }}
-          resizeMode="contain"
-        />
-        <Text className="text-white text-2xl font-bold mt-4">
-          Franchise Church
+    <Screen scroll padded>
+      {/* ── Logo ───────────────────────────────────────────────────────────── */}
+      <View className="items-center mt-14 mb-10">
+        <Text
+          style={{ fontFamily: "DancingScript_700Bold", fontSize: 52 }}
+          className="text-gold"
+        >
+          Franchise
         </Text>
-        <Text className="text-gray-400 text-sm mt-1">
-          Sign in to your account
+        <Text className="text-ink-muted text-xs tracking-widest uppercase mt-1">
+          Church
         </Text>
       </View>
 
-      {/* Form */}
+      {/* ── Form ───────────────────────────────────────────────────────────── */}
       <View className="gap-y-4">
         <Controller
           control={control}
@@ -78,7 +76,6 @@ export default function LoginScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.email?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
@@ -97,33 +94,27 @@ export default function LoginScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.password?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
 
         <Link href="/(auth)/forgot-password" asChild>
           <TouchableOpacity className="self-end" accessibilityRole="link">
-            <Text className="text-brand text-sm">Forgot password?</Text>
+            <Text className="text-gold text-sm">Forgot password?</Text>
           </TouchableOpacity>
         </Link>
 
-        <Button
-          size="lg"
-          loading={isSubmitting}
-          onPress={handleSubmit(onSubmit)}
-          className="mt-2"
-        >
+        <Button size="lg" loading={isSubmitting} onPress={handleSubmit(onSubmit)} className="mt-2">
           Sign In
         </Button>
       </View>
 
-      {/* Footer */}
+      {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <View className="flex-row justify-center mt-8 gap-x-1">
-        <Text className="text-gray-400 text-sm">Don't have an account?</Text>
+        <Text className="text-ink-secondary text-sm">Don't have an account?</Text>
         <Link href="/(auth)/signup" asChild>
           <TouchableOpacity accessibilityRole="link">
-            <Text className="text-brand text-sm font-semibold">Sign up</Text>
+            <Text className="text-gold text-sm font-semibold">Sign up</Text>
           </TouchableOpacity>
         </Link>
       </View>

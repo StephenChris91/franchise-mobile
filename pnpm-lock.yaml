@@ -17,6 +17,15 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@expo-google-fonts/dancing-script':
+        specifier: ^0.2.3
+        version: 0.2.3
+      '@expo-google-fonts/fraunces':
+        specifier: ^0.2.3
+        version: 0.2.3
+      '@expo-google-fonts/inter':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@expo/metro-runtime':
         specifier: ~6.1.2
         version: 6.1.2(expo@54.0.34)(react-dom@19.1.0(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.1.0))(react@19.1.0)
@@ -1522,6 +1531,15 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@expo-google-fonts/dancing-script@0.2.3':
+    resolution: {integrity: sha512-W92/z1/T7jD0GM7/uSr4QFUW1n3QEHfvM7kBIQzJtqYnLC9egMncGdcWpb1dhKAsIzwH/LvLKB9i/9Uoc28NEg==}
+
+  '@expo-google-fonts/fraunces@0.2.3':
+    resolution: {integrity: sha512-krgIGxViwYutW+egNHfSfc8u10ZpP+UL10MZHxbQ8C4LwEKA4HWuWLEiqSsbj1Kq3OoiXnbR+x9ERWgdhuoB1A==}
+
+  '@expo-google-fonts/inter@0.2.3':
+    resolution: {integrity: sha512-iHK9FI+dnE45X5c2Z5hSFwNH4zUWethizpbv3XUn0FIGw5jwvzriENz0a6wCdkI4/d+1QkurnHo5XHti7TbNJA==}
 
   '@expo/cli@54.0.24':
     resolution: {integrity: sha512-5xse1bEgnVUBhOrtttc6xTNJVvjyTRavpzuF0/0nuj+312vfSbk7EiRbG+xJ2pW/iZxnhLPJkFCrPYG0nmheAQ==}
@@ -8631,6 +8649,12 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@expo-google-fonts/dancing-script@0.2.3': {}
+
+  '@expo-google-fonts/fraunces@0.2.3': {}
+
+  '@expo-google-fonts/inter@0.2.3': {}
 
   '@expo/cli@54.0.24(expo-router@6.0.23)(expo@54.0.34)(react-native@0.81.5(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.15)(react@19.1.0))(typescript@5.3.3)':
     dependencies:

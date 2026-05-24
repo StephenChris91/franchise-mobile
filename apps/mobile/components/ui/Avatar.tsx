@@ -35,11 +35,25 @@ export function Avatar({ uri, name, size = 44, className }: AvatarProps) {
 
   return (
     <View
-      style={{ width: size, height: size, borderRadius: size / 2 }}
-      className={`bg-brand items-center justify-center ${className ?? ""}`}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor: "rgba(212, 166, 74, 0.15)",
+        borderWidth: 1.5,
+        borderColor: "rgba(212, 166, 74, 0.35)",
+      }}
+      className={`items-center justify-center ${className ?? ""}`}
       accessibilityLabel={name ?? "User avatar"}
     >
-      <Text style={{ fontSize, lineHeight: fontSize * 1.2 }} className="text-white font-bold">
+      <Text
+        style={{
+          fontSize,
+          lineHeight: fontSize * 1.2,
+          color: "#d4a64a",
+          fontWeight: "700",
+        }}
+      >
         {initials}
       </Text>
     </View>

@@ -42,10 +42,10 @@ export default function EditProfileScreen() {
   } = useForm<EditProfileInput>({
     resolver: zodResolver(editProfileSchema),
     values: {
-      fullName: profile?.fullName ?? "",
-      bio: profile?.bio ?? "",
-      ministry: profile?.ministry ?? "",
-      phone: profile?.phone ?? "",
+      fullName:  profile?.fullName  ?? "",
+      bio:       profile?.bio       ?? "",
+      ministry:  profile?.ministry  ?? "",
+      phone:     profile?.phone     ?? "",
     },
   });
 
@@ -92,7 +92,7 @@ export default function EditProfileScreen() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 bg-white px-5 pt-6 gap-y-4">
+      <View className="flex-1 bg-page px-5 pt-6 gap-y-4">
         <Skeleton width="100%" height={56} />
         <Skeleton width="100%" height={100} />
         <Skeleton width="100%" height={56} />
@@ -103,29 +103,39 @@ export default function EditProfileScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white"
+      className="flex-1 bg-page"
       contentContainerStyle={{ padding: 20, paddingBottom: 48 }}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      {/* Avatar picker */}
+      {/* ── Avatar picker ─────────────────────────────────────────────────── */}
       <View className="items-center mb-8">
         <View className="relative">
           <Avatar uri={profile?.photoUrl} name={profile?.fullName} size={96} />
           <TouchableOpacity
             onPress={handleChangePhoto}
             accessibilityLabel="Change profile photo"
-            className="absolute bottom-0 right-0 w-8 h-8 bg-brand rounded-full items-center justify-center border-2 border-white"
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              width: 32,
+              height: 32,
+              borderRadius: 16,
+              backgroundColor: COLORS.brand.primary,
+              borderWidth: 2,
+              borderColor: COLORS.bg.page,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <Camera size={14} color="#fff" />
+            <Camera size={14} color={COLORS.bg.page} />
           </TouchableOpacity>
         </View>
-        <Text className="text-brand text-sm font-medium mt-2">
-          Change photo
-        </Text>
+        <Text className="text-gold text-sm font-medium mt-2">Change photo</Text>
       </View>
 
-      {/* Form fields */}
+      {/* ── Form fields ───────────────────────────────────────────────────── */}
       <View className="gap-y-4">
         <Controller
           control={control}

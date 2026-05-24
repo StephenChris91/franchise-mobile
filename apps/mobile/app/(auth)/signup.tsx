@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,16 +39,16 @@ export default function SignupScreen() {
   }
 
   return (
-    <Screen dark scroll padded>
-      {/* Header */}
-      <View className="mt-8 mb-8">
-        <Text className="text-white text-2xl font-bold">Create account</Text>
-        <Text className="text-gray-400 text-sm mt-1">
+    <Screen scroll padded>
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      <View className="mt-10 mb-8">
+        <Text className="text-ink text-2xl font-bold">Create account</Text>
+        <Text className="text-ink-secondary text-sm mt-1">
           Join the Franchise Church community
         </Text>
       </View>
 
-      {/* Form */}
+      {/* ── Form ───────────────────────────────────────────────────────────── */}
       <View className="gap-y-4">
         <Controller
           control={control}
@@ -63,7 +63,6 @@ export default function SignupScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.fullName?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
@@ -82,7 +81,6 @@ export default function SignupScreen() {
               value={value}
               error={errors.username?.message}
               hint="Lowercase letters, numbers, and hyphens only"
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
@@ -102,7 +100,6 @@ export default function SignupScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.email?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
@@ -120,7 +117,6 @@ export default function SignupScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.password?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
@@ -138,15 +134,14 @@ export default function SignupScreen() {
               onBlur={onBlur}
               value={value}
               error={errors.confirmPassword?.message}
-              className="bg-dark-card border-dark-border"
             />
           )}
         />
 
-        <Text className="text-gray-400 text-xs leading-5">
+        <Text className="text-ink-muted text-xs leading-5">
           By creating an account you agree to our{" "}
-          <Text className="text-brand">Terms of Service</Text>. Your account
-          will be reviewed by our pastoral team before you gain full access.
+          <Text className="text-gold">Terms of Service</Text>. Your account will
+          be reviewed by our pastoral team before you gain full access.
         </Text>
 
         <Button
@@ -159,12 +154,12 @@ export default function SignupScreen() {
         </Button>
       </View>
 
-      {/* Footer */}
+      {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <View className="flex-row justify-center mt-8 gap-x-1">
-        <Text className="text-gray-400 text-sm">Already have an account?</Text>
+        <Text className="text-ink-secondary text-sm">Already have an account?</Text>
         <Link href="/(auth)/login" asChild>
           <TouchableOpacity accessibilityRole="link">
-            <Text className="text-brand text-sm font-semibold">Sign in</Text>
+            <Text className="text-gold text-sm font-semibold">Sign in</Text>
           </TouchableOpacity>
         </Link>
       </View>

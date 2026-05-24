@@ -21,21 +21,32 @@ function TabIcon({
   badge?: number;
 }) {
   return (
-    <View className="items-center">
+    <View className="items-center gap-y-1">
       <View className="relative">
         <Icon
-          size={24}
-          color={focused ? COLORS.brand.primary : COLORS.text.secondary}
+          size={22}
+          color={focused ? COLORS.brand.primary : COLORS.ink.muted}
           strokeWidth={focused ? 2.5 : 1.8}
         />
         {badge != null && badge > 0 && (
-          <View className="absolute -top-1 -right-2 bg-red-500 rounded-full min-w-[16px] h-4 items-center justify-center px-1">
+          <View className="absolute -top-1 -right-2 bg-danger rounded-full min-w-[16px] h-4 items-center justify-center px-1">
             <Text className="text-white text-[10px] font-bold">
               {badge > 99 ? "99+" : badge}
             </Text>
           </View>
         )}
       </View>
+      {/* Active dot indicator */}
+      {focused && (
+        <View
+          style={{
+            width: 4,
+            height: 4,
+            borderRadius: 2,
+            backgroundColor: COLORS.brand.primary,
+          }}
+        />
+      )}
     </View>
   );
 }
@@ -55,20 +66,24 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: COLORS.brand.primary,
-        tabBarInactiveTintColor: COLORS.text.secondary,
+        tabBarInactiveTintColor: COLORS.ink.muted,
         tabBarStyle: {
-          borderTopColor: COLORS.border.default,
-          backgroundColor: COLORS.bg.primary,
-          elevation: 8,
-          shadowOpacity: 0.06,
-          shadowRadius: 8,
-          height: 60,
+          borderTopWidth: 1,
+          borderTopColor: COLORS.border.subtle,
+          backgroundColor: COLORS.bg.elevated,
+          elevation: 0,
+          shadowOpacity: 0,
+          height: 64,
           paddingBottom: 8,
+          paddingTop: 4,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: "500",
+          marginTop: 0,
         },
+        // Hide the default label when we show a dot; keep labels for accessibility
+        tabBarShowLabel: true,
       }}
     >
       <Tabs.Screen

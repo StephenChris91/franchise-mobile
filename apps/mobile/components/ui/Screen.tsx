@@ -5,6 +5,7 @@ interface ScreenProps {
   children: React.ReactNode;
   scroll?: boolean;
   padded?: boolean;
+  /** @deprecated All screens use the dark theme. Prop kept for API compat. */
   dark?: boolean;
   className?: string;
 }
@@ -13,10 +14,9 @@ export function Screen({
   children,
   scroll = false,
   padded = true,
-  dark = false,
+  dark: _dark,   // accepted but unused — always dark
   className,
 }: ScreenProps) {
-  const bg = dark ? "bg-dark-bg" : "bg-white";
   const padding = padded ? "px-5" : "";
 
   const content = scroll ? (
@@ -32,7 +32,7 @@ export function Screen({
   );
 
   return (
-    <SafeAreaView className={`flex-1 ${bg} ${className ?? ""}`}>
+    <SafeAreaView className={`flex-1 bg-page ${className ?? ""}`}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
