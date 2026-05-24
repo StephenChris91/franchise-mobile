@@ -1,15 +1,50 @@
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
+import Constants from "expo-constants";
 import { api } from "@/lib/api/client";
+
+/**
+ * Returns true when running inside Expo Go.
+ * Push notifications (remote) are NOT supported in Expo Go since SDK 53.
+ * They require a development build or production build.
+ */
+function isExpoGo(): boolean {
+  return Constants.appOwnership === "expo";
+}
+
+/**
+ * Configure how notifications appear when the app is in the foreground.
+ * No-ops silently in Expo Go (not supported since SDK 53).
+ * Call once at app startup before any screens mount.
+ */
+export function configureForegroundNotifications(): void {
+  if (isExpoGo()) return; // skip — crashes in Expo Go since SDK 53
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+}
 
 /**
  * Request push notification permissions and register the Expo push token
  * with the backend. Safe to call on every app launch — the server upserts.
  *
- * @returns The Expo push token string, or null if not supported / denied.
+ * Returns null in Expo Go, on simulators, or if permission is denied.
  */
 export async function registerPushToken(): Promise<string | null> {
+  // Push tokens are not supported in Expo Go since SDK 53
+  if (isExpoGo()) {
+    console.log("[push] skipped — Expo Go does not support remote push notifications");
+    console.log("[push] Use a development build: https://docs.expo.dev/develop/development-builds/introduction/");
+    return null;
+  }
+
   // Push notifications only work on physical devices
   if (!Device.isDevice) {
     console.log("[push] skipped — not a physical device");
@@ -54,19 +89,4 @@ export async function registerPushToken(): Promise<string | null> {
   });
 
   return pushToken;
-}
-
-/**
- * Configure how notifications appear when the app is in the foreground.
- * Call this once at app startup (before any screens mount).
- */
-export function configureForegroundNotifications() {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowBanner: true,
-      shouldShowList: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  });
 }

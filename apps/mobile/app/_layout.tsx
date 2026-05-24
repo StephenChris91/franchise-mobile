@@ -8,6 +8,7 @@ import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
 import type { Subscription } from "expo-notifications";
+import Constants from "expo-constants";
 import {
   configureForegroundNotifications,
   registerPushToken,
@@ -35,9 +36,6 @@ import { queryClient, asyncStoragePersister } from "@/lib/query/client";
 
 SplashScreen.preventAutoHideAsync();
 
-// Configure how foreground notifications appear — must be called before any render
-configureForegroundNotifications();
-
 export default function RootLayout() {
   const checkAuth = useAuthStore((s) => s.checkAuth);
   const isLoading = useAuthStore((s) => s.isLoading);
@@ -58,6 +56,8 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    // Safe to call here — the function no-ops in Expo Go (not at module scope)
+    configureForegroundNotifications();
     checkAuth();
   }, [checkAuth]);
 
@@ -76,7 +76,10 @@ export default function RootLayout() {
   }, [isAuthenticated]);
 
   // Handle notification tap → deep link to the relevant screen
+  // Skip in Expo Go — push listener APIs crash since SDK 53
   useEffect(() => {
+    if (Constants.appOwnership === "expo") return;
+
     notifResponseListener.current = Notifications.addNotificationResponseReceivedListener(
       (response) => {
         const data = response.notification.request.content.data as Record<string, unknown>;
