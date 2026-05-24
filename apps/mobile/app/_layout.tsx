@@ -6,8 +6,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as Notifications from "expo-notifications";
-import type { Subscription } from "expo-notifications";
+// expo-notifications must NOT be statically imported — it crashes at module
+// load time in Expo Go (SDK 53+). We lazy-require it inside useEffect instead.
 import Constants from "expo-constants";
 import {
   configureForegroundNotifications,
@@ -41,7 +41,7 @@ export default function RootLayout() {
   const isLoading = useAuthStore((s) => s.isLoading);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const router = useRouter();
-  const notifResponseListener = useRef<Subscription | null>(null);
+  const notifResponseListener = useRef<{ remove(): void } | null>(null);
 
   const [fontsLoaded] = useFonts({
     DancingScript_400Regular,
@@ -76,11 +76,15 @@ export default function RootLayout() {
   }, [isAuthenticated]);
 
   // Handle notification tap → deep link to the relevant screen
-  // Skip in Expo Go — push listener APIs crash since SDK 53
+  // Skip in Expo Go — expo-notifications crashes at module load time since SDK 53.
+  // Lazy require() ensures the module is never initialized in Expo Go.
   useEffect(() => {
     if (Constants.appOwnership === "expo") return;
 
-    notifResponseListener.current = Notifications.addNotificationResponseReceivedListener(
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { addNotificationResponseReceivedListener } = require("expo-notifications") as typeof import("expo-notifications");
+
+    notifResponseListener.current = addNotificationResponseReceivedListener(
       (response) => {
         const data = response.notification.request.content.data as Record<string, unknown>;
         if (data.type === "comment" && data.postId) {

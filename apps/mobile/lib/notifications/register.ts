@@ -1,4 +1,7 @@
-import * as Notifications from "expo-notifications";
+// NOTE: expo-notifications must NOT be statically imported at the top level.
+// In Expo Go (SDK 53+), the module crashes at initialization time — before any
+// runtime guard can run. We use lazy require() inside each function instead,
+// which Metro only executes when the function is actually called.
 import * as Device from "expo-device";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
@@ -21,6 +24,8 @@ function isExpoGo(): boolean {
 export function configureForegroundNotifications(): void {
   if (isExpoGo()) return; // skip — crashes in Expo Go since SDK 53
 
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Notifications = require("expo-notifications") as typeof import("expo-notifications");
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowBanner: true,
@@ -50,6 +55,10 @@ export async function registerPushToken(): Promise<string | null> {
     console.log("[push] skipped — not a physical device");
     return null;
   }
+
+  // Lazy require — only runs on dev/prod builds (never in Expo Go)
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Notifications = require("expo-notifications") as typeof import("expo-notifications");
 
   // Request permission (iOS shows a system prompt the first time)
   const { status: existingStatus } = await Notifications.getPermissionsAsync();

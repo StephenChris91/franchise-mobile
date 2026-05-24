@@ -4,7 +4,10 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import * as Calendar from "expo-calendar";
+// expo-calendar must NOT be statically imported — it crashes at module load
+// time in Expo Go (SDK 53+) with "_expo.createPermissionHook is not a function".
+// We lazy-require it inside addToDeviceCalendar() instead.
+import Constants from "expo-constants";
 import { MapPin, Clock, Users, CalendarPlus, ExternalLink } from "lucide-react-native";
 import { Screen } from "@/components/ui/Screen";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -40,6 +43,13 @@ async function addToDeviceCalendar(opts: {
   startsAt: Date;
   endsAt: Date;
 }): Promise<boolean> {
+  // expo-calendar crashes in Expo Go at module load time — skip entirely
+  if (Constants.appOwnership === "expo") return false;
+
+  // Lazy require — only runs on dev/prod builds (never in Expo Go)
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Calendar = require("expo-calendar") as typeof import("expo-calendar");
+
   const { status } = await Calendar.requestCalendarPermissionsAsync();
   if (status !== "granted") return false;
 
