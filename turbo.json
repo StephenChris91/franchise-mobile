@@ -3,7 +3,28 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "DATABASE_URL",
+        "DATABASE_URL_UNPOOLED",
+        "AUTH_SECRET",
+        "AUTH_GOOGLE_ID",
+        "AUTH_GOOGLE_SECRET",
+        "JWT_SECRET",
+        "RESEND_API_KEY",
+        "ADMIN_NOTIFICATION_EMAILS",
+        "CLOUDINARY_CLOUD_NAME",
+        "CLOUDINARY_API_KEY",
+        "CLOUDINARY_API_SECRET",
+        "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME",
+        "PUSHER_APP_ID",
+        "PUSHER_KEY",
+        "PUSHER_SECRET",
+        "PUSHER_CLUSTER",
+        "NEXT_PUBLIC_PUSHER_KEY",
+        "NEXT_PUBLIC_PUSHER_CLUSTER",
+        "NEXT_PUBLIC_APP_URL"
+      ]
     },
     "dev": {
       "cache": false,
