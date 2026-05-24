@@ -225,3 +225,34 @@ export interface MemberResponse {
   ministry: string;
   bio: string | null;
 }
+
+// ─── Search ───────────────────────────────────────────────────────────────────
+
+export interface SearchResultItem {
+  type: "post" | "event" | "group" | "member";
+  id: string;
+  title: string;
+  subtitle?: string;
+  imageUrl?: string | null;
+  slug?: string | null;
+}
+
+export interface SearchResponse {
+  query: string;
+  results: SearchResultItem[];
+}
+
+// ─── App version ──────────────────────────────────────────────────────────────
+
+export interface AppVersionResponse {
+  currentVersion: string;
+  minimumVersion: string;
+  clientVersion: string;
+  updateAvailable: boolean;
+  updateRequired: boolean;
+  storeUrl: {
+    ios: string;
+    android: string;
+  };
+  message: string | null;
+}

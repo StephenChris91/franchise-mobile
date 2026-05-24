@@ -53,4 +53,23 @@ export const queryKeys = {
     list: () => [...queryKeys.notifications.all, "list"] as const,
     unreadCount: () => [...queryKeys.notifications.all, "unreadCount"] as const,
   },
+
+  // ── Events ───────────────────────────────────────────────────────────────
+  events: {
+    all: ["events"] as const,
+    list: (upcoming?: boolean) =>
+      [...queryKeys.events.all, "list", upcoming ?? false] as const,
+    detail: (slug: string) =>
+      [...queryKeys.events.all, "detail", slug] as const,
+  },
+
+  // ── Search ───────────────────────────────────────────────────────────────
+  search: {
+    query: (q: string, type?: string) =>
+      ["search", q, type ?? "all"] as const,
+  },
+
+  // ── App version ──────────────────────────────────────────────────────────
+  appVersion: (clientVersion: string) =>
+    ["app-version", clientVersion] as const,
 } as const;

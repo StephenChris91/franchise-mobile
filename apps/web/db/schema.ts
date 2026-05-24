@@ -118,6 +118,16 @@ export const profiles = pgTable("profiles", {
   approvedAt: timestamp("approved_at", { mode: "date" }),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  notificationPrefs: jsonb("notification_prefs")
+    .$type<{
+      comments: boolean;
+      reactions: boolean;
+      groupPosts: boolean;
+      announcements: boolean;
+      eventReminders: boolean;
+    }>()
+    .notNull()
+    .default({ comments: true, reactions: true, groupPosts: true, announcements: true, eventReminders: true }),
 });
 
 // ─── Password reset tokens ────────────────────────────────────────────────────
@@ -318,6 +328,8 @@ export const notificationTypeEnum = pgEnum("notification_type", [
   "mention",
   "prayer_reaction",
   "new_post_in_group",
+  "announcement",
+  "event_reminder",
 ]);
 
 export const notificationEntityTypeEnum = pgEnum("notification_entity_type", [
@@ -587,6 +599,53 @@ export const adminActions = pgTable(
   ]
 );
 
+// ─── Refresh tokens (JWT auth for mobile) ────────────────────────────────────
+
+export const refreshTokens = pgTable(
+  "refresh_tokens",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull(),
+    deviceInfo: text("device_info"),
+    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    lastUsedAt: timestamp("last_used_at", { mode: "date" }).defaultNow().notNull(),
+    revoked: boolean("revoked").notNull().default(false),
+  },
+  (t) => [
+    index("refresh_tokens_user_idx").on(t.userId),
+    index("refresh_tokens_hash_idx").on(t.tokenHash),
+  ]
+);
+
+// ─── Push notification tokens ─────────────────────────────────────────────────
+
+export const pushTokens = pgTable(
+  "push_tokens",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    token: text("token").notNull(),
+    platform: text("platform").notNull(), // "ios" | "android"
+    deviceName: text("device_name"),
+    lastUsedAt: timestamp("last_used_at", { mode: "date" }).defaultNow().notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [
+    uniqueIndex("push_tokens_token_idx").on(t.token),
+    index("push_tokens_user_idx").on(t.userId),
+  ]
+);
+
 // ─── Social types ─────────────────────────────────────────────────────────────
 
 export type Group = typeof groups.$inferSelect;
@@ -599,3 +658,5 @@ export type Notification = typeof notifications.$inferSelect;
 export type Event = typeof events.$inferSelect;
 export type EventRsvp = typeof eventRsvps.$inferSelect;
 export type AdminAction = typeof adminActions.$inferSelect;
+export type RefreshToken = typeof refreshTokens.$inferSelect;
+export type PushToken = typeof pushTokens.$inferSelect;

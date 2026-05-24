@@ -60,6 +60,20 @@
           "image": "./assets/images/splash.png",
           "imageWidth": 200
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#d4a64a",
+          "sounds": []
+        }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Allow Franchise Church to add events to your calendar."
+        }
       ]
     ],
     "experiments": {

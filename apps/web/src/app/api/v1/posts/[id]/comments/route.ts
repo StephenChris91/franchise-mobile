@@ -5,6 +5,7 @@ import { createCommentSchema } from "@franchise/validators";
 import { ok, err, withApproved, withAuth } from "@/lib/api/middleware";
 import { containsProfanity } from "@/lib/profanity";
 import { pusherServer } from "@/lib/pusher";
+import { sendPushToUser } from "@/lib/push/service";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   return withAuth(req, async () => {
@@ -59,6 +60,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     if (post.authorId !== user.sub) {
       await db.insert(notifications).values({ userId: post.authorId, actorId: user.sub, notificationType: "comment_on_post", entityType: "comment", entityId: comment!.id });
       pusherServer.trigger(`private-user-${post.authorId}`, "notification", {}).catch(() => {});
+      sendPushToUser(
+        post.authorId,
+        {
+          title: `${user.username} commented on your post`,
+          body: content.length > 80 ? content.slice(0, 80) + "…" : content,
+          data: { type: "comment", postId: id, commentId: comment!.id },
+        },
+        "comments"
+      ).catch(() => {});
     }
     pusherServer.trigger(`post-${id}`, "new-comment", { commentId: comment!.id }).catch(() => {});
 

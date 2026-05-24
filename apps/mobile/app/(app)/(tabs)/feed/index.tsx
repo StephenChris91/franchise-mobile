@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
-import { Plus, Rss } from "lucide-react-native";
+import { Plus, Rss, Search } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { PostResponse } from "@franchise/types";
 import { PostCard } from "@/components/post/PostCard";
@@ -73,13 +73,22 @@ export default function FeedScreen() {
       {/* ── Header ─────────────────────────────────────────────── */}
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <Text style={styles.title}>Feed</Text>
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() => router.push("/(app)/composer")}
-          activeOpacity={0.8}
-        >
-          <Plus size={20} color={COLORS.bg.page} strokeWidth={2.5} />
-        </TouchableOpacity>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            style={styles.headerIconBtn}
+            onPress={() => router.push("/(app)/search")}
+            activeOpacity={0.8}
+          >
+            <Search size={20} color={COLORS.ink.secondary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.fab}
+            onPress={() => router.push("/(app)/composer")}
+            activeOpacity={0.8}
+          >
+            <Plus size={20} color={COLORS.bg.page} strokeWidth={2.5} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* ── Filter pills ─────────────────────────────────────────── */}
@@ -164,6 +173,21 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: COLORS.ink.primary,
     fontFamily: "Fraunces_700Bold",
+  },
+  headerActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  headerIconBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: COLORS.bg.card,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: COLORS.border.subtle,
   },
   fab: {
     width: 38,

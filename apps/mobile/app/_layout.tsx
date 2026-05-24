@@ -1,11 +1,18 @@
 // Must import global.css so NativeWind registers custom-config color classes
 import "../global.css";
-import { useEffect } from "react";
-import { Stack } from "expo-router";
+import { useEffect, useRef } from "react";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as Notifications from "expo-notifications";
+import type { Subscription } from "expo-notifications";
+import {
+  configureForegroundNotifications,
+  registerPushToken,
+} from "@/lib/notifications/register";
+import { analytics } from "@/lib/analytics";
 import {
   DancingScript_400Regular,
   DancingScript_700Bold,
@@ -28,9 +35,15 @@ import { queryClient, asyncStoragePersister } from "@/lib/query/client";
 
 SplashScreen.preventAutoHideAsync();
 
+// Configure how foreground notifications appear — must be called before any render
+configureForegroundNotifications();
+
 export default function RootLayout() {
   const checkAuth = useAuthStore((s) => s.checkAuth);
   const isLoading = useAuthStore((s) => s.isLoading);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const router = useRouter();
+  const notifResponseListener = useRef<Subscription | null>(null);
 
   const [fontsLoaded] = useFonts({
     DancingScript_400Regular,
@@ -53,6 +66,31 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [isLoading, fontsLoaded]);
+
+  // Register push token once auth resolves
+  useEffect(() => {
+    if (isAuthenticated) {
+      registerPushToken().catch(() => {});
+      analytics.identify("user"); // TODO: pass actual userId when auth store exposes it
+    }
+  }, [isAuthenticated]);
+
+  // Handle notification tap → deep link to the relevant screen
+  useEffect(() => {
+    notifResponseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const data = response.notification.request.content.data as Record<string, unknown>;
+        if (data.type === "comment" && data.postId) {
+          router.push(`/(app)/feed/${data.postId}`);
+        } else if (data.type === "reaction" && data.postId) {
+          router.push(`/(app)/feed/${data.postId}`);
+        }
+      }
+    );
+    return () => {
+      notifResponseListener.current?.remove();
+    };
+  }, [router]);
 
   return (
     // Required by react-native-gesture-handler (@gorhom/bottom-sheet)

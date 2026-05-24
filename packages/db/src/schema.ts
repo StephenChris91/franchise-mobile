@@ -120,6 +120,16 @@ export const profiles = pgTable("profiles", {
   approvedAt: timestamp("approved_at", { mode: "date" }),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  notificationPrefs: jsonb("notification_prefs")
+    .$type<{
+      comments: boolean;
+      reactions: boolean;
+      groupPosts: boolean;
+      announcements: boolean;
+      eventReminders: boolean;
+    }>()
+    .notNull()
+    .default({ comments: true, reactions: true, groupPosts: true, announcements: true, eventReminders: true }),
 });
 
 // ─── Password reset tokens ────────────────────────────────────────────────────
@@ -320,6 +330,8 @@ export const notificationTypeEnum = pgEnum("notification_type", [
   "mention",
   "prayer_reaction",
   "new_post_in_group",
+  "announcement",
+  "event_reminder",
 ]);
 
 export const notificationEntityTypeEnum = pgEnum("notification_entity_type", [
@@ -626,6 +638,8 @@ export const pushTokens = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     token: text("token").notNull(),
     platform: text("platform").notNull(), // "ios" | "android"
+    deviceName: text("device_name"),
+    lastUsedAt: timestamp("last_used_at", { mode: "date" }).defaultNow().notNull(),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   },
   (t) => [

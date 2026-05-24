@@ -2,7 +2,7 @@ import type {
   LoginResponse, SignupResponse, RefreshResponse, AuthUser, ProfileResponse,
   CloudinarySignResponse, PostResponse, CommentResponse, GroupResponse, GroupMemberResponse,
   EventResponse, BlogPostResponse, BlogPostDetailResponse, NotificationResponse,
-  MemberResponse, PaginatedResponse,
+  MemberResponse, PaginatedResponse, SearchResponse, AppVersionResponse,
 } from "@franchise/types";
 import type { LoginInput, SignupInput } from "@franchise/validators";
 
@@ -311,10 +311,35 @@ export class FranchiseAPI {
   // ─── Push tokens ───────────────────────────────────────────────────────────
 
   pushTokens = {
-    register: (token: string, platform: "ios" | "android") =>
-      this.request<{ ok: boolean }>("/api/v1/push-tokens", { method: "POST", body: { token, platform } }),
+    register: (token: string, platform: "ios" | "android", deviceName?: string) =>
+      this.request<{ ok: boolean }>("/api/v1/push-tokens", { method: "POST", body: { token, platform, deviceName } }),
 
     unregister: (token: string) =>
       this.request<{ ok: boolean }>(`/api/v1/push-tokens/${token}`, { method: "DELETE" }),
+  };
+
+  // ─── Search ────────────────────────────────────────────────────────────────
+
+  search = {
+    query: (q: string, type?: "all" | "posts" | "events" | "groups" | "members", signal?: AbortSignal) => {
+      const qs = new URLSearchParams({ q, ...(type && type !== "all" ? { type } : {}) }).toString();
+      return this.request<SearchResponse>(`/api/v1/search?${qs}`, { signal });
+    },
+  };
+
+  // ─── App ───────────────────────────────────────────────────────────────────
+
+  app = {
+    version: (clientVersion?: string, signal?: AbortSignal) => {
+      const qs = clientVersion ? `?v=${encodeURIComponent(clientVersion)}` : "";
+      return this.request<AppVersionResponse>(`/api/v1/app/version${qs}`, { signal, skipAuth: true });
+    },
+  };
+
+  // ─── Contact ───────────────────────────────────────────────────────────────
+
+  contact = {
+    pastor: (subject: string, message: string) =>
+      this.request<{ ok: boolean }>("/api/v1/contact/pastor", { method: "POST", body: { subject, message } }),
   };
 }

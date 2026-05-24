@@ -4,6 +4,7 @@ import { db, socialPosts, socialPostReactions, notifications } from "@franchise/
 import { reactionSchema } from "@franchise/validators";
 import { ok, err, withApproved } from "@/lib/api/middleware";
 import { pusherServer } from "@/lib/pusher";
+import { sendPushToUser } from "@/lib/push/service";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   return withApproved(req, async (req, user) => {
@@ -29,6 +30,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       if (post && post.authorId !== user.sub) {
         await db.insert(notifications).values({ userId: post.authorId, actorId: user.sub, notificationType: reactionType === "praying" ? "prayer_reaction" : "reaction_on_post", entityType: "post", entityId: id });
         pusherServer.trigger(`private-user-${post.authorId}`, "notification", {}).catch(() => {});
+
+        const reactionEmoji: Record<string, string> = { like: "👍", amen: "🙏", praying: "🕊️", heart: "❤️" };
+        sendPushToUser(
+          post.authorId,
+          {
+            title: `${user.username} reacted to your post`,
+            body: `${reactionEmoji[reactionType] ?? ""} ${reactionType}`,
+            data: { type: "reaction", postId: id, reactionType },
+          },
+          "reactions"
+        ).catch(() => {});
       }
     }
 

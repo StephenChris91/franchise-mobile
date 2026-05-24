@@ -11,7 +11,19 @@ export async function POST(req: NextRequest) {
     const parsed = pushTokenSchema.safeParse(body);
     if (!parsed.success) return err("VALIDATION_ERROR", parsed.error.issues[0]?.message ?? "Invalid input", 400);
 
-    await db.insert(pushTokens).values({ userId: user.sub, token: parsed.data.token, platform: parsed.data.platform }).onConflictDoNothing();
+    await db
+      .insert(pushTokens)
+      .values({
+        userId: user.sub,
+        token: parsed.data.token,
+        platform: parsed.data.platform,
+        deviceName: parsed.data.deviceName ?? null,
+        lastUsedAt: new Date(),
+      })
+      .onConflictDoUpdate({
+        target: pushTokens.token,
+        set: { lastUsedAt: new Date(), deviceName: parsed.data.deviceName ?? null },
+      });
     return ok({ ok: true }, 201);
   });
 }

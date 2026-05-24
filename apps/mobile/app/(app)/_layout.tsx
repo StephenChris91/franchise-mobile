@@ -92,6 +92,40 @@ export default function AppLayout() {
           animation: "slide_from_bottom",
         }}
       />
+
+      {/* ── Event detail ─────────────────────────────────────────── */}
+      <Stack.Screen
+        name="events/[slug]"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          ...DARK_HEADER,
+          animation: "slide_from_right",
+        }}
+      />
+
+      {/* ── Search ───────────────────────────────────────────────── */}
+      <Stack.Screen
+        name="search"
+        options={{
+          headerShown: true,
+          headerTitle: "Search",
+          ...DARK_HEADER,
+          animation: "slide_from_right",
+        }}
+      />
+
+      {/* ── Message Pastor (modal) ───────────────────────────────── */}
+      <Stack.Screen
+        name="message-pastor"
+        options={{
+          headerShown: true,
+          headerTitle: "Message Pastor",
+          ...DARK_HEADER,
+          presentation: "modal",
+          animation: "slide_from_bottom",
+        }}
+      />
     </Stack>
   );
 }

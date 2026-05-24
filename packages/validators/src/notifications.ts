@@ -8,6 +8,7 @@ export const listNotificationsSchema = z.object({
 export const pushTokenSchema = z.object({
   token: z.string().min(1),
   platform: z.enum(["ios", "android"]),
+  deviceName: z.string().max(100).optional(),
 });
 
 export type PushTokenInput = z.infer<typeof pushTokenSchema>;
