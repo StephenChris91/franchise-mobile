@@ -43,14 +43,14 @@ export function PostCard({ post, onPress }: PostCardProps) {
       {/* ── Header ───────────────────────────────────────────────── */}
       <View style={styles.header}>
         <Avatar
-          uri={post.author.photoUrl}
-          name={post.author.fullName}
+          uri={post.author?.photoUrl}
+          name={post.author?.fullName ?? "Member"}
           size={40}
         />
 
         <View style={styles.headerText}>
           <View style={styles.nameRow}>
-            <Text style={styles.name}>{post.author.fullName}</Text>
+            <Text style={styles.name}>{post.author?.fullName ?? "Member"}</Text>
             {post.isPinned && (
               <Pin size={12} color={COLORS.brand.primary} />
             )}

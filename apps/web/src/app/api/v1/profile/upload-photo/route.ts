@@ -9,21 +9,26 @@ cloudinary.config({
 });
 
 export async function POST(req: NextRequest) {
-  return withApproved(req, async (req, user) => {
-    let body: unknown;
-    try { body = await req.json(); } catch { return err("BAD_REQUEST", "Invalid JSON", 400); }
+  return withApproved(req, async (_req, user) => {
+    // Build the exact params we will sign — generate server-side so that
+    // the signature, timestamp, and folder are always consistent.
+    // Never trust client-supplied values for params that affect the signature.
+    const timestamp = Math.round(Date.now() / 1000);
+    const folder = `franchise/profiles/${user.sub}`;
 
-    const paramsToSign = (body as { paramsToSign?: Record<string, unknown> }).paramsToSign;
-    if (!paramsToSign) return err("BAD_REQUEST", "paramsToSign is required", 400);
+    const paramsToSign: Record<string, unknown> = { timestamp, folder };
 
-    const signature = cloudinary.utils.api_sign_request(paramsToSign, process.env.CLOUDINARY_API_SECRET!);
+    const signature = cloudinary.utils.api_sign_request(
+      paramsToSign,
+      process.env.CLOUDINARY_API_SECRET!
+    );
 
     return ok({
       signature,
       apiKey: process.env.CLOUDINARY_API_KEY,
       cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-      timestamp: Math.round(Date.now() / 1000),
-      folder: `franchise/profiles/${user.sub}`,
+      timestamp,
+      folder,
     });
   });
 }
