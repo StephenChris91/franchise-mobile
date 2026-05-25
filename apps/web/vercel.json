@@ -10,11 +10,19 @@
     },
     {
       "path": "/api/cron/check-live-status",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 9 * * 0"
     },
     {
-      "path": "/api/cron/service-reminders",
-      "schedule": "*/5 * * * *"
+      "path": "/api/cron/service-reminders?svc=sunday",
+      "schedule": "45 8 * * 0"
+    },
+    {
+      "path": "/api/cron/service-reminders?svc=wednesday",
+      "schedule": "15 17 * * 3"
+    },
+    {
+      "path": "/api/cron/service-reminders?svc=friday",
+      "schedule": "45 19 * * 5"
     }
   ]
 }
