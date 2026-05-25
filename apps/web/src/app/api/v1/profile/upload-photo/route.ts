@@ -3,7 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { ok, err, withApproved } from "@/lib/api/middleware";
 
 cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  cloud_name: (process.env.CLOUDINARY_CLOUD_NAME ?? process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME),
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     return ok({
       signature,
       apiKey: process.env.CLOUDINARY_API_KEY,
-      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      cloudName: (process.env.CLOUDINARY_CLOUD_NAME ?? process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME),
       timestamp,
       folder,
     });
