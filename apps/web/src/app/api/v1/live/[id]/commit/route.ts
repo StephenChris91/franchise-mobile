@@ -9,10 +9,10 @@ export const dynamic = "force-dynamic";
 // POST — toggle commitment on
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withApproved(req, async (_, user) => {
-    const { id } = params;
+    const { id } = await params;
 
     const [ls] = await db.select({ id: livestreams.id, serviceType: livestreams.serviceType })
       .from(livestreams).where(eq(livestreams.id, id)).limit(1);
@@ -39,10 +39,10 @@ export async function POST(
 // DELETE — remove commitment
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withApproved(req, async (_, user) => {
-    const { id } = params;
+    const { id } = await params;
 
     await db
       .delete(prayerCommitments)

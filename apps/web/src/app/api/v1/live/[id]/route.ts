@@ -8,10 +8,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withApproved(req, async (_, user) => {
-    const { id } = params;
+    const { id } = await params;
 
     const [ls] = await db.select().from(livestreams).where(eq(livestreams.id, id)).limit(1);
     if (!ls) return err("NOT_FOUND", "Livestream not found", 404);

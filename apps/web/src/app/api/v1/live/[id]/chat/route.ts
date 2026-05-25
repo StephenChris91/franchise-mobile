@@ -17,10 +17,10 @@ const sendSchema = z.object({
 // GET /api/v1/live/:id/chat — paginated history
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withApproved(req, async (req) => {
-    const { id } = params;
+    const { id } = await params;
     const cursor = req.nextUrl.searchParams.get("cursor");
     const limit = Math.min(Number(req.nextUrl.searchParams.get("limit") ?? 50), 100);
 
@@ -87,10 +87,10 @@ export async function GET(
 // POST /api/v1/live/:id/chat — send message or reaction
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withApproved(req, async (req, user) => {
-    const { id } = params;
+    const { id } = await params;
 
     let body: unknown;
     try { body = await req.json(); } catch { return err("BAD_REQUEST", "Invalid JSON", 400); }

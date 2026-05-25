@@ -8,10 +8,10 @@ export const dynamic = "force-dynamic";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string; messageId: string } }
+  { params }: { params: Promise<{ id: string; messageId: string }> }
 ) {
   return withAdmin(req, async () => {
-    const { id, messageId } = params;
+    const { id, messageId } = await params;
 
     const [msg] = await db
       .select()

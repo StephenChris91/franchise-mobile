@@ -18,10 +18,10 @@ const updateSchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAdmin(req, async (req) => {
-    const { id } = params;
+    const { id } = await params;
 
     let body: unknown;
     try { body = await req.json(); } catch { return err("BAD_REQUEST", "Invalid JSON", 400); }
