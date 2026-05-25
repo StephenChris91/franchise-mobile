@@ -22,6 +22,19 @@ cloudinary.config({
 });
 
 export async function POST(request: NextRequest) {
+  // Fail fast with a clear message if credentials are missing
+  if (
+    !process.env.CLOUDINARY_API_KEY ||
+    !process.env.CLOUDINARY_API_SECRET ||
+    !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  ) {
+    return err(
+      "CONFIGURATION_ERROR",
+      "Cloudinary credentials are not configured on the server. Add CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, and NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME to Vercel environment variables.",
+      500
+    );
+  }
+
   return withApproved(request, async (req) => {
     let formData: FormData;
     try {
@@ -41,7 +54,6 @@ export async function POST(request: NextRequest) {
     const dataUri = `data:${mimeType};base64,${buffer.toString("base64")}`;
 
     try {
-      // Upload directly using server credentials — no signature needed
       const result = await cloudinary.uploader.upload(dataUri, {
         folder,
         resource_type: "image",
@@ -49,7 +61,20 @@ export async function POST(request: NextRequest) {
 
       return ok({ url: result.secure_url, publicId: result.public_id });
     } catch (e) {
-      const message = e instanceof Error ? e.message : "Cloudinary upload failed";
+      // Cloudinary SDK throws plain objects, not Error instances
+      let message = "Cloudinary upload failed";
+      if (e instanceof Error) {
+        message = e.message;
+      } else if (e && typeof e === "object") {
+        const cErr = e as Record<string, unknown>;
+        if (typeof cErr.message === "string") message = cErr.message;
+        else if (cErr.error && typeof (cErr.error as Record<string, unknown>).message === "string") {
+          message = (cErr.error as Record<string, unknown>).message as string;
+        } else if (typeof cErr.http_code === "number") {
+          message = `Cloudinary error HTTP ${cErr.http_code}`;
+        }
+      }
+      console.error("[upload] Cloudinary error:", e);
       return err("UPLOAD_FAILED", message, 500);
     }
   });
