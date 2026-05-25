@@ -76,7 +76,16 @@ export class FranchiseAPI {
   }
 
   private async parseResponse<T>(res: Response): Promise<T> {
-    const json = (await res.json()) as { data?: T; error?: { code: string; message: string } };
+    let json: { data?: T; error?: { code: string; message: string } };
+    try {
+      json = (await res.json()) as { data?: T; error?: { code: string; message: string } };
+    } catch {
+      // Server returned non-JSON (e.g. HTML error page) — give a readable message
+      throw Object.assign(
+        new Error(`Server error (HTTP ${res.status}) — please try again`),
+        { status: res.status }
+      );
+    }
     if (!res.ok) throw Object.assign(new Error(json.error?.message ?? "Request failed"), { code: json.error?.code, status: res.status });
     return json.data as T;
   }

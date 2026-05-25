@@ -6,7 +6,7 @@
  * signed-upload complexity (mismatched timestamps, missing secrets, etc.).
  *
  * Body: multipart/form-data
- *   file   — image file (JPEG)
+ *   file   — image file (JPEG / PNG)
  *   folder — Cloudinary folder path (e.g. "franchise/posts")
  *
  * Response: { url: string, publicId: string }
@@ -21,13 +21,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Increase body size limit to 10 MB for images
-export const config = {
-  api: { bodyParser: false }, // not used in App Router, but harmless
-};
-
-export async function POST(req: NextRequest) {
-  return withApproved(req, async (req) => {
+export async function POST(request: NextRequest) {
+  return withApproved(request, async (req) => {
     let formData: FormData;
     try {
       formData = await req.formData();
@@ -40,25 +35,22 @@ export async function POST(req: NextRequest) {
 
     const folder = (formData.get("folder") as string | null) ?? "franchise/posts";
 
-    // Convert file to base64 data URI for Cloudinary SDK
+    // Convert file buffer → base64 data URI for the Cloudinary SDK
     const buffer = Buffer.from(await file.arrayBuffer());
     const mimeType = file.type || "image/jpeg";
     const dataUri = `data:${mimeType};base64,${buffer.toString("base64")}`;
 
-    // Upload directly — no signature ceremony
-    const result = await new Promise<{ secure_url: string; public_id: string }>(
-      (resolve, reject) => {
-        cloudinary.uploader.upload(
-          dataUri,
-          { folder, resource_type: "image" },
-          (error, res) => {
-            if (error || !res) reject(error ?? new Error("Cloudinary upload failed"));
-            else resolve(res as { secure_url: string; public_id: string });
-          }
-        );
-      }
-    );
+    try {
+      // Upload directly using server credentials — no signature needed
+      const result = await cloudinary.uploader.upload(dataUri, {
+        folder,
+        resource_type: "image",
+      });
 
-    return ok({ url: result.secure_url, publicId: result.public_id });
+      return ok({ url: result.secure_url, publicId: result.public_id });
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Cloudinary upload failed";
+      return err("UPLOAD_FAILED", message, 500);
+    }
   });
 }
