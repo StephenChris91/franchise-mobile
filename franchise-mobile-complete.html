@@ -1,0 +1,3349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Franchise Mobile — Complete Design Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,500&family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Black canvas */
+    --bg-page: #0a0807;
+    --bg-elevated: #14110f;
+    --bg-card: #1a1614;
+    --bg-card-hover: #221d1a;
+
+    /* Inks */
+    --ink-primary: #f7f3ec;
+    --ink-secondary: #a5a09a;
+    --ink-muted: #6b6661;
+
+    /* Gold — the signature */
+    --gold: #d4a64a;
+    --gold-bright: #e8bc5e;
+    --gold-deep: #a87f2d;
+    --gold-soft: rgba(212, 166, 74, 0.12);
+    --gold-glow: rgba(212, 166, 74, 0.25);
+
+    /* Supporting accents */
+    --cream: #f0e4cf;
+    --accent-red: #c93a3a;
+    --accent-red-soft: rgba(201, 58, 58, 0.15);
+
+    /* Borders */
+    --border-subtle: rgba(212, 166, 74, 0.08);
+    --border-default: rgba(212, 166, 74, 0.18);
+    --border-neutral: rgba(255, 255, 255, 0.06);
+
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --script: 'Dancing Script', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f0c09;
+    background-image: 
+      radial-gradient(at 20% 10%, rgba(212, 166, 74, 0.04) 0px, transparent 50%),
+      radial-gradient(at 80% 90%, rgba(232, 188, 94, 0.03) 0px, transparent 50%);
+    min-height: 100vh;
+    font-family: var(--sans);
+    color: var(--ink-primary);
+    padding: 60px 24px 80px;
+  }
+
+  /* ============ GALLERY LAYOUT ============ */
+  .gallery-header {
+    max-width: 1400px;
+    margin: 0 auto 50px;
+    text-align: center;
+  }
+
+  .gallery-header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .gallery-header h1 {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .gallery-header h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .gallery-header p {
+    font-size: 16px;
+    color: var(--ink-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .section-banner {
+    max-width: 1400px;
+    margin: 80px auto 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-banner:first-of-type { margin-top: 20px; }
+
+  .section-banner .num {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--gold-deep);
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+
+  .section-banner .title {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink-primary);
+  }
+
+  .section-banner .title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .section-banner .subtitle {
+    font-size: 14px;
+    color: var(--ink-secondary);
+    margin-top: 4px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 60px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .screen-label {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .screen-label .num {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-right: 8px;
+  }
+
+  .screen-label .name {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-primary);
+  }
+
+  .screen-label .desc {
+    font-size: 13px;
+    color: var(--ink-secondary);
+    margin-top: 6px;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  /* ============ PHONE FRAME ============ */
+  .phone {
+    width: 340px;
+    height: 720px;
+    background: #000;
+    border-radius: 48px;
+    padding: 10px;
+    box-shadow: 
+      0 0 0 2px #2a2522,
+      0 30px 80px -20px rgba(0, 0, 0, 0.9),
+      0 10px 30px -10px rgba(0, 0, 0, 0.6),
+      0 0 60px -20px rgba(212, 166, 74, 0.15);
+    position: relative;
+  }
+
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 30px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 10;
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-page);
+    border-radius: 38px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 0;
+    flex-shrink: 0;
+  }
+
+  .status-bar .time { font-size: 14px; font-weight: 600; color: var(--ink-primary); }
+  .status-bar .indicators { display: flex; gap: 5px; align-items: center; color: var(--ink-primary); }
+  .status-bar svg { width: 16px; height: 11px; }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .content::-webkit-scrollbar { display: none; }
+
+  /* ============ THE FRANCHISE LOGO ============ */
+  .fc-logo {
+    font-family: var(--script);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .fc-logo-small {
+    font-family: var(--script);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .fc-logo-sub {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ============ SHARED COMPONENTS ============ */
+  .app-header {
+    padding: 12px 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-page);
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-primary);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
+  .notif-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--bg-page);
+  }
+
+  /* Tab bar */
+  .tab-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 8px 28px;
+    background: rgba(10, 8, 7, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 500;
+    position: relative;
+  }
+
+  .tab.active { color: var(--gold); }
+  .tab.active::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .tab svg { width: 22px; height: 22px; }
+
+  .tab .tab-badge {
+    position: absolute;
+    top: -2px;
+    right: 4px;
+    background: var(--gold);
+    color: var(--bg-page);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 8px;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  /* Avatars */
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5a3a1a 0%, #d4a64a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #1a1208;
+    flex-shrink: 0;
+  }
+
+  .avatar.deep { background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%); color: var(--cream); }
+  .avatar.warm { background: linear-gradient(135deg, #8b6f3e 0%, #f0e4cf 100%); color: #2a1d0a; }
+  .avatar.bronze { background: linear-gradient(135deg, #4a2a1a 0%, #b8702e 100%); color: var(--cream); }
+  .avatar.amber { background: linear-gradient(135deg, #6b4e1f 0%, #e8bc5e 100%); color: #1a1208; }
+  .avatar.dark { background: linear-gradient(135deg, #1a0e05 0%, #3a2a1a 100%); color: var(--gold); }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg-page);
+    border: none;
+    padding: 16px;
+    border-radius: 100px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    width: 100%;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-primary);
+    border: 1px solid var(--border-default);
+    padding: 16px;
+    border-radius: 100px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* ============ 01. WELCOME ============ */
+  .welcome-screen {
+    background: var(--bg-page);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .welcome-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(212, 166, 74, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(232, 188, 94, 0.06) 0%, transparent 50%),
+      linear-gradient(180deg, #0a0807 0%, #050403 100%);
+  }
+
+  .welcome-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 32px 40px;
+    height: calc(100% - 44px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .welcome-logo {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .welcome-logo .fc-logo {
+    font-size: 42px;
+  }
+
+  .welcome-logo .fc-logo-sub {
+    font-size: 10px;
+    margin-top: 4px;
+    letter-spacing: 0.5em;
+  }
+
+  .welcome-hero {
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .welcome-hero h1 {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.0;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+
+  .welcome-hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .welcome-hero p {
+    font-size: 15px;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .welcome-footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+
+  /* ============ 02. FEED ============ */
+  .brand-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .feed-brand-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .groups-strip {
+    display: flex;
+    gap: 8px;
+    padding: 14px 20px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border-neutral);
+  }
+
+  .groups-strip::-webkit-scrollbar { display: none; }
+
+  .group-pill {
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    border: 1px solid var(--border-neutral);
+  }
+
+  .group-pill.active {
+    background: var(--gold);
+    color: var(--bg-page);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  .post-card {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border-neutral);
+  }
+
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .post-meta { flex: 1; min-width: 0; }
+
+  .post-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .post-author .badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    background: var(--gold-soft);
+    color: var(--gold);
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .post-time {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .post-menu {
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+  }
+
+  .post-content {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-primary);
+    margin-bottom: 12px;
+  }
+
+  .post-image {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-image.worship {
+    background: 
+      linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%),
+      linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 50%, #1a0e05 100%);
+  }
+
+  .post-image.worship::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 40%, rgba(232, 188, 94, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(201, 58, 58, 0.25) 0%, transparent 50%);
+  }
+
+  .post-actions {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .post-action {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--ink-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .post-action.active { color: var(--gold); }
+  .post-action svg { width: 16px; height: 16px; }
+
+  /* ============ 03. PRAYER WALL ============ */
+  .prayer-hero {
+    padding: 24px 20px 20px;
+    text-align: center;
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(212, 166, 74, 0.1) 0%, transparent 60%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .prayer-hero .label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .prayer-hero h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .prayer-hero h2 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .prayer-hero p {
+    font-size: 12px;
+    color: var(--ink-secondary);
+    max-width: 240px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .prayer-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .prayer-stat { text-align: center; }
+
+  .prayer-stat .num {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .prayer-stat .lbl {
+    font-size: 9px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  .prayer-card {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border-neutral);
+    position: relative;
+  }
+
+  .prayer-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+    width: 2px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .prayer-card .post-content {
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .praying-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-neutral);
+  }
+
+  .avatar-stack { display: flex; }
+
+  .avatar-stack .avatar {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+    border: 2px solid var(--bg-page);
+    margin-left: -6px;
+  }
+
+  .avatar-stack .avatar:first-child { margin-left: 0; }
+
+  .praying-count {
+    font-size: 11px;
+    color: var(--ink-secondary);
+    margin-left: 8px;
+  }
+
+  .praying-count strong { color: var(--ink-primary); font-weight: 600; }
+
+  .btn-pray {
+    background: var(--gold);
+    color: var(--bg-page);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .btn-pray svg { width: 14px; height: 14px; }
+
+  /* ============ 04. EVENT DETAIL ============ */
+  .event-cover {
+    height: 240px;
+    background: 
+      linear-gradient(180deg, transparent 40%, rgba(10, 8, 7, 0.95) 100%),
+      linear-gradient(135deg, #1a0e05 0%, #4a2a1a 50%, #8b6f3e 100%);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .event-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 30%, rgba(232, 188, 94, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 70%, rgba(212, 166, 74, 0.3) 0%, transparent 50%);
+  }
+
+  .event-cover-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .event-cover-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 20px 20px;
+    z-index: 2;
+  }
+
+  .event-type {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 10px;
+    border: 1px solid var(--border-default);
+  }
+
+  .event-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .event-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .event-body { padding: 20px; }
+
+  .event-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-neutral);
+  }
+
+  .event-icon-wrap {
+    width: 36px;
+    height: 36px;
+    background: var(--gold-soft);
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .event-icon-wrap svg { width: 16px; height: 16px; }
+
+  .event-detail-text { flex: 1; }
+
+  .event-detail-text .lbl {
+    font-size: 9px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+
+  .event-detail-text .val {
+    font-size: 13px;
+    color: var(--ink-primary);
+    font-weight: 500;
+  }
+
+  .event-description {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+    margin: 20px 0;
+  }
+
+  .rsvp-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .rsvp-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .rsvp-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .rsvp-btn {
+    padding: 10px 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-neutral);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    cursor: pointer;
+  }
+
+  .rsvp-btn.selected {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--bg-page);
+  }
+
+  .attendees {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-secondary);
+  }
+
+  .attendees .avatar-stack .avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  /* ============ 05. POST COMPOSER ============ */
+  .composer-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-neutral);
+  }
+
+  .composer-cancel {
+    background: none;
+    border: none;
+    color: var(--ink-secondary);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .composer-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .composer-submit {
+    background: var(--gold);
+    color: var(--bg-page);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .composer-body { padding: 18px 20px; }
+
+  .composer-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .composer-user-info { flex: 1; }
+
+  .composer-user-name { font-size: 13px; font-weight: 600; }
+
+  .scope-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--ink-secondary);
+    margin-top: 4px;
+    cursor: pointer;
+  }
+
+  .scope-selector svg { width: 11px; height: 11px; }
+
+  .composer-textarea {
+    width: 100%;
+    min-height: 140px;
+    background: transparent;
+    border: none;
+    color: var(--ink-primary);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+  }
+
+  .composer-textarea::placeholder { color: var(--ink-muted); }
+
+  .post-type-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 16px 0;
+    padding-bottom: 4px;
+  }
+
+  .post-type-row::-webkit-scrollbar { display: none; }
+
+  .post-type {
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-neutral);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .post-type.selected {
+    background: var(--gold-soft);
+    border-color: var(--gold);
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .composer-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-neutral);
+    background: var(--bg-elevated);
+  }
+
+  .toolbar-actions { display: flex; gap: 8px; }
+
+  .toolbar-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .toolbar-btn svg { width: 16px; height: 16px; }
+
+  .char-count {
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ 06. PROFILE ============ */
+  .profile-cover {
+    height: 120px;
+    background: 
+      linear-gradient(180deg, transparent 0%, rgba(10, 8, 7, 0.8) 100%),
+      linear-gradient(135deg, #1a0e05 0%, #6b4e1f 40%, #d4a64a 100%);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .profile-header-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .profile-info {
+    padding: 0 20px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #2a1d0a 0%, #d4a64a 100%);
+    border: 4px solid var(--bg-page);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--bg-page);
+    margin-bottom: 16px;
+  }
+
+  .profile-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .profile-username {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .profile-ministry {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: var(--gold-soft);
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .profile-bio {
+    font-size: 13px;
+    color: var(--ink-secondary);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .profile-bio em { color: var(--gold); font-style: italic; }
+
+  .profile-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .profile-stat {
+    text-align: center;
+    position: relative;
+  }
+
+  .profile-stat + .profile-stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 25%;
+    bottom: 25%;
+    width: 1px;
+    background: var(--border-neutral);
+  }
+
+  .profile-stat .n {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .profile-stat .l {
+    font-size: 9px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .profile-btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .profile-btn svg { width: 14px; height: 14px; }
+
+  .profile-btn.primary {
+    background: var(--gold);
+    color: var(--bg-page);
+    border-color: var(--gold);
+  }
+
+  .section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 12px;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+  }
+
+  .section-title-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+
+  .group-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+  }
+
+  .group-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .group-icon.warm { background: linear-gradient(135deg, #8b6f3e 0%, #e8bc5e 100%); color: #1a0e05; }
+  .group-icon.deep { background: linear-gradient(135deg, #1a0e05 0%, #4a2a1a 100%); color: var(--gold); }
+
+  .group-info { flex: 1; }
+  .group-name { font-size: 13px; font-weight: 600; color: var(--ink-primary); }
+  .group-members { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+
+  /* ============ 07. LIVE HUB ============ */
+  .hub-hero {
+    padding: 8px 20px 20px;
+  }
+
+  .hub-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .hub-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .hub-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hub-subtitle {
+    font-size: 13px;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+  }
+
+  .live-hero {
+    margin: 0 20px 16px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: 
+      linear-gradient(180deg, transparent 30%, rgba(10, 8, 7, 0.9) 90%),
+      linear-gradient(135deg, #1a0e05 0%, #4a2a1a 50%, #2a1d0a 100%);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    cursor: pointer;
+    border: 1px solid var(--border-default);
+  }
+
+  .live-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 30%, rgba(232, 188, 94, 0.45) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 70%, rgba(212, 166, 74, 0.25) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .live-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--accent-red);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: white;
+    z-index: 2;
+  }
+
+  .live-badge .pulse {
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .live-watching {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    z-index: 2;
+    border: 1px solid rgba(212, 166, 74, 0.2);
+  }
+
+  .live-watching svg { width: 12px; height: 12px; }
+
+  .live-content { position: relative; z-index: 2; }
+
+  .live-platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    margin-bottom: 10px;
+    border: 1px solid rgba(212, 166, 74, 0.2);
+    letter-spacing: 0.05em;
+  }
+
+  .live-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.1;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .live-title em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+
+  .live-meta {
+    font-size: 12px;
+    color: rgba(247, 243, 236, 0.7);
+    margin-bottom: 14px;
+  }
+
+  .live-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px;
+    background: var(--gold);
+    color: var(--bg-page);
+    border: none;
+    border-radius: 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .live-cta svg { width: 16px; height: 16px; }
+
+  .service-card {
+    margin: 0 20px 12px;
+    padding: 14px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .service-card:hover { background: var(--bg-card-hover); }
+
+  .service-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    position: relative;
+  }
+
+  .service-icon.zoom { background: linear-gradient(135deg, #1a0e05 0%, #4a2a1a 100%); color: var(--gold); border: 1px solid var(--border-default); }
+  .service-icon.youtube { background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%); color: var(--gold-bright); border: 1px solid var(--border-default); }
+  .service-icon svg { width: 24px; height: 24px; }
+
+  .service-info { flex: 1; min-width: 0; }
+
+  .service-day {
+    font-size: 10px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .service-name {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .service-when {
+    font-size: 12px;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .service-when svg { width: 11px; height: 11px; }
+
+  .service-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .countdown-pill {
+    padding: 4px 10px;
+    background: var(--gold-soft);
+    color: var(--gold);
+    border: 1px solid var(--border-default);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .reminder-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-neutral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-secondary);
+    cursor: pointer;
+  }
+
+  .reminder-btn.on {
+    background: var(--gold);
+    color: var(--bg-page);
+    border-color: var(--gold);
+  }
+
+  .reminder-btn svg { width: 13px; height: 13px; }
+
+  .replay-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 0 20px 16px;
+  }
+
+  .replay-strip::-webkit-scrollbar { display: none; }
+
+  .replay-card {
+    flex-shrink: 0;
+    width: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+    cursor: pointer;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .replay-thumb {
+    height: 110px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .replay-thumb.sermon-1 {
+    background: 
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%),
+      linear-gradient(135deg, #4a2a1a 0%, #8b6f3e 50%, #1a0e05 100%);
+  }
+
+  .replay-thumb.sermon-2 {
+    background:
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%),
+      linear-gradient(135deg, #2a1d0a 0%, #d4a64a 50%, #1a0e05 100%);
+  }
+
+  .replay-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold-bright);
+  }
+
+  .replay-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .replay-play svg { width: 14px; height: 14px; color: var(--bg-page); }
+
+  .replay-meta { padding: 10px 12px; }
+
+  .replay-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-primary);
+    margin-bottom: 3px;
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .replay-info { font-size: 10px; color: var(--ink-muted); }
+
+  /* ============ 08. LIVE PLAYER ============ */
+  .player-screen { background: #000; }
+
+  .player-nav {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    z-index: 5;
+    position: relative;
+  }
+
+  .player-nav-title {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .live-mini-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 7px;
+    background: var(--accent-red);
+    border-radius: 100px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .live-mini-badge .pulse {
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .video-frame {
+    aspect-ratio: 16/9;
+    background: 
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4) 100%),
+      linear-gradient(135deg, #1a0e05 0%, #4a2a1a 50%, #8b6f3e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 50% 40%, rgba(232, 188, 94, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(212, 166, 74, 0.3) 0%, transparent 50%);
+  }
+
+  .video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+  }
+
+  .video-controls .play-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+  }
+
+  .video-controls .play-btn svg { width: 12px; height: 12px; }
+
+  .video-progress {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 65%;
+    background: var(--accent-red);
+    border-radius: 100px;
+  }
+
+  .video-progress::after {
+    content: 'LIVE';
+    position: absolute;
+    right: 0;
+    top: -2px;
+    background: var(--accent-red);
+    color: white;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .video-controls .control-icon {
+    width: 24px;
+    height: 24px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .stream-meta {
+    padding: 16px 20px;
+    background: var(--bg-page);
+  }
+
+  .stream-platform-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .stream-platform {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .platform-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%);
+    border: 1px solid var(--border-default);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+  }
+
+  .platform-logo svg { width: 14px; height: 14px; }
+
+  .platform-info .platform-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-primary);
+  }
+
+  .platform-info .platform-sub {
+    font-size: 10px;
+    color: var(--ink-muted);
+  }
+
+  .stream-actions { display: flex; gap: 6px; }
+
+  .stream-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-secondary);
+    cursor: pointer;
+  }
+
+  .stream-action-btn svg { width: 14px; height: 14px; }
+
+  .stream-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .stream-title em { font-style: italic; color: var(--gold); }
+
+  .stream-info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--ink-secondary);
+    margin-bottom: 16px;
+  }
+
+  .stream-info-row .dot {
+    width: 3px;
+    height: 3px;
+    background: var(--ink-muted);
+    border-radius: 50%;
+  }
+
+  .chat-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-neutral);
+    padding: 0 20px;
+  }
+
+  .chat-tab {
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .chat-tab.active { color: var(--gold); }
+  .chat-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .chat-messages { padding: 12px 20px; }
+
+  .chat-msg {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .chat-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5a3a1a 0%, #d4a64a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--bg-page);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .chat-avatar.deep { background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%); color: var(--cream); }
+  .chat-avatar.warm { background: linear-gradient(135deg, #8b6f3e 0%, #f0e4cf 100%); color: #2a1d0a; }
+  .chat-avatar.bronze { background: linear-gradient(135deg, #4a2a1a 0%, #b8702e 100%); color: var(--cream); }
+
+  .chat-bubble { flex: 1; min-width: 0; }
+
+  .chat-author {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-primary);
+    margin-bottom: 1px;
+  }
+
+  .chat-author .badge {
+    font-size: 8px;
+    padding: 1px 5px;
+    background: var(--gold-soft);
+    color: var(--gold);
+    border-radius: 3px;
+    margin-left: 5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: 1px;
+  }
+
+  .chat-text {
+    color: var(--ink-primary);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .chat-amen { color: var(--gold); font-weight: 600; }
+
+  .chat-input-bar {
+    padding: 10px 16px 12px;
+    background: var(--bg-page);
+    border-top: 1px solid var(--border-neutral);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    padding: 10px 16px;
+    color: var(--ink-primary);
+    font-family: var(--sans);
+    font-size: 12px;
+    outline: none;
+  }
+
+  .chat-input::placeholder { color: var(--ink-muted); }
+
+  .send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-page);
+    cursor: pointer;
+  }
+
+  .send-btn svg { width: 16px; height: 16px; }
+
+  .quick-reaction-row {
+    display: flex;
+    gap: 6px;
+    padding: 0 20px 8px;
+    overflow-x: auto;
+  }
+
+  .quick-reaction-row::-webkit-scrollbar { display: none; }
+
+  .quick-reaction {
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--ink-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  /* ============ 09. PRAYER ZOOM LOBBY ============ */
+  .prayer-screen-bg {
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(212, 166, 74, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(232, 188, 94, 0.05) 0%, transparent 50%),
+      var(--bg-page);
+  }
+
+  .prayer-back-nav {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .prayer-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-primary);
+    cursor: pointer;
+  }
+
+  .prayer-back-btn svg { width: 16px; height: 16px; }
+
+  .prayer-nav-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .prayer-hero-zoom {
+    padding: 20px 24px 24px;
+    text-align: center;
+  }
+
+  .prayer-day-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--gold);
+    color: var(--bg-page);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .prayer-day-pill svg { width: 11px; height: 11px; }
+
+  .prayer-zoom-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    line-height: 1.0;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin-bottom: 14px;
+  }
+
+  .prayer-zoom-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .prayer-zoom-subtitle {
+    font-size: 14px;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+    max-width: 270px;
+    margin: 0 auto 24px;
+  }
+
+  .countdown-card {
+    margin: 0 20px 20px;
+    padding: 24px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .countdown-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+  }
+
+  .countdown-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .countdown-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown-num {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown-unit-lbl {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  .countdown-divider {
+    font-family: var(--serif);
+    font-size: 38px;
+    color: var(--gold-deep);
+    line-height: 1;
+    opacity: 0.5;
+  }
+
+  .countdown-time {
+    font-size: 12px;
+    color: var(--ink-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .prayer-cta-section { margin: 0 20px 20px; }
+
+  .btn-join-prayer {
+    width: 100%;
+    padding: 18px;
+    background: var(--gold);
+    color: var(--bg-page);
+    border: none;
+    border-radius: 14px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px -8px rgba(212, 166, 74, 0.5);
+  }
+
+  .btn-join-prayer svg { width: 18px; height: 18px; }
+
+  .btn-join-prayer.disabled {
+    background: var(--bg-card);
+    color: var(--ink-muted);
+    box-shadow: none;
+    cursor: default;
+    border: 1px solid var(--border-neutral);
+  }
+
+  .reminder-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+  }
+
+  .reminder-toggle-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .reminder-toggle-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gold-soft);
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+  }
+
+  .reminder-toggle-icon svg { width: 14px; height: 14px; }
+
+  .reminder-toggle-text { font-size: 12px; }
+  .reminder-toggle-title { font-weight: 600; color: var(--ink-primary); margin-bottom: 2px; }
+  .reminder-toggle-sub { font-size: 11px; color: var(--ink-muted); }
+
+  .switch {
+    width: 40px;
+    height: 24px;
+    background: var(--gold);
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-page);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+
+  .switch.off { background: var(--bg-elevated); border: 1px solid var(--border-neutral); }
+  .switch.off::after { right: auto; left: 2px; background: var(--ink-muted); }
+
+  .joining-section {
+    margin: 4px 20px 20px;
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .joining-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .joining-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .joining-count {
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .avatar-stack-large {
+    display: flex;
+    margin-bottom: 8px;
+  }
+
+  .avatar-stack-large .stack-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-card);
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+  }
+
+  .avatar-stack-large .stack-avatar:first-child { margin-left: 0; }
+
+  .joining-text {
+    font-size: 12px;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+  }
+
+  .joining-text strong { color: var(--ink-primary); font-weight: 600; }
+
+  .prayer-focus {
+    margin: 0 20px 20px;
+    padding: 18px;
+    background: 
+      linear-gradient(135deg, rgba(212, 166, 74, 0.06) 0%, rgba(232, 188, 94, 0.02) 100%),
+      var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .focus-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .focus-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-primary);
+    margin-bottom: 10px;
+  }
+
+  .focus-verse {
+    font-size: 11px;
+    color: var(--gold-deep);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .info-block {
+    margin: 0 20px 20px;
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--gold-soft);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+  }
+
+  .info-block svg {
+    width: 14px;
+    height: 14px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .info-block-text {
+    font-size: 11px;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+  }
+
+  .info-block-text strong { color: var(--ink-primary); font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .gallery-header h1 { font-size: 34px; }
+    body { padding: 40px 16px; }
+    .gallery-grid { gap: 50px 20px; }
+    .section-banner .title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="gallery-header">
+  <div class="eyebrow">Franchise Mobile · Complete Design Set</div>
+  <h1>A generation, <em>awakened</em>.</h1>
+  <p>Nine screens designed in the visual language of Franchise Church — gold on black, editorial serif, rejoicing forever in Christ.</p>
+</header>
+
+<!-- ===================== SECTION 1: CORE ===================== -->
+<section class="section-banner">
+  <div class="num">— I —</div>
+  <div class="title">The <em>Core</em> Experience</div>
+  <div class="subtitle">Welcome, feed, prayer wall, events, composer, profile.</div>
+</section>
+
+<div class="gallery-grid">
+
+  <!-- 01 WELCOME -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar" style="color: white;">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="welcome-screen">
+          <div class="welcome-bg"></div>
+          <div class="welcome-content">
+            <div class="welcome-logo">
+              <div class="fc-logo">Franchise</div>
+              <div class="fc-logo-sub">Church</div>
+            </div>
+            <div class="welcome-hero">
+              <h1>A generation, <em>awakened</em> to eternity.</h1>
+              <p>Step into community. Share prayers. Grow together in Christ.</p>
+            </div>
+            <div>
+              <div class="welcome-actions">
+                <button class="btn-primary">Create Account</button>
+                <button class="btn-ghost">I have an account</button>
+              </div>
+              <div class="welcome-footer">By continuing you agree to our Terms &amp; Privacy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">01</span><span class="name">Welcome</span></div>
+      <div class="desc">First impression — cursive gold logo, editorial serif heading, the brand's worship-led language front and centre.</div>
+    </div>
+  </div>
+
+  <!-- 02 FEED -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="app-header">
+          <div class="brand-row">
+            <div class="fc-logo-small">Franchise</div>
+            <div class="feed-brand-label">Social</div>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+            <button class="icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+              <span class="notif-dot"></span>
+            </button>
+          </div>
+        </div>
+        <div class="content">
+          <div class="groups-strip">
+            <div class="group-pill active">For You</div>
+            <div class="group-pill">Youth</div>
+            <div class="group-pill">Prayer Team</div>
+            <div class="group-pill">Choir</div>
+            <div class="group-pill">Ushers</div>
+          </div>
+
+          <div class="post-card">
+            <div class="post-header">
+              <div class="avatar deep">TM</div>
+              <div class="post-meta">
+                <div class="post-author">Pastor Tosin <span class="badge">Pastor</span></div>
+                <div class="post-time">2 hours ago · Announcement</div>
+              </div>
+              <button class="post-menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+              </button>
+            </div>
+            <div class="post-content">Family, what a Sunday. The presence of God was tangible. Let's keep walking in what we received — boldness, joy, and an unshakeable hope in Christ.</div>
+            <div class="post-image worship"></div>
+            <div class="post-actions">
+              <button class="post-action active">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <span>234</span>
+              </button>
+              <button class="post-action">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>48</span>
+              </button>
+              <button class="post-action">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="post-card">
+            <div class="post-header">
+              <div class="avatar warm">AO</div>
+              <div class="post-meta">
+                <div class="post-author">Adaeze Okonkwo</div>
+                <div class="post-time">5h · Choir</div>
+              </div>
+              <button class="post-menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+              </button>
+            </div>
+            <div class="post-content">Rehearsal tonight was something else 🎶 Can't wait for everyone to hear what we've been working on for the conference.</div>
+            <div class="post-actions">
+              <button class="post-action">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <span>89</span>
+              </button>
+              <button class="post-action">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>12</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab active">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9.5L12 3l9 6.5V21h-6v-7h-6v7H3V9.5z"/></svg>
+            <span>Feed</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2v6a2 2 0 0 0 2 2h6"/><path d="M4 22V4a2 2 0 0 1 2-2h10l6 6v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+            <span>Prayer</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+            <span>Live</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+            <span>Inbox</span>
+            <span class="tab-badge">3</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+            <span>Profile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">02</span><span class="name">Feed</span></div>
+      <div class="desc">Home tab — gold tab indicators, role badges in gold, warm-toned avatars throughout.</div>
+    </div>
+  </div>
+
+  <!-- 03 PRAYER WALL -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="prayer-hero">
+            <div class="label">The Prayer Wall</div>
+            <h2>Where we <em>carry</em> each other.</h2>
+            <p>A sacred space for requests, intercession, and testimony.</p>
+            <div class="prayer-stats">
+              <div class="prayer-stat">
+                <div class="num">142</div>
+                <div class="lbl">Active</div>
+              </div>
+              <div class="prayer-stat">
+                <div class="num">2.8k</div>
+                <div class="lbl">Praying</div>
+              </div>
+              <div class="prayer-stat">
+                <div class="num">87</div>
+                <div class="lbl">Answered</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="prayer-card">
+            <div class="post-header">
+              <div class="avatar bronze">CN</div>
+              <div class="post-meta">
+                <div class="post-author">Chinedu Nwosu</div>
+                <div class="post-time">1 hour ago</div>
+              </div>
+            </div>
+            <div class="post-content">Asking the family to stand with me as I sit for my final medical exams next week. Praying for clarity, peace, and that everything I've studied returns to me at the right moment.</div>
+            <div class="praying-bar">
+              <div style="display: flex; align-items: center;">
+                <div class="avatar-stack">
+                  <div class="avatar warm">A</div>
+                  <div class="avatar deep">T</div>
+                  <div class="avatar amber">M</div>
+                  <div class="avatar bronze">S</div>
+                </div>
+                <span class="praying-count"><strong>34</strong> are praying</span>
+              </div>
+              <button class="btn-pray">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg>
+                <span>Pray</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prayer-card">
+            <div class="post-header">
+              <div class="avatar amber">RA</div>
+              <div class="post-meta">
+                <div class="post-author">Ruth Adeyemi</div>
+                <div class="post-time">3 hours ago</div>
+              </div>
+            </div>
+            <div class="post-content">For my mum — recovering from surgery this week. The doctors are pleased but we are still believing for full restoration. Thank you, family.</div>
+            <div class="praying-bar">
+              <div style="display: flex; align-items: center;">
+                <div class="avatar-stack">
+                  <div class="avatar deep">P</div>
+                  <div class="avatar warm">K</div>
+                  <div class="avatar bronze">D</div>
+                </div>
+                <span class="praying-count"><strong>67</strong> are praying</span>
+              </div>
+              <button class="btn-pray">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg>
+                <span>Pray</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V21h-6v-7h-6v7H3V9.5z"/></svg>
+            <span>Feed</span>
+          </button>
+          <button class="tab active">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2v6a2 2 0 0 0 2 2h6V4a2 2 0 0 0-2-2h-6zM4 22V4a2 2 0 0 1 2-2h10l6 6v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+            <span>Prayer</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+            <span>Live</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+            <span>Inbox</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+            <span>Profile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">03</span><span class="name">Prayer Wall</span></div>
+      <div class="desc">Sacred treatment — italic serif requests with a gold vertical accent. "Pray" button rendered in signature gold.</div>
+    </div>
+  </div>
+
+  <!-- 04 EVENT DETAIL -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar" style="color: white;">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="event-cover">
+            <div class="event-cover-nav">
+              <button class="icon-btn" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border-color: rgba(212,166,74,0.3);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </button>
+              <button class="icon-btn" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border-color: rgba(212,166,74,0.3);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              </button>
+            </div>
+            <div class="event-cover-content">
+              <span class="event-type">Conference</span>
+              <div class="event-title">The Awakened <em>Generation</em></div>
+            </div>
+          </div>
+          <div class="event-body">
+            <div class="event-detail-row">
+              <div class="event-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div class="event-detail-text">
+                <div class="lbl">Date</div>
+                <div class="val">Friday, 12 June 2026 · 6:00 PM</div>
+              </div>
+            </div>
+            <div class="event-detail-row">
+              <div class="event-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="event-detail-text">
+                <div class="lbl">Location</div>
+                <div class="val">Franchise Auditorium, Lekki, Lagos</div>
+              </div>
+            </div>
+            <div class="event-detail-row">
+              <div class="event-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="event-detail-text">
+                <div class="lbl">Hosted by</div>
+                <div class="val">Pastor Tosin Martins</div>
+              </div>
+            </div>
+
+            <div class="event-description">
+              Three nights of unfiltered worship, the unveiling of the Word, and a generation rising to its eternal identity in Christ. Bring everyone.
+            </div>
+
+            <div class="rsvp-section">
+              <div class="rsvp-title">Will You Be There?</div>
+              <div class="rsvp-buttons">
+                <button class="rsvp-btn selected">Going</button>
+                <button class="rsvp-btn">Interested</button>
+                <button class="rsvp-btn">Can't make it</button>
+              </div>
+              <div class="attendees">
+                <div style="display: flex; align-items: center;">
+                  <div class="avatar-stack">
+                    <div class="avatar deep">T</div>
+                    <div class="avatar warm">A</div>
+                    <div class="avatar bronze">C</div>
+                    <div class="avatar amber">R</div>
+                  </div>
+                  <span class="praying-count" style="margin-left: 10px;"><strong>312</strong> going · <strong>89</strong> interested</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">04</span><span class="name">Event Detail</span></div>
+      <div class="desc">Cinematic header with warm gold gradient atmosphere. RSVP selection styled in signature gold.</div>
+    </div>
+  </div>
+
+  <!-- 05 COMPOSER -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="composer-header">
+          <button class="composer-cancel">Cancel</button>
+          <div class="composer-title">New Post</div>
+          <button class="composer-submit">Share</button>
+        </div>
+        <div class="content">
+          <div class="composer-body">
+            <div class="composer-user">
+              <div class="avatar deep">SC</div>
+              <div class="composer-user-info">
+                <div class="composer-user-name">Stephen Chris</div>
+                <div class="scope-selector">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  Posting to <strong style="color: var(--ink-primary); margin-left: 2px;">Main Feed</strong>
+                </div>
+              </div>
+            </div>
+            <textarea class="composer-textarea" placeholder="Share what's on your heart…">What God did this week is still landing. The clarity, the peace — none of it earned. Just received. Grateful for this family.</textarea>
+            
+            <div class="post-type-row">
+              <div class="post-type selected">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                Testimony
+              </div>
+              <div class="post-type">Regular</div>
+              <div class="post-type">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg>
+                Prayer
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="composer-toolbar">
+          <div class="toolbar-actions">
+            <button class="toolbar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </button>
+            <button class="toolbar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </button>
+            <button class="toolbar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </button>
+            <button class="toolbar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.08V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6"/><polyline points="14 3 14 8 19 8"/><circle cx="18" cy="18" r="3"/></svg>
+            </button>
+          </div>
+          <div class="char-count">157 / 5000</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">05</span><span class="name">Composer</span></div>
+      <div class="desc">Modal sheet for new posts. Gold "Share" button affirms publishing; type selector reinforced in gold.</div>
+    </div>
+  </div>
+
+  <!-- 06 PROFILE -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar" style="color: white;">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="profile-cover">
+            <div class="profile-header-nav">
+              <button class="icon-btn" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border-color: rgba(212,166,74,0.2);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </button>
+              <button class="icon-btn" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border-color: rgba(212,166,74,0.2);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="profile-info">
+            <div class="profile-avatar">S</div>
+            <div class="profile-name">Stephen Chris</div>
+            <div class="profile-username">@stephenchris · Joined April 2026</div>
+            <div class="profile-ministry">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.77l-6.18 3.25L7 12.14 2 7.27l6.91-1.01L12 0z"/></svg>
+              Media Team
+            </div>
+            <div class="profile-bio">
+              Software consultant. Building tools that serve the body of Christ. Husband to Rachel. Voice behind <em>Halleluyah</em>.
+            </div>
+
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <div class="n">147</div>
+                <div class="l">Posts</div>
+              </div>
+              <div class="profile-stat">
+                <div class="n">4</div>
+                <div class="l">Groups</div>
+              </div>
+              <div class="profile-stat">
+                <div class="n">2.3k</div>
+                <div class="l">Amens</div>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <button class="profile-btn primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit Profile
+              </button>
+              <button class="profile-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Share
+              </button>
+            </div>
+          </div>
+
+          <div class="section-title-row">
+            <div class="section-title">My Groups</div>
+            <div class="section-title-link">View All</div>
+          </div>
+
+          <div class="group-item">
+            <div class="group-icon">MT</div>
+            <div class="group-info">
+              <div class="group-name">Media Team</div>
+              <div class="group-members">42 members · 8 new posts</div>
+            </div>
+          </div>
+          <div class="group-item">
+            <div class="group-icon warm">PT</div>
+            <div class="group-info">
+              <div class="group-name">Prayer Team</div>
+              <div class="group-members">128 members · 3 new posts</div>
+            </div>
+          </div>
+          <div class="group-item">
+            <div class="group-icon deep">FA</div>
+            <div class="group-info">
+              <div class="group-name">Franchise Adults</div>
+              <div class="group-members">340 members · 12 new posts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">06</span><span class="name">Profile</span></div>
+      <div class="desc">Personal home. Cover gradient cascades from black through bronze to gold — the brand's color story in microcosm.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== SECTION 2: LIVE & GATHER ===================== -->
+<section class="section-banner">
+  <div class="num">— II —</div>
+  <div class="title">Live <em>&amp; Gather</em></div>
+  <div class="subtitle">Sunday service, midweek, Friday prayer — one tap to join.</div>
+</section>
+
+<div class="gallery-grid">
+
+  <!-- 07 LIVE HUB -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="app-header">
+          <div class="brand-row">
+            <div class="fc-logo-small">Franchise</div>
+            <div class="feed-brand-label">Live</div>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="content">
+          <div class="hub-hero">
+            <div class="hub-eyebrow">Sunday · Live Now</div>
+            <div class="hub-title">The family is <em>worshipping</em>.</div>
+            <div class="hub-subtitle">Pastor Tosin is on the altar. Join in.</div>
+          </div>
+
+          <div class="live-hero">
+            <span class="live-badge">
+              <span class="pulse"></span>
+              Live Now
+            </span>
+            <span class="live-watching">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              1,247 watching
+            </span>
+            <div class="live-content">
+              <span class="live-platform">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                YouTube
+              </span>
+              <div class="live-title">Sunday Service · <em>The Unshakeable</em></div>
+              <div class="live-meta">Pastor Tosin Martins · Started 18 min ago</div>
+              <button class="live-cta">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Join the Service
+              </button>
+            </div>
+          </div>
+
+          <div class="section-title-row">
+            <div class="section-title">This Week</div>
+            <div class="section-title-link">View All</div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <div class="service-info">
+              <div class="service-day">Friday Prayer</div>
+              <div class="service-name">Weekly Prayer Meeting</div>
+              <div class="service-when">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Fri · 9:00 PM · Zoom
+              </div>
+            </div>
+            <div class="service-status">
+              <span class="countdown-pill">In 2 days</span>
+              <button class="reminder-btn on">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 5 9 7 13 2-4 7-7.75 7-13 0-3.87-3.13-7-7-7z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon youtube">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </div>
+            <div class="service-info">
+              <div class="service-day">Wednesday</div>
+              <div class="service-name">Midweek Service</div>
+              <div class="service-when">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Wed · 6:30 PM · YouTube
+              </div>
+            </div>
+            <div class="service-status">
+              <span class="countdown-pill">In 4 days</span>
+              <button class="reminder-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 5 9 7 13 2-4 7-7.75 7-13 0-3.87-3.13-7-7-7z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="section-title-row" style="margin-top: 8px;">
+            <div class="section-title">Watch Again</div>
+            <div class="section-title-link">See All</div>
+          </div>
+
+          <div class="replay-strip">
+            <div class="replay-card">
+              <div class="replay-thumb sermon-1">
+                <div class="replay-play">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <span class="replay-duration">1:24:36</span>
+              </div>
+              <div class="replay-meta">
+                <div class="replay-title">Endless Life — Part 2: The Inheritance</div>
+                <div class="replay-info">Pastor Tosin · 3 days ago</div>
+              </div>
+            </div>
+            <div class="replay-card">
+              <div class="replay-thumb sermon-2">
+                <div class="replay-play">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <span class="replay-duration">48:12</span>
+              </div>
+              <div class="replay-meta">
+                <div class="replay-title">Midweek: The Mind of Christ</div>
+                <div class="replay-info">Pastor Tosin · 5 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V21h-6v-7h-6v7H3V9.5z"/></svg>
+            <span>Feed</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2v6a2 2 0 0 0 2 2h6"/><path d="M4 22V4a2 2 0 0 1 2-2h10l6 6v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+            <span>Prayer</span>
+          </button>
+          <button class="tab active">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><polygon fill="#0a0807" points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Live</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+            <span>Inbox</span>
+          </button>
+          <button class="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+            <span>Profile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">07</span><span class="name">Live & Gather Hub</span></div>
+      <div class="desc">All services in one tab. Live service in hero card with one-tap "Join the Service" gold CTA. Upcoming with countdown and bell reminders.</div>
+    </div>
+  </div>
+
+  <!-- 08 LIVE PLAYER -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen player-screen">
+        <div class="status-bar" style="color: white;">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="player-nav">
+          <button class="icon-btn" style="background: rgba(255,255,255,0.1); border-color: rgba(212,166,74,0.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="player-nav-title">
+            <span class="live-mini-badge">
+              <span class="pulse"></span>
+              Live
+            </span>
+            <span>Sunday Service</span>
+          </div>
+          <button class="icon-btn" style="background: rgba(255,255,255,0.1); border-color: rgba(212,166,74,0.2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+        </div>
+        <div class="video-frame">
+          <div class="video-controls">
+            <button class="play-btn">
+              <svg viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </button>
+            <div class="video-progress">
+              <div class="video-progress-fill"></div>
+            </div>
+            <svg class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="stream-meta">
+            <div class="stream-platform-row">
+              <div class="stream-platform">
+                <div class="platform-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <div class="platform-info">
+                  <div class="platform-name">@thefranchisechurch</div>
+                  <div class="platform-sub">Streaming via YouTube</div>
+                </div>
+              </div>
+              <div class="stream-actions">
+                <button class="stream-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                </button>
+                <button class="stream-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a9 9 0 0 1 9-7c3 0 5.7 1.4 7.5 3.6"/><path d="M21 3v6h-6"/><path d="M21 15a9 9 0 0 1-9 7c-3 0-5.7-1.4-7.5-3.6"/><path d="M3 21v-6h6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="stream-title">The Unshakeable <em>Hope</em></div>
+            <div class="stream-info-row">
+              <span>Pastor Tosin Martins</span>
+              <span class="dot"></span>
+              <span>1,247 watching</span>
+              <span class="dot"></span>
+              <span>Live</span>
+            </div>
+          </div>
+
+          <div class="chat-tabs">
+            <button class="chat-tab active">Live Chat</button>
+            <button class="chat-tab">Notes</button>
+            <button class="chat-tab">Give</button>
+          </div>
+
+          <div class="chat-messages">
+            <div class="chat-msg">
+              <div class="chat-avatar warm">G</div>
+              <div class="chat-bubble">
+                <div class="chat-author">Grace Aigbe</div>
+                <div class="chat-text">Joining from Abuja 🙌</div>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar bronze">DA</div>
+              <div class="chat-bubble">
+                <div class="chat-author">David Adebayo</div>
+                <div class="chat-text"><span class="chat-amen">Amen!</span> That word is for me today.</div>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar deep">MO</div>
+              <div class="chat-bubble">
+                <div class="chat-author">Mary Olawale <span class="badge">Usher</span></div>
+                <div class="chat-text">Family, please welcome those joining online 💛</div>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-avatar">JC</div>
+              <div class="chat-bubble">
+                <div class="chat-author">James Chukwu</div>
+                <div class="chat-text">The worship was 🔥 🔥</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-reaction-row">
+            <button class="quick-reaction">🙌 Amen</button>
+            <button class="quick-reaction">🙏 Praying</button>
+            <button class="quick-reaction">❤️ Love</button>
+            <button class="quick-reaction">🔥 Fire</button>
+            <button class="quick-reaction">📖 Receiving</button>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input class="chat-input" placeholder="Share what you're receiving…">
+          <button class="send-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">08</span><span class="name">In-App Live Service</span></div>
+      <div class="desc">YouTube embedded. In-app live chat with role badges in gold. Tabs for Chat / Notes / Give. Gold send button anchors the experience.</div>
+    </div>
+  </div>
+
+  <!-- 09 PRAYER ZOOM LOBBY -->
+  <div class="screen-wrapper">
+    <div class="phone">
+      <div class="screen prayer-screen-bg">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="indicators">
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 3h2v7H9zM13 1h2v9h-2z"/></svg>
+            <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 2C5.5 2 3.3 3 1.6 4.6L8 11l6.4-6.4C12.7 3 10.5 2 8 2z"/></svg>
+            <svg viewBox="0 0 25 11" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="22" height="10" rx="2"/><rect x="2" y="2" width="19" height="7" rx="1" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="prayer-back-nav">
+          <button class="prayer-back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </button>
+          <div class="prayer-nav-title">Prayer Session</div>
+        </div>
+        <div class="content">
+          <div class="prayer-hero-zoom">
+            <div class="prayer-day-pill">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg>
+              Friday Prayer
+            </div>
+            <div class="prayer-zoom-title">When two or three <em>gather</em>…</div>
+            <div class="prayer-zoom-subtitle">Our weekly intercession over Zoom. Bring your requests. Bring your praise.</div>
+          </div>
+
+          <div class="countdown-card">
+            <div class="countdown-label">Starts in</div>
+            <div class="countdown-numbers">
+              <div class="countdown-unit">
+                <div class="countdown-num">02</div>
+                <div class="countdown-unit-lbl">Days</div>
+              </div>
+              <div class="countdown-divider">·</div>
+              <div class="countdown-unit">
+                <div class="countdown-num">14</div>
+                <div class="countdown-unit-lbl">Hrs</div>
+              </div>
+              <div class="countdown-divider">·</div>
+              <div class="countdown-unit">
+                <div class="countdown-num">36</div>
+                <div class="countdown-unit-lbl">Min</div>
+              </div>
+            </div>
+            <div class="countdown-time">Friday, 30 May · 9:00 PM WAT</div>
+          </div>
+
+          <div class="prayer-cta-section">
+            <button class="btn-join-prayer disabled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Opens when prayer begins
+            </button>
+            <div class="reminder-toggle">
+              <div class="reminder-toggle-info">
+                <div class="reminder-toggle-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+                </div>
+                <div class="reminder-toggle-text">
+                  <div class="reminder-toggle-title">Remind me</div>
+                  <div class="reminder-toggle-sub">15 minutes before we gather</div>
+                </div>
+              </div>
+              <div class="switch"></div>
+            </div>
+          </div>
+
+          <div class="joining-section">
+            <div class="joining-header">
+              <div class="joining-title">Joining This Week</div>
+              <div class="joining-count">+47</div>
+            </div>
+            <div class="avatar-stack-large">
+              <div class="stack-avatar" style="background: linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%); color: var(--cream);">SC</div>
+              <div class="stack-avatar" style="background: linear-gradient(135deg, #8b6f3e 0%, #f0e4cf 100%); color: #2a1d0a;">AO</div>
+              <div class="stack-avatar" style="background: linear-gradient(135deg, #4a2a1a 0%, #b8702e 100%); color: var(--cream);">CN</div>
+              <div class="stack-avatar" style="background: linear-gradient(135deg, #6b4e1f 0%, #e8bc5e 100%); color: #1a1208;">RA</div>
+              <div class="stack-avatar" style="background: linear-gradient(135deg, #5a3a1a 0%, #d4a64a 100%); color: #1a1208;">DA</div>
+              <div class="stack-avatar" style="background: var(--bg-elevated); color: var(--ink-secondary); font-size: 10px;">+9</div>
+            </div>
+            <div class="joining-text"><strong>53 members</strong> have committed to gather this Friday. Will you?</div>
+          </div>
+
+          <div class="prayer-focus">
+            <div class="focus-label">This Week's Focus</div>
+            <div class="focus-text">"Standing together for the harvest — that labourers would be raised from our midst, and that hearts across Lagos would turn to Christ."</div>
+            <div class="focus-verse">— Matthew 9:37–38</div>
+          </div>
+
+          <div class="info-block">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="info-block-text">When it's time, tap <strong>Join</strong> — we'll open Zoom for you. Meeting ID and passcode pre-filled.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">
+      <div><span class="num">09</span><span class="name">Friday Prayer · Zoom Lobby</span></div>
+      <div class="desc">Countdown to next session, gold reminder switch, the family showing up, this week's prayer focus with scripture. Join button activates at prayer time.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

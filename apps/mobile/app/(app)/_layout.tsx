@@ -126,6 +126,25 @@ export default function AppLayout() {
           animation: "slide_from_bottom",
         }}
       />
+
+      {/* ── Live player (modal, full-screen) ─────────────────────── */}
+      <Stack.Screen
+        name="live/[id]"
+        options={{
+          headerShown: false,
+          presentation: "modal",
+          animation: "slide_from_bottom",
+        }}
+      />
+
+      {/* ── Friday Prayer lobby (slides in from right) ───────────── */}
+      <Stack.Screen
+        name="live/prayer"
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      />
     </Stack>
   );
 }

@@ -17,8 +17,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing params" }, { status: 400 });
   }
 
-  // Only allow private channels for the authenticated user's own channel
-  if (channel !== `private-user-${session.user.id}`) {
+  // Allow private user channels and public livestream channels
+  const isUserChannel = channel === `private-user-${session.user.id}`;
+  const isLivestreamChannel = /^livestream-[a-zA-Z0-9_-]+$/.test(channel);
+
+  if (!isUserChannel && !isLivestreamChannel) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

@@ -91,6 +91,10 @@ export default function RootLayout() {
           router.push(`/(app)/feed/${data.postId}`);
         } else if (data.type === "reaction" && data.postId) {
           router.push(`/(app)/feed/${data.postId}`);
+        } else if (data.type === "prayer_now_open" || data.type === "prayer_starting_soon") {
+          router.push("/(app)/live/prayer");
+        } else if ((data.type === "service_now_live" || data.type === "service_starting_soon") && data.livestreamId) {
+          router.push(`/(app)/live/${data.livestreamId}`);
         }
       }
     );

@@ -1,4 +1,5 @@
-import { db, groups, users } from "./index";
+import { db, groups, users, livestreams } from "./index";
+import { eq } from "drizzle-orm";
 import { eq } from "drizzle-orm";
 
 const SEED_GROUPS = [
@@ -81,6 +82,56 @@ async function seed() {
   }
 
   console.log(`✅ ${SEED_GROUPS.length} groups seeded.`);
+
+  // ── Livestreams ─────────────────────────────────────────────────────────
+  console.log("Seeding livestreams…");
+
+  const SEED_LIVESTREAMS = [
+    {
+      name: "Sunday Service",
+      serviceType: "sunday_youtube" as const,
+      platform: "youtube" as const,
+      youtubeChannelId: process.env.YOUTUBE_CHANNEL_ID ?? "",
+      dayOfWeek: 0,
+      scheduledTime: "10:00",
+      durationMins: 120,
+      status: "scheduled" as const,
+    },
+    {
+      name: "Midweek Service",
+      serviceType: "wednesday_youtube" as const,
+      platform: "youtube" as const,
+      youtubeChannelId: process.env.YOUTUBE_CHANNEL_ID ?? "",
+      dayOfWeek: 3,
+      scheduledTime: "18:30",
+      durationMins: 90,
+      status: "scheduled" as const,
+    },
+    {
+      name: "Friday Prayer",
+      serviceType: "friday_zoom" as const,
+      platform: "zoom" as const,
+      zoomMeetingId: process.env.ZOOM_MEETING_ID ?? "",
+      zoomPasscode: process.env.ZOOM_PASSCODE ?? "",
+      dayOfWeek: 5,
+      scheduledTime: "21:00",
+      durationMins: 60,
+      status: "scheduled" as const,
+      prayerFocus:
+        "Standing together for the harvest — that labourers would be raised from our midst, and that hearts across Lagos would turn to Christ.",
+      prayerVerse: "Matthew 9:37-38",
+    },
+  ];
+
+  for (const ls of SEED_LIVESTREAMS) {
+    await db
+      .insert(livestreams)
+      .values(ls)
+      .onConflictDoNothing();
+    console.log(`  ✓ ${ls.name}`);
+  }
+
+  console.log(`✅ ${SEED_LIVESTREAMS.length} livestreams seeded.`);
 }
 
 seed().catch((e) => {

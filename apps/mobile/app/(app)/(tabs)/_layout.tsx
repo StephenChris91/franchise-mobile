@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react";
 import { Tabs } from "expo-router";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Animated } from "react-native";
 import { Home, HandHeart, Calendar, Bell, User } from "lucide-react-native";
 import { COLORS } from "@/lib/theme/colors";
 import { useQuery } from "@tanstack/react-query";
@@ -31,6 +32,55 @@ function TabIcon({
       </View>
       {/* Active dot */}
       {focused && <View style={styles.dot} />}
+    </View>
+  );
+}
+
+function LiveTabIcon({ focused }: { focused: boolean }) {
+  const { data: schedule } = useQuery({
+    queryKey: queryKeys.live.schedule(),
+    queryFn: ({ signal }) => api.live.schedule(signal),
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+  });
+  const isLive = schedule?.some((s) => s.status === "live") ?? false;
+
+  // Pulse animation when live
+  const pulse = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    if (isLive) {
+      const loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulse, { toValue: 1.4, duration: 600, useNativeDriver: true }),
+          Animated.timing(pulse, { toValue: 1, duration: 600, useNativeDriver: true }),
+        ])
+      );
+      loop.start();
+      return () => loop.stop();
+    } else {
+      pulse.setValue(1);
+    }
+  }, [isLive, pulse]);
+
+  return (
+    <View style={styles.iconWrap}>
+      {isLive ? (
+        // Solid red circle with white play triangle when live
+        <View style={styles.liveIconCircle}>
+          <Animated.View style={[styles.livePulseRing, { transform: [{ scale: pulse }] }]} />
+          <View style={styles.liveIconInner}>
+            <Text style={styles.liveIconPlay}>▶</Text>
+          </View>
+        </View>
+      ) : (
+        <View>
+          {/* Outlined play circle when not live */}
+          <View style={[styles.playCircle, focused && styles.playCircleActive]}>
+            <Text style={[styles.playIcon, { color: focused ? COLORS.bg.page : COLORS.ink.muted }]}>▶</Text>
+          </View>
+        </View>
+      )}
+      {focused && !isLive && <View style={styles.dot} />}
     </View>
   );
 }
@@ -89,6 +139,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="live/index"
+        options={{
+          title: "Live",
+          tabBarIcon: ({ focused }) => <LiveTabIcon focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
         name="notifications/index"
         options={{
           title: "Updates",
@@ -134,4 +191,33 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: COLORS.brand.primary,
   },
+  // Live tab icon
+  liveIconCircle: { width: 24, height: 24, alignItems: "center", justifyContent: "center" },
+  livePulseRing: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: COLORS.status.live + "33",
+  },
+  liveIconInner: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: COLORS.status.live,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  liveIconPlay: { color: "#fff", fontSize: 9, marginLeft: 1 },
+  playCircle: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1.8,
+    borderColor: COLORS.ink.muted,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  playCircleActive: { borderColor: COLORS.brand.primary, backgroundColor: COLORS.brand.primary },
+  playIcon: { fontSize: 8, marginLeft: 1 },
 });

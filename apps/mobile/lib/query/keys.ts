@@ -72,4 +72,14 @@ export const queryKeys = {
   // ── App version ──────────────────────────────────────────────────────────
   appVersion: (clientVersion: string) =>
     ["app-version", clientVersion] as const,
+
+  // ── Live services ─────────────────────────────────────────────────────────
+  live: {
+    all: ["live"] as const,
+    schedule: () => [...["live"], "schedule"] as const,
+    detail: (id: string) => [...["live"], "detail", id] as const,
+    chat: (id: string) => [...["live"], "chat", id] as const,
+    reminders: () => [...["live"], "reminders"] as const,
+    commitments: (id: string) => [...["live"], "commitments", id] as const,
+  },
 } as const;

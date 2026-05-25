@@ -242,6 +242,67 @@ export interface SearchResponse {
   results: SearchResultItem[];
 }
 
+// ─── Live services ────────────────────────────────────────────────────────────
+
+export type ServiceType = "sunday_youtube" | "wednesday_youtube" | "friday_zoom";
+export type LivePlatform = "youtube" | "zoom";
+export type LivestreamStatus = "scheduled" | "live" | "ended";
+export type ChatReactionType = "amen" | "praying" | "love" | "fire" | "receiving";
+
+export interface LivestreamScheduleItem {
+  id: string;
+  name: string;
+  serviceType: ServiceType;
+  platform: LivePlatform;
+  status: LivestreamStatus;
+  dayOfWeek: number;
+  scheduledTime: string;          // "HH:MM" WAT
+  durationMins: number;
+  nextOccurrence: string;         // ISO — next scheduled datetime (WAT→UTC)
+  youtubeVideoId: string | null;
+  zoomMeetingId: string | null;
+  zoomPasscode: string | null;
+  replayUrl: string | null;
+  startedAt: string | null;
+  reminderActive: boolean;        // current user's reminder pref
+}
+
+export interface CommittedMember {
+  userId: string;
+  username: string;
+  fullName: string;
+  photoUrl: string | null;
+}
+
+export interface LivestreamDetailResponse extends LivestreamScheduleItem {
+  prayerFocus: string | null;
+  prayerVerse: string | null;
+  commitmentCount: number;
+  committedMembers: CommittedMember[]; // up to 5
+  userCommitted: boolean;
+}
+
+export interface LiveChatMessageResponse {
+  id: string;
+  content: string;
+  reactionType: ChatReactionType | null;
+  isPinned: boolean;
+  createdAt: string;
+  author: {
+    userId: string;
+    username: string;
+    fullName: string;
+    photoUrl: string | null;
+    role: string;
+  };
+}
+
+export interface ServiceReminderResponse {
+  serviceType: ServiceType;
+  isActive: boolean;
+  minutesBefore: number;
+}
+
 // ─── App version ──────────────────────────────────────────────────────────────
 
 export interface AppVersionResponse {

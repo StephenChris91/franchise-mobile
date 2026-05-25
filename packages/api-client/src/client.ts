@@ -3,6 +3,8 @@ import type {
   CloudinarySignResponse, PostResponse, CommentResponse, GroupResponse, GroupMemberResponse,
   EventResponse, BlogPostResponse, BlogPostDetailResponse, NotificationResponse,
   MemberResponse, PaginatedResponse, SearchResponse, AppVersionResponse,
+  LivestreamScheduleItem, LivestreamDetailResponse, LiveChatMessageResponse,
+  ServiceReminderResponse, ServiceType,
 } from "@franchise/types";
 import type { LoginInput, SignupInput } from "@franchise/validators";
 
@@ -341,5 +343,45 @@ export class FranchiseAPI {
   contact = {
     pastor: (subject: string, message: string) =>
       this.request<{ ok: boolean }>("/api/v1/contact/pastor", { method: "POST", body: { subject, message } }),
+  };
+
+  // ─── Live services ─────────────────────────────────────────────────────────
+
+  live = {
+    schedule: (signal?: AbortSignal) =>
+      this.request<LivestreamScheduleItem[]>("/api/v1/live/schedule", { signal }),
+
+    get: (id: string, signal?: AbortSignal) =>
+      this.request<LivestreamDetailResponse>(`/api/v1/live/${id}`, { signal }),
+
+    chat: {
+      list: (id: string, params: { cursor?: string; limit?: number } = {}, signal?: AbortSignal) => {
+        const qs = new URLSearchParams(Object.entries(params).filter(([, v]) => v != null).map(([k, v]) => [k, String(v)])).toString();
+        return this.request<PaginatedResponse<LiveChatMessageResponse>>(`/api/v1/live/${id}/chat${qs ? `?${qs}` : ""}`, { signal });
+      },
+      send: (id: string, content: string, reactionType?: string) =>
+        this.request<LiveChatMessageResponse>(`/api/v1/live/${id}/chat`, { method: "POST", body: { content, reactionType } }),
+    },
+
+    commit: (id: string) =>
+      this.request<{ ok: boolean; committed: boolean }>(`/api/v1/live/${id}/commit`, { method: "POST" }),
+
+    uncommit: (id: string) =>
+      this.request<{ ok: boolean }>(`/api/v1/live/${id}/commit`, { method: "DELETE" }),
+
+    reminders: {
+      list: (signal?: AbortSignal) =>
+        this.request<ServiceReminderResponse[]>("/api/v1/live/reminders", { signal }),
+      set: (serviceType: ServiceType, isActive: boolean, minutesBefore?: number) =>
+        this.request<ServiceReminderResponse>("/api/v1/live/reminders", { method: "POST", body: { serviceType, isActive, minutesBefore } }),
+    },
+
+    admin: {
+      update: (id: string, data: { status?: string; youtubeVideoId?: string; replayUrl?: string; prayerFocus?: string; prayerVerse?: string }) =>
+        this.request<{ ok: boolean }>(`/api/v1/admin/live/${id}`, { method: "PATCH", body: data }),
+
+      pinChat: (id: string, messageId: string) =>
+        this.request<{ ok: boolean }>(`/api/v1/admin/live/${id}/pin-chat/${messageId}`, { method: "POST" }),
+    },
   };
 }

@@ -660,3 +660,122 @@ export type EventRsvp = typeof eventRsvps.$inferSelect;
 export type AdminAction = typeof adminActions.$inferSelect;
 export type RefreshToken = typeof refreshTokens.$inferSelect;
 export type PushToken = typeof pushTokens.$inferSelect;
+
+// ─── Live services enums ──────────────────────────────────────────────────────
+
+export const serviceTypeEnum = pgEnum("service_type", [
+  "sunday_youtube",
+  "wednesday_youtube",
+  "friday_zoom",
+]);
+
+export const livePlatformEnum = pgEnum("live_platform", [
+  "youtube",
+  "zoom",
+]);
+
+export const livestreamStatusEnum = pgEnum("livestream_status", [
+  "scheduled",
+  "live",
+  "ended",
+]);
+
+export const chatReactionTypeEnum = pgEnum("chat_reaction_type", [
+  "amen",
+  "praying",
+  "love",
+  "fire",
+  "receiving",
+]);
+
+// ─── Livestreams ──────────────────────────────────────────────────────────────
+
+export const livestreams = pgTable(
+  "livestreams",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name").notNull(),
+    serviceType: serviceTypeEnum("service_type").notNull(),
+    platform: livePlatformEnum("platform").notNull(),
+    youtubeChannelId: text("youtube_channel_id"),
+    youtubeVideoId: text("youtube_video_id"),
+    zoomMeetingId: text("zoom_meeting_id"),
+    zoomPasscode: text("zoom_passcode"),
+    dayOfWeek: integer("day_of_week").notNull(),
+    scheduledTime: text("scheduled_time").notNull(),
+    durationMins: integer("duration_mins").notNull().default(90),
+    status: livestreamStatusEnum("status").notNull().default("scheduled"),
+    startedAt: timestamp("started_at", { mode: "date" }),
+    endedAt: timestamp("ended_at", { mode: "date" }),
+    replayUrl: text("replay_url"),
+    prayerFocus: text("prayer_focus"),
+    prayerVerse: text("prayer_verse"),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [index("livestreams_service_type_idx").on(t.serviceType)]
+);
+
+export const liveChatMessages = pgTable(
+  "live_chat_messages",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    livestreamId: text("livestream_id")
+      .notNull()
+      .references(() => livestreams.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    content: text("content").notNull(),
+    reactionType: chatReactionTypeEnum("reaction_type"),
+    isPinned: boolean("is_pinned").notNull().default(false),
+    isHidden: boolean("is_hidden").notNull().default(false),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [
+    index("live_chat_livestream_idx").on(t.livestreamId),
+    index("live_chat_created_idx").on(t.createdAt),
+  ]
+);
+
+export const serviceReminders = pgTable(
+  "service_reminders",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    serviceType: serviceTypeEnum("service_type").notNull(),
+    minutesBefore: integer("minutes_before").notNull().default(15),
+    isActive: boolean("is_active").notNull().default(true),
+  },
+  (t) => [
+    primaryKey({ columns: [t.userId, t.serviceType] }),
+    index("service_reminders_user_idx").on(t.userId),
+  ]
+);
+
+export const prayerCommitments = pgTable(
+  "prayer_commitments",
+  {
+    livestreamId: text("livestream_id")
+      .notNull()
+      .references(() => livestreams.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    committedAt: timestamp("committed_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.livestreamId, t.userId] }),
+    index("prayer_commitments_livestream_idx").on(t.livestreamId),
+  ]
+);
+
+export type Livestream = typeof livestreams.$inferSelect;
+export type LiveChatMessage = typeof liveChatMessages.$inferSelect;
+export type ServiceReminder = typeof serviceReminders.$inferSelect;
+export type PrayerCommitment = typeof prayerCommitments.$inferSelect;
