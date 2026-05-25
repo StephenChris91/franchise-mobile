@@ -1,0 +1,300 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Franchise Church — Mobile & Web Design Tokens. Source of truth for all color, typography, spacing, and radius decisions. Gold on warm black — rejoicing forever.",
+
+  "color": {
+    "bg": {
+      "page":    { "$value": "#0a0807", "$description": "Deepest canvas. Used as screen background." },
+      "elevated":{ "$value": "#14110f", "$description": "Slightly lifted surface. Toolbars, bottom sheets." },
+      "card":    { "$value": "#1a1614", "$description": "Default card and list item background." },
+      "overlay": { "$value": "rgba(10, 8, 7, 0.95)", "$description": "Tab bar and nav overlay." }
+    },
+
+    "ink": {
+      "primary":   { "$value": "#f7f3ec", "$description": "Main body text. Warm white, not pure white." },
+      "secondary": { "$value": "#a5a09a", "$description": "Supporting text, meta, timestamps." },
+      "muted":     { "$value": "#6b6661", "$description": "Placeholder text, disabled labels." },
+      "inverse":   { "$value": "#0a0807", "$description": "Text on gold surfaces." }
+    },
+
+    "gold": {
+      "DEFAULT": { "$value": "#d4a64a", "$description": "Primary brand accent. Buttons, active tabs, badges, CTAs." },
+      "bright":  { "$value": "#e8bc5e", "$description": "Lighter gold for gradients and highlights." },
+      "deep":    { "$value": "#a87f2d", "$description": "Darker gold for labels on dark backgrounds." },
+      "soft":    { "$value": "rgba(212, 166, 74, 0.12)", "$description": "Tinted gold background for badges and tags." },
+      "glow":    { "$value": "rgba(212, 166, 74, 0.25)", "$description": "Gold glow used in shadows and halos." }
+    },
+
+    "cream": {
+      "DEFAULT": { "$value": "#f0e4cf", "$description": "Warm cream. Used as secondary warm accent." },
+      "soft":    { "$value": "rgba(240, 228, 207, 0.08)", "$description": "Tinted cream for subtle section backgrounds." }
+    },
+
+    "border": {
+      "subtle":  { "$value": "rgba(212, 166, 74, 0.08)", "$description": "Barely-there gold tint border." },
+      "default": { "$value": "rgba(212, 166, 74, 0.18)", "$description": "Standard card and component border." },
+      "strong":  { "$value": "rgba(212, 166, 74, 0.35)", "$description": "Focused or active border state." },
+      "neutral": { "$value": "rgba(255, 255, 255, 0.06)", "$description": "Neutral divider, no gold tint." }
+    },
+
+    "status": {
+      "live":        { "$value": "#c93a3a", "$description": "LIVE badge only. Universal live-streaming red." },
+      "live-soft":   { "$value": "rgba(201, 58, 58, 0.15)", "$description": "Soft live background." },
+      "success":     { "$value": "#4a9e6b", "$description": "Positive confirmation states." },
+      "warning":     { "$value": "#d4a64a", "$description": "Warnings reuse gold to stay on-brand." }
+    },
+
+    "gradient": {
+      "hero-warm": {
+        "$value": "linear-gradient(135deg, #1a0e05 0%, #4a2a1a 50%, #8b6f3e 100%)",
+        "$description": "Event and service cover hero backgrounds."
+      },
+      "hero-radial": {
+        "$value": "radial-gradient(ellipse at 70% 30%, rgba(232, 188, 94, 0.5) 0%, transparent 50%), radial-gradient(ellipse at 20% 70%, rgba(212, 166, 74, 0.3) 0%, transparent 50%)",
+        "$description": "Atmospheric overlay on hero images."
+      },
+      "profile-cover": {
+        "$value": "linear-gradient(135deg, #1a0e05 0%, #6b4e1f 40%, #d4a64a 100%)",
+        "$description": "Profile header cover gradient."
+      },
+      "welcome-glow": {
+        "$value": "radial-gradient(ellipse at 50% 0%, rgba(212, 166, 74, 0.18) 0%, transparent 55%)",
+        "$description": "Welcome screen top glow."
+      },
+      "avatar-default": {
+        "$value": "linear-gradient(135deg, #5a3a1a 0%, #d4a64a 100%)",
+        "$description": "Default avatar gradient."
+      },
+      "avatar-deep": {
+        "$value": "linear-gradient(135deg, #2a1d0a 0%, #6b4e1f 100%)",
+        "$description": "Deep bronze avatar."
+      },
+      "avatar-warm": {
+        "$value": "linear-gradient(135deg, #8b6f3e 0%, #f0e4cf 100%)",
+        "$description": "Warm cream avatar."
+      },
+      "avatar-bronze": {
+        "$value": "linear-gradient(135deg, #4a2a1a 0%, #b8702e 100%)",
+        "$description": "Bronze avatar."
+      },
+      "avatar-amber": {
+        "$value": "linear-gradient(135deg, #6b4e1f 0%, #e8bc5e 100%)",
+        "$description": "Amber avatar."
+      }
+    }
+  },
+
+  "font": {
+    "family": {
+      "serif":  { "$value": "'Fraunces', Georgia, serif", "$description": "Editorial headings, pull quotes, sermon titles, italic emphasis." },
+      "sans":   { "$value": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", "$description": "All body text, labels, UI elements." },
+      "script": { "$value": "'Dancing Script', cursive", "$description": "Wordmark only — the cursive Franchise logo." }
+    },
+
+    "size": {
+      "xs":   { "$value": "10px" },
+      "sm":   { "$value": "12px" },
+      "base": { "$value": "14px" },
+      "md":   { "$value": "15px" },
+      "lg":   { "$value": "18px" },
+      "xl":   { "$value": "22px" },
+      "2xl":  { "$value": "28px" },
+      "3xl":  { "$value": "36px" },
+      "4xl":  { "$value": "44px" },
+      "hero": { "$value": "52px" }
+    },
+
+    "weight": {
+      "regular":   { "$value": "400" },
+      "medium":    { "$value": "500" },
+      "semibold":  { "$value": "600" },
+      "bold":      { "$value": "700" }
+    },
+
+    "leading": {
+      "tight":  { "$value": "1.0" },
+      "snug":   { "$value": "1.1" },
+      "normal": { "$value": "1.4" },
+      "relaxed":{ "$value": "1.55" },
+      "loose":  { "$value": "1.6" }
+    },
+
+    "tracking": {
+      "tight":  { "$value": "-0.03em" },
+      "snug":   { "$value": "-0.02em" },
+      "normal": { "$value": "0" },
+      "wide":   { "$value": "0.05em" },
+      "wider":  { "$value": "0.1em" },
+      "widest": { "$value": "0.2em" },
+      "brand":  { "$value": "0.4em", "$description": "For ALL CAPS label text." }
+    }
+  },
+
+  "radius": {
+    "sm":     { "$value": "8px",   "$description": "Small tags, small badges." },
+    "md":     { "$value": "12px",  "$description": "Buttons, inputs, toolbar buttons." },
+    "lg":     { "$value": "16px",  "$description": "Cards, list items, panels." },
+    "xl":     { "$value": "20px",  "$description": "Large cards, hero cards." },
+    "2xl":    { "$value": "24px",  "$description": "Avatar squares, group icons." },
+    "pill":   { "$value": "100px", "$description": "Fully rounded pills — group pills, action buttons." },
+    "phone":  { "$value": "38px",  "$description": "Phone frame inner radius." },
+    "screen": { "$value": "48px",  "$description": "Phone frame outer radius." }
+  },
+
+  "spacing": {
+    "1":  { "$value": "4px" },
+    "2":  { "$value": "8px" },
+    "3":  { "$value": "12px" },
+    "4":  { "$value": "16px" },
+    "5":  { "$value": "20px" },
+    "6":  { "$value": "24px" },
+    "8":  { "$value": "32px" },
+    "10": { "$value": "40px" },
+    "12": { "$value": "48px" },
+    "16": { "$value": "64px" }
+  },
+
+  "shadow": {
+    "card": {
+      "$value": "0 1px 3px rgba(0, 0, 0, 0.4)",
+      "$description": "Default card shadow."
+    },
+    "gold-glow": {
+      "$value": "0 8px 24px -8px rgba(212, 166, 74, 0.5)",
+      "$description": "Glow on primary gold CTA buttons."
+    },
+    "phone-frame": {
+      "$value": "0 0 0 2px #2a2522, 0 30px 80px -20px rgba(0,0,0,0.9), 0 0 60px -20px rgba(212,166,74,0.15)",
+      "$description": "Phone mockup frame shadow."
+    }
+  },
+
+  "component": {
+    "avatar": {
+      "sm":  { "$value": "22px", "$description": "Stack avatars, reaction lists." },
+      "md":  { "$value": "38px", "$description": "Post headers, list rows." },
+      "lg":  { "$value": "56px", "$description": "Profile cards in feeds." },
+      "xl":  { "$value": "80px", "$description": "Full profile page avatar." }
+    },
+
+    "icon-btn": {
+      "size":   { "$value": "36px" },
+      "radius": { "$value": "50%" }
+    },
+
+    "tab-bar": {
+      "height":        { "$value": "72px", "$description": "Including safe area bottom padding." },
+      "icon-size":     { "$value": "22px" },
+      "label-size":    { "$value": "10px" },
+      "active-dot":    { "$value": "4px" },
+      "active-color":  { "$value": "#d4a64a" },
+      "inactive-color":{ "$value": "#6b6661" }
+    },
+
+    "status-bar": {
+      "height": { "$value": "44px" }
+    },
+
+    "button": {
+      "height-default": { "$value": "52px" },
+      "height-sm":      { "$value": "36px" },
+      "padding-x":      { "$value": "20px" },
+      "font-size":      { "$value": "14px" },
+      "font-weight":    { "$value": "700" },
+      "radius":         { "$value": "100px" }
+    },
+
+    "badge": {
+      "font-size":   { "$value": "9px" },
+      "font-weight": { "$value": "700" },
+      "padding":     { "$value": "2px 6px" },
+      "radius":      { "$value": "4px" },
+      "bg":          { "$value": "rgba(212, 166, 74, 0.12)" },
+      "color":       { "$value": "#d4a64a" },
+      "letter-spacing": { "$value": "0.06em" }
+    },
+
+    "post-card": {
+      "padding":        { "$value": "18px 20px" },
+      "content-size":   { "$value": "14px" },
+      "content-leading":{ "$value": "1.55" },
+      "action-size":    { "$value": "12px" },
+      "action-icon":    { "$value": "16px" }
+    },
+
+    "prayer-accent": {
+      "bar-width":  { "$value": "2px" },
+      "bar-color":  { "$value": "rgba(212, 166, 74, 0.5)" },
+      "text-style": { "$value": "italic" },
+      "font-family":{ "$value": "Fraunces" }
+    },
+
+    "countdown": {
+      "num-size":    { "$value": "38px" },
+      "num-font":    { "$value": "Fraunces" },
+      "num-color":   { "$value": "#d4a64a" },
+      "label-size":  { "$value": "9px" },
+      "label-track": { "$value": "0.18em" }
+    },
+
+    "live-badge": {
+      "bg":           { "$value": "#c93a3a" },
+      "color":        { "$value": "#ffffff" },
+      "font-size":    { "$value": "11px" },
+      "font-weight":  { "$value": "700" },
+      "letter-spacing":{ "$value": "0.1em" },
+      "pulse-size":   { "$value": "6px" }
+    },
+
+    "section-label": {
+      "font-size":    { "$value": "11px" },
+      "font-weight":  { "$value": "700" },
+      "letter-spacing":{ "$value": "0.12em" },
+      "text-transform":{ "$value": "uppercase" },
+      "color":        { "$value": "#6b6661" }
+    },
+
+    "eyebrow": {
+      "font-size":    { "$value": "10px" },
+      "font-weight":  { "$value": "700" },
+      "letter-spacing":{ "$value": "0.25em" },
+      "text-transform":{ "$value": "uppercase" },
+      "color":        { "$value": "#d4a64a" }
+    }
+  },
+
+  "logo": {
+    "wordmark": {
+      "font":   { "$value": "Dancing Script" },
+      "weight": { "$value": "700" },
+      "color":  { "$value": "#d4a64a" },
+      "usage":  { "$value": "Wordmark only. Never use for body text or headings." }
+    },
+    "sub": {
+      "font":    { "$value": "Inter" },
+      "size":    { "$value": "9px" },
+      "weight":  { "$value": "600" },
+      "color":   { "$value": "#a87f2d" },
+      "tracking":{ "$value": "0.4em" },
+      "transform":{ "$value": "uppercase" }
+    }
+  },
+
+  "motion": {
+    "duration": {
+      "instant": { "$value": "80ms" },
+      "fast":    { "$value": "150ms" },
+      "default": { "$value": "200ms" },
+      "slow":    { "$value": "350ms" }
+    },
+    "easing": {
+      "default": { "$value": "cubic-bezier(0.2, 0, 0, 1)" },
+      "spring":  { "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)" }
+    },
+    "pulse": {
+      "duration": { "$value": "1.5s" },
+      "easing":   { "$value": "ease-in-out" },
+      "usage":    { "$value": "LIVE badge pulse only." }
+    }
+  }
+}
