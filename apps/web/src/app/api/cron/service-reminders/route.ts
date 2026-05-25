@@ -31,7 +31,11 @@ export async function GET(req: Request) {
     // Fire reminder if service starts in 13–18 minutes (5-min cron window ± buffer)
     if (minutesUntil >= 13 && minutesUntil <= 18) {
       const reminderRows = await db
-        .select({ userId: serviceReminders.userId, minutesBefore: serviceReminders.minutesBefore })
+        .select({
+          userId: serviceReminders.userId,
+          minutesBefore: serviceReminders.minutesBefore,
+          isActive: serviceReminders.isActive,
+        })
         .from(serviceReminders)
         .where(eq(serviceReminders.serviceType, ls.serviceType));
 

@@ -1,6 +1,5 @@
 import { db, groups, users, livestreams } from "./index";
 import { eq } from "drizzle-orm";
-import { eq } from "drizzle-orm";
 
 const SEED_GROUPS = [
   {
