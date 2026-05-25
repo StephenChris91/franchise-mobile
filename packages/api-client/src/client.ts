@@ -81,6 +81,50 @@ export class FranchiseAPI {
     return json.data as T;
   }
 
+  /**
+   * Upload a local file (React Native file URI) to the backend's proxy upload
+   * endpoint. Sends multipart/form-data — do NOT set Content-Type manually,
+   * the fetch implementation sets it with the correct boundary automatically.
+   */
+  async uploadFile(
+    localUri: string,
+    folder = "franchise/posts"
+  ): Promise<{ url: string; publicId: string }> {
+    const token = await this.config.getToken();
+
+    const form = new FormData();
+    // React Native accepts { uri, type, name } for file fields
+    form.append("file", { uri: localUri, type: "image/jpeg", name: "upload.jpg" } as unknown as Blob);
+    form.append("folder", folder);
+
+    const headers: Record<string, string> = {};
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    // ⚠️ Do NOT set Content-Type here — fetch sets multipart/form-data + boundary
+
+    const res = await fetch(`${this.config.baseUrl}/api/v1/upload`, {
+      method: "POST",
+      headers,
+      body: form,
+    });
+
+    if (res.status === 401) {
+      const newToken = await this.refreshOnce();
+      if (!newToken) { this.config.onUnauthorized(); throw new Error("Unauthorized"); }
+      const retryHeaders = { Authorization: `Bearer ${newToken}` };
+      const retryForm = new FormData();
+      retryForm.append("file", { uri: localUri, type: "image/jpeg", name: "upload.jpg" } as unknown as Blob);
+      retryForm.append("folder", folder);
+      const retryRes = await fetch(`${this.config.baseUrl}/api/v1/upload`, {
+        method: "POST",
+        headers: retryHeaders,
+        body: retryForm,
+      });
+      return this.parseResponse<{ url: string; publicId: string }>(retryRes);
+    }
+
+    return this.parseResponse<{ url: string; publicId: string }>(res);
+  }
+
   private async refreshOnce(): Promise<string | null> {
     if (this.refreshPromise) return this.refreshPromise;
 
