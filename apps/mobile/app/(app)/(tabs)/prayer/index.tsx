@@ -2,11 +2,11 @@ import { useCallback } from "react";
 import {
   View,
   Text,
+  FlatList,
   StyleSheet,
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
 import { HandHeart } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -89,11 +89,10 @@ export default function PrayerWallScreen() {
           }}
         />
       ) : (
-        <FlashList
+        <FlatList
           data={posts}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          estimatedItemSize={200}
           contentContainerStyle={styles.listContent}
           ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
           ListFooterComponent={renderFooter}

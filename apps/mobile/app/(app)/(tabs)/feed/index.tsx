@@ -2,12 +2,12 @@ import { useCallback, useState } from "react";
 import {
   View,
   Text,
+  FlatList,
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
 import { Plus, Rss, Search } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -136,11 +136,10 @@ export default function FeedScreen() {
           }}
         />
       ) : (
-        <FlashList
+        <FlatList
           data={posts}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          estimatedItemSize={200}
           contentContainerStyle={styles.listContent}
           ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
           ListFooterComponent={renderFooter}
